@@ -1,0 +1,11 @@
+{
+  "manifest_version": 3,
+  "name": "ETH Wallet Demo",
+  "version": "1.0.0",
+  "description": "Generate and import Ethereum wallets in popup.",
+  "action": {
+    "default_title": "ETH Wallet Demo",
+    "default_popup": "popup.html"
+  },
+  "permissions": ["storage"]
+}
