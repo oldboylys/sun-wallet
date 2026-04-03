@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import {
   ArrowDownToLine,
   ArrowUpToLine,
+  Check,
   Copy,
   Eye,
   EyeOff,
@@ -12,6 +13,7 @@ import {
   Repeat2,
   Settings,
   ArrowLeftRight,
+  AppWindow,
 } from "lucide-react";
 import QRCode from "qrcode";
 import { ThemeProvider, CssBaseline } from "@mui/material";
@@ -81,6 +83,10 @@ const AUTH_MODE = {
   UNLOCK: "unlock",
 };
 
+/** 当前页面是否运行在侧边栏（sidepanel.html） */
+const IS_SIDE_PANEL_SURFACE =
+  typeof window !== "undefined" && window.location.pathname.endsWith("sidepanel.html");
+
 function PageHeader({ title, canBack, onBack }) {
   return (
     <Box
@@ -131,6 +137,8 @@ function App() {
   const [settingsNameDraft, setSettingsNameDraft] = useState("Sun Wallet");
   const [settingsMenuAnchor, setSettingsMenuAnchor] = useState(null);
   const settingsMenuCloseTimerRef = useRef(null);
+  const [addressCopiedFeedback, setAddressCopiedFeedback] = useState(false);
+  const addressCopyFeedbackTimerRef = useRef(null);
 
   const current = stack[stack.length - 1];
   const canBack = stack.length > 1;
@@ -194,6 +202,14 @@ function App() {
     initApp();
     return () => {
       cancelled = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (addressCopyFeedbackTimerRef.current) {
+        clearTimeout(addressCopyFeedbackTimerRef.current);
+      }
     };
   }, []);
 
@@ -294,6 +310,14 @@ function App() {
     try {
       await navigator.clipboard.writeText(walletAddress);
       setToast("地址已复制到剪贴板");
+      if (addressCopyFeedbackTimerRef.current) {
+        clearTimeout(addressCopyFeedbackTimerRef.current);
+      }
+      setAddressCopiedFeedback(true);
+      addressCopyFeedbackTimerRef.current = setTimeout(() => {
+        setAddressCopiedFeedback(false);
+        addressCopyFeedbackTimerRef.current = null;
+      }, 2000);
     } catch {
       setToast("复制失败，请重试或手动复制");
     }
@@ -306,34 +330,46 @@ function App() {
     }
   }
 
+  /** 关闭前移出菜单内焦点，避免 Modal 设 aria-hidden 时子元素仍 :focus 触发无障碍告警 */
+  function closeSettingsMenu() {
+    const active = document.activeElement;
+    if (active instanceof HTMLElement && active.closest('[role="menu"]')) {
+      active.blur();
+    }
+    setSettingsMenuAnchor(null);
+  }
+
   function scheduleCloseSettingsMenu() {
     clearSettingsMenuCloseTimer();
     settingsMenuCloseTimerRef.current = setTimeout(() => {
-      setSettingsMenuAnchor(null);
-    }, 220);
+      closeSettingsMenu();
+    }, 280);
   }
 
   function openSettingsMenuFromHover(event) {
     clearSettingsMenuCloseTimer();
-    setSettingsMenuAnchor(event.currentTarget);
+    const btn = event.currentTarget.querySelector("button");
+    if (btn) {
+      setSettingsMenuAnchor(btn);
+    }
   }
 
   function goToSettingsPage() {
     clearSettingsMenuCloseTimer();
-    setSettingsMenuAnchor(null);
+    closeSettingsMenu();
     setSettingsNameDraft(walletDisplayName);
     goto(VIEWS.SETTINGS);
   }
 
   function onDappConnectionsPlaceholder() {
     clearSettingsMenuCloseTimer();
-    setSettingsMenuAnchor(null);
+    closeSettingsMenu();
     setToast("DApp 连接管理（占位）");
   }
 
   async function openSidePanelMode() {
     clearSettingsMenuCloseTimer();
-    setSettingsMenuAnchor(null);
+    closeSettingsMenu();
     try {
       if (typeof chrome !== "undefined" && chrome.sidePanel?.open && chrome.windows?.getCurrent) {
         const w = await chrome.windows.getCurrent();
@@ -347,9 +383,39 @@ function App() {
     }
   }
 
+  /** 侧边栏内：切换为工具栏弹窗 / 独立 popup 窗口 */
+  async function switchToWindowMode() {
+    clearSettingsMenuCloseTimer();
+    closeSettingsMenu();
+    try {
+      if (typeof chrome !== "undefined" && chrome.action?.openPopup) {
+        await chrome.action.openPopup();
+        window.close();
+        return;
+      }
+    } catch {
+      /* openPopup 在部分环境不可用，走下方 create */
+    }
+    try {
+      if (typeof chrome !== "undefined" && chrome.windows?.create) {
+        await chrome.windows.create({
+          url: chrome.runtime.getURL("popup.html"),
+          type: "popup",
+          width: Math.round(POPUP_WIDTH_PX),
+          height: Math.round(POPUP_HEIGHT_PX + 32),
+          focused: true,
+        });
+        window.close();
+        return;
+      }
+    } catch {
+      setToast("无法打开窗口模式");
+    }
+  }
+
   async function lockWallet() {
     clearSettingsMenuCloseTimer();
-    setSettingsMenuAnchor(null);
+    closeSettingsMenu();
     await clearUnlockSession();
     setStack([VIEWS.LOGIN]);
     setToast("钱包已锁定");
@@ -585,7 +651,8 @@ function App() {
               px: 2,
               pt: 1,
               pb: 0,
-              overflow: "hidden",
+              /* 不设 hidden，避免 disablePortal 的设置菜单被裁切；滚动仅在中部列表容器上 */
+              overflow: "visible",
             }}
           >
             <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", mb: 1.25, flexShrink: 0 }}>
@@ -606,32 +673,55 @@ function App() {
                 </Box>
               </Box>
               <Box sx={{ display: "flex", gap: 0.5, alignItems: "center" }}>
-                <IconButton size="small" color="default" onClick={copyWalletAddress} title="复制地址">
-                  <Copy size={18} />
+                <IconButton
+                  size="small"
+                  color="default"
+                  onClick={copyWalletAddress}
+                  title={addressCopiedFeedback ? "已复制" : "复制地址"}
+                  sx={{
+                    color: addressCopiedFeedback ? "success.main" : "text.primary",
+                    transition: "color 0.2s ease, transform 0.2s ease",
+                    transform: addressCopiedFeedback ? "scale(1.08)" : "scale(1)",
+                  }}
+                >
+                  {addressCopiedFeedback ? (
+                    <Check size={18} strokeWidth={2.5} aria-hidden />
+                  ) : (
+                    <Copy size={18} aria-hidden />
+                  )}
                 </IconButton>
-                <Box sx={{ position: "relative", display: "inline-flex" }}>
-                  <IconButton
-                    size="small"
-                    color="default"
-                    title="设置"
-                    onMouseEnter={openSettingsMenuFromHover}
-                    onMouseLeave={scheduleCloseSettingsMenu}
-                    sx={{ color: "text.primary" }}
-                  >
+                <Box
+                  sx={{
+                    position: "relative",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    zIndex: 10,
+                  }}
+                  onMouseEnter={openSettingsMenuFromHover}
+                  onMouseLeave={scheduleCloseSettingsMenu}
+                >
+                  <IconButton size="small" color="default" title="设置" sx={{ color: "text.primary" }}>
                     <Settings size={18} />
                   </IconButton>
                   <Menu
+                    disablePortal
                     anchorEl={settingsMenuAnchor}
                     open={Boolean(settingsMenuAnchor)}
-                    onClose={() => setSettingsMenuAnchor(null)}
-                    disableAutoFocus
+                    onClose={closeSettingsMenu}
+                    autoFocus={false}
+                    disableAutoFocusItem
                     disableScrollLock
                     anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
                     transformOrigin={{ vertical: "top", horizontal: "right" }}
                     slotProps={{
+                      root: {
+                        disableEnforceFocus: true,
+                        disableAutoFocus: true,
+                        disableRestoreFocus: true,
+                      },
                       paper: {
                         sx: {
-                          mt: 0.75,
+                          mt: 0,
                           minWidth: 196,
                           maxWidth: 220,
                           bgcolor: "#1e2026",
@@ -640,9 +730,9 @@ function App() {
                           borderRadius: 2,
                           boxShadow: "0 8px 24px rgba(0,0,0,0.45)",
                           py: 0.5,
+                          pointerEvents: "auto",
                         },
                         onMouseEnter: clearSettingsMenuCloseTimer,
-                        onMouseLeave: () => setSettingsMenuAnchor(null),
                       },
                     }}
                   >
@@ -668,13 +758,15 @@ function App() {
                     </MenuItem>
                     <MenuItem
                       dense
-                      onClick={openSidePanelMode}
+                      onClick={IS_SIDE_PANEL_SURFACE ? switchToWindowMode : openSidePanelMode}
                       sx={{ py: 1.1, gap: 1, fontSize: 14, color: "text.primary" }}
                     >
                       <ListItemIcon sx={{ minWidth: 32, color: "text.primary" }}>
-                        <ArrowLeftRight size={18} />
+                        {IS_SIDE_PANEL_SURFACE ? <AppWindow size={18} /> : <ArrowLeftRight size={18} />}
                       </ListItemIcon>
-                      <ListItemText primary="侧边栏模式" />
+                      <ListItemText
+                        primary={IS_SIDE_PANEL_SURFACE ? "切换为窗口模式" : "侧边栏模式"}
+                      />
                     </MenuItem>
                     <MenuItem
                       dense
@@ -936,8 +1028,21 @@ function App() {
                   {walletAddress}
                 </Typography>
                 <Box sx={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 1, mt: 2 }}>
-                  <Button variant="outlined" onClick={copyWalletAddress}>
-                    复制地址
+                  <Button
+                    variant="outlined"
+                    onClick={copyWalletAddress}
+                    startIcon={
+                      addressCopiedFeedback ? (
+                        <Check size={16} strokeWidth={2.5} aria-hidden />
+                      ) : undefined
+                    }
+                    sx={{
+                      color: addressCopiedFeedback ? "success.main" : undefined,
+                      borderColor: addressCopiedFeedback ? "success.main" : undefined,
+                      transition: "color 0.2s ease, border-color 0.2s ease",
+                    }}
+                  >
+                    {addressCopiedFeedback ? "已复制" : "复制地址"}
                   </Button>
                   <Button variant="outlined" onClick={() => setToast("分享二维码（占位）")}>
                     分享二维码

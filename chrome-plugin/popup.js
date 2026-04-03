@@ -25045,40 +25045,53 @@
     return Component;
   };
 
-  // node_modules/lucide-react/dist/esm/icons/arrow-down-to-line.js
+  // node_modules/lucide-react/dist/esm/icons/app-window.js
   var __iconNode = [
+    ["rect", { x: "2", y: "4", width: "20", height: "16", rx: "2", key: "izxlao" }],
+    ["path", { d: "M10 4v4", key: "pp8u80" }],
+    ["path", { d: "M2 8h20", key: "d11cs7" }],
+    ["path", { d: "M6 4v4", key: "1svtjw" }]
+  ];
+  var AppWindow = createLucideIcon("app-window", __iconNode);
+
+  // node_modules/lucide-react/dist/esm/icons/arrow-down-to-line.js
+  var __iconNode2 = [
     ["path", { d: "M12 17V3", key: "1cwfxf" }],
     ["path", { d: "m6 11 6 6 6-6", key: "12ii2o" }],
     ["path", { d: "M19 21H5", key: "150jfl" }]
   ];
-  var ArrowDownToLine = createLucideIcon("arrow-down-to-line", __iconNode);
+  var ArrowDownToLine = createLucideIcon("arrow-down-to-line", __iconNode2);
 
   // node_modules/lucide-react/dist/esm/icons/arrow-left-right.js
-  var __iconNode2 = [
+  var __iconNode3 = [
     ["path", { d: "M8 3 4 7l4 4", key: "9rb6wj" }],
     ["path", { d: "M4 7h16", key: "6tx8e3" }],
     ["path", { d: "m16 21 4-4-4-4", key: "siv7j2" }],
     ["path", { d: "M20 17H4", key: "h6l3hr" }]
   ];
-  var ArrowLeftRight = createLucideIcon("arrow-left-right", __iconNode2);
+  var ArrowLeftRight = createLucideIcon("arrow-left-right", __iconNode3);
 
   // node_modules/lucide-react/dist/esm/icons/arrow-up-to-line.js
-  var __iconNode3 = [
+  var __iconNode4 = [
     ["path", { d: "M5 3h14", key: "7usisc" }],
     ["path", { d: "m18 13-6-6-6 6", key: "1kf1n9" }],
     ["path", { d: "M12 7v14", key: "1akyts" }]
   ];
-  var ArrowUpToLine = createLucideIcon("arrow-up-to-line", __iconNode3);
+  var ArrowUpToLine = createLucideIcon("arrow-up-to-line", __iconNode4);
+
+  // node_modules/lucide-react/dist/esm/icons/check.js
+  var __iconNode5 = [["path", { d: "M20 6 9 17l-5-5", key: "1gmf2c" }]];
+  var Check = createLucideIcon("check", __iconNode5);
 
   // node_modules/lucide-react/dist/esm/icons/copy.js
-  var __iconNode4 = [
+  var __iconNode6 = [
     ["rect", { width: "14", height: "14", x: "8", y: "8", rx: "2", ry: "2", key: "17jyea" }],
     ["path", { d: "M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2", key: "zix9uf" }]
   ];
-  var Copy = createLucideIcon("copy", __iconNode4);
+  var Copy = createLucideIcon("copy", __iconNode6);
 
   // node_modules/lucide-react/dist/esm/icons/eye-off.js
-  var __iconNode5 = [
+  var __iconNode7 = [
     [
       "path",
       {
@@ -25096,10 +25109,10 @@
     ],
     ["path", { d: "m2 2 20 20", key: "1ooewy" }]
   ];
-  var EyeOff = createLucideIcon("eye-off", __iconNode5);
+  var EyeOff = createLucideIcon("eye-off", __iconNode7);
 
   // node_modules/lucide-react/dist/esm/icons/eye.js
-  var __iconNode6 = [
+  var __iconNode8 = [
     [
       "path",
       {
@@ -25109,42 +25122,42 @@
     ],
     ["circle", { cx: "12", cy: "12", r: "3", key: "1v7zrd" }]
   ];
-  var Eye = createLucideIcon("eye", __iconNode6);
+  var Eye = createLucideIcon("eye", __iconNode8);
 
   // node_modules/lucide-react/dist/esm/icons/globe.js
-  var __iconNode7 = [
+  var __iconNode9 = [
     ["circle", { cx: "12", cy: "12", r: "10", key: "1mglay" }],
     ["path", { d: "M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20", key: "13o1zl" }],
     ["path", { d: "M2 12h20", key: "9i4pu4" }]
   ];
-  var Globe = createLucideIcon("globe", __iconNode7);
+  var Globe = createLucideIcon("globe", __iconNode9);
 
   // node_modules/lucide-react/dist/esm/icons/history.js
-  var __iconNode8 = [
+  var __iconNode10 = [
     ["path", { d: "M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8", key: "1357e3" }],
     ["path", { d: "M3 3v5h5", key: "1xhq8a" }],
     ["path", { d: "M12 7v5l4 2", key: "1fdv2h" }]
   ];
-  var History = createLucideIcon("history", __iconNode8);
+  var History = createLucideIcon("history", __iconNode10);
 
   // node_modules/lucide-react/dist/esm/icons/lock.js
-  var __iconNode9 = [
+  var __iconNode11 = [
     ["rect", { width: "18", height: "11", x: "3", y: "11", rx: "2", ry: "2", key: "1w4ew1" }],
     ["path", { d: "M7 11V7a5 5 0 0 1 10 0v4", key: "fwvmzm" }]
   ];
-  var Lock = createLucideIcon("lock", __iconNode9);
+  var Lock = createLucideIcon("lock", __iconNode11);
 
   // node_modules/lucide-react/dist/esm/icons/repeat-2.js
-  var __iconNode10 = [
+  var __iconNode12 = [
     ["path", { d: "m2 9 3-3 3 3", key: "1ltn5i" }],
     ["path", { d: "M13 18H7a2 2 0 0 1-2-2V6", key: "1r6tfw" }],
     ["path", { d: "m22 15-3 3-3-3", key: "4rnwn2" }],
     ["path", { d: "M11 6h6a2 2 0 0 1 2 2v10", key: "2f72bc" }]
   ];
-  var Repeat2 = createLucideIcon("repeat-2", __iconNode10);
+  var Repeat2 = createLucideIcon("repeat-2", __iconNode12);
 
   // node_modules/lucide-react/dist/esm/icons/settings.js
-  var __iconNode11 = [
+  var __iconNode13 = [
     [
       "path",
       {
@@ -25154,7 +25167,7 @@
     ],
     ["circle", { cx: "12", cy: "12", r: "3", key: "1v7zrd" }]
   ];
-  var Settings = createLucideIcon("settings", __iconNode11);
+  var Settings = createLucideIcon("settings", __iconNode13);
 
   // src/popup.entry.jsx
   var import_qrcode = __toESM(require_browser());
@@ -62835,6 +62848,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
     SETUP: "setup",
     UNLOCK: "unlock"
   };
+  var IS_SIDE_PANEL_SURFACE = typeof window !== "undefined" && window.location.pathname.endsWith("sidepanel.html");
   function PageHeader({ title, canBack, onBack }) {
     return /* @__PURE__ */ import_react13.default.createElement(
       Box_default,
@@ -62876,6 +62890,8 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
     const [settingsNameDraft, setSettingsNameDraft] = (0, import_react13.useState)("Sun Wallet");
     const [settingsMenuAnchor, setSettingsMenuAnchor] = (0, import_react13.useState)(null);
     const settingsMenuCloseTimerRef = (0, import_react13.useRef)(null);
+    const [addressCopiedFeedback, setAddressCopiedFeedback] = (0, import_react13.useState)(false);
+    const addressCopyFeedbackTimerRef = (0, import_react13.useRef)(null);
     const current = stack[stack.length - 1];
     const canBack = stack.length > 1;
     const canReset = checks.every(Boolean);
@@ -62929,6 +62945,13 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
       initApp();
       return () => {
         cancelled = true;
+      };
+    }, []);
+    (0, import_react13.useEffect)(() => {
+      return () => {
+        if (addressCopyFeedbackTimerRef.current) {
+          clearTimeout(addressCopyFeedbackTimerRef.current);
+        }
       };
     }, []);
     async function hashPassword(raw) {
@@ -63015,6 +63038,14 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
       try {
         await navigator.clipboard.writeText(walletAddress);
         setToast("\u5730\u5740\u5DF2\u590D\u5236\u5230\u526A\u8D34\u677F");
+        if (addressCopyFeedbackTimerRef.current) {
+          clearTimeout(addressCopyFeedbackTimerRef.current);
+        }
+        setAddressCopiedFeedback(true);
+        addressCopyFeedbackTimerRef.current = setTimeout(() => {
+          setAddressCopiedFeedback(false);
+          addressCopyFeedbackTimerRef.current = null;
+        }, 2e3);
       } catch {
         setToast("\u590D\u5236\u5931\u8D25\uFF0C\u8BF7\u91CD\u8BD5\u6216\u624B\u52A8\u590D\u5236");
       }
@@ -63025,30 +63056,40 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
         settingsMenuCloseTimerRef.current = null;
       }
     }
+    function closeSettingsMenu() {
+      const active = document.activeElement;
+      if (active instanceof HTMLElement && active.closest('[role="menu"]')) {
+        active.blur();
+      }
+      setSettingsMenuAnchor(null);
+    }
     function scheduleCloseSettingsMenu() {
       clearSettingsMenuCloseTimer();
       settingsMenuCloseTimerRef.current = setTimeout(() => {
-        setSettingsMenuAnchor(null);
-      }, 1000);
+        closeSettingsMenu();
+      }, 280);
     }
     function openSettingsMenuFromHover(event) {
       clearSettingsMenuCloseTimer();
-      setSettingsMenuAnchor(event.currentTarget);
+      const btn = event.currentTarget.querySelector("button");
+      if (btn) {
+        setSettingsMenuAnchor(btn);
+      }
     }
     function goToSettingsPage() {
       clearSettingsMenuCloseTimer();
-      setSettingsMenuAnchor(null);
+      closeSettingsMenu();
       setSettingsNameDraft(walletDisplayName);
       goto(VIEWS.SETTINGS);
     }
     function onDappConnectionsPlaceholder() {
       clearSettingsMenuCloseTimer();
-      setSettingsMenuAnchor(null);
+      closeSettingsMenu();
       setToast("DApp \u8FDE\u63A5\u7BA1\u7406\uFF08\u5360\u4F4D\uFF09");
     }
     async function openSidePanelMode() {
       clearSettingsMenuCloseTimer();
-      setSettingsMenuAnchor(null);
+      closeSettingsMenu();
       try {
         if (typeof chrome !== "undefined" && chrome.sidePanel?.open && chrome.windows?.getCurrent) {
           const w = await chrome.windows.getCurrent();
@@ -63061,9 +63102,36 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
         setToast("\u65E0\u6CD5\u6253\u5F00\u4FA7\u8FB9\u680F\uFF08\u9700 Chrome 114+ \u5E76\u5DF2\u6388\u4E88 sidePanel\uFF09");
       }
     }
+    async function switchToWindowMode() {
+      clearSettingsMenuCloseTimer();
+      closeSettingsMenu();
+      try {
+        if (typeof chrome !== "undefined" && chrome.action?.openPopup) {
+          await chrome.action.openPopup();
+          window.close();
+          return;
+        }
+      } catch {
+      }
+      try {
+        if (typeof chrome !== "undefined" && chrome.windows?.create) {
+          await chrome.windows.create({
+            url: chrome.runtime.getURL("popup.html"),
+            type: "popup",
+            width: Math.round(POPUP_WIDTH_PX),
+            height: Math.round(POPUP_HEIGHT_PX + 32),
+            focused: true
+          });
+          window.close();
+          return;
+        }
+      } catch {
+        setToast("\u65E0\u6CD5\u6253\u5F00\u7A97\u53E3\u6A21\u5F0F");
+      }
+    }
     async function lockWallet() {
       clearSettingsMenuCloseTimer();
-      setSettingsMenuAnchor(null);
+      closeSettingsMenu();
       await clearUnlockSession();
       setStack([VIEWS.LOGIN]);
       setToast("\u94B1\u5305\u5DF2\u9501\u5B9A");
@@ -63269,7 +63337,8 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
           px: 2,
           pt: 1,
           pb: 0,
-          overflow: "hidden"
+          /* 不设 hidden，避免 disablePortal 的设置菜单被裁切；滚动仅在中部列表容器上 */
+          overflow: "visible"
         }
       },
       /* @__PURE__ */ import_react13.default.createElement(Box_default, { sx: { display: "flex", alignItems: "center", justifyContent: "space-between", mb: 1.25, flexShrink: 0 } }, /* @__PURE__ */ import_react13.default.createElement(Box_default, { sx: { display: "flex", alignItems: "center", gap: 1 } }, /* @__PURE__ */ import_react13.default.createElement(
@@ -63280,86 +63349,115 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
           alt: "",
           sx: { width: 32, height: 32, borderRadius: 1, border: 1, borderColor: "divider" }
         }
-      ), /* @__PURE__ */ import_react13.default.createElement(Box_default, null, /* @__PURE__ */ import_react13.default.createElement(Typography_default, { variant: "body2", fontWeight: 600 }, walletDisplayName), /* @__PURE__ */ import_react13.default.createElement(Typography_default, { variant: "caption", color: "text.secondary" }, shortAddress(walletAddress)))), /* @__PURE__ */ import_react13.default.createElement(Box_default, { sx: { display: "flex", gap: 0.5, alignItems: "center" } }, /* @__PURE__ */ import_react13.default.createElement(IconButton_default, { size: "small", color: "default", onClick: copyWalletAddress, title: "\u590D\u5236\u5730\u5740" }, /* @__PURE__ */ import_react13.default.createElement(Copy, { size: 18 })), /* @__PURE__ */ import_react13.default.createElement(Box_default, { sx: { position: "relative", display: "inline-flex" } }, /* @__PURE__ */ import_react13.default.createElement(
+      ), /* @__PURE__ */ import_react13.default.createElement(Box_default, null, /* @__PURE__ */ import_react13.default.createElement(Typography_default, { variant: "body2", fontWeight: 600 }, walletDisplayName), /* @__PURE__ */ import_react13.default.createElement(Typography_default, { variant: "caption", color: "text.secondary" }, shortAddress(walletAddress)))), /* @__PURE__ */ import_react13.default.createElement(Box_default, { sx: { display: "flex", gap: 0.5, alignItems: "center" } }, /* @__PURE__ */ import_react13.default.createElement(
         IconButton_default,
         {
           size: "small",
           color: "default",
-          title: "\u8BBE\u7F6E",
-          onMouseEnter: openSettingsMenuFromHover,
-          onMouseLeave: scheduleCloseSettingsMenu,
-          sx: { color: "text.primary" }
-        },
-        /* @__PURE__ */ import_react13.default.createElement(Settings, { size: 18 })
-      ), /* @__PURE__ */ import_react13.default.createElement(
-        Menu_default,
-        {
-          anchorEl: settingsMenuAnchor,
-          open: Boolean(settingsMenuAnchor),
-          onClose: () => setSettingsMenuAnchor(null),
-          disableAutoFocus: true,
-          disableScrollLock: true,
-          anchorOrigin: { vertical: "bottom", horizontal: "right" },
-          transformOrigin: { vertical: "top", horizontal: "right" },
-          slotProps: {
-            paper: {
-              sx: {
-                mt: 0.75,
-                minWidth: 196,
-                maxWidth: 220,
-                bgcolor: "#1e2026",
-                border: "1px solid",
-                borderColor: "divider",
-                borderRadius: 2,
-                boxShadow: "0 8px 24px rgba(0,0,0,0.45)",
-                py: 0.5
-              },
-              onMouseEnter: clearSettingsMenuCloseTimer,
-              onMouseLeave: () => setSettingsMenuAnchor(null)
-            }
+          onClick: copyWalletAddress,
+          title: addressCopiedFeedback ? "\u5DF2\u590D\u5236" : "\u590D\u5236\u5730\u5740",
+          sx: {
+            color: addressCopiedFeedback ? "success.main" : "text.primary",
+            transition: "color 0.2s ease, transform 0.2s ease",
+            transform: addressCopiedFeedback ? "scale(1.08)" : "scale(1)"
           }
         },
-        /* @__PURE__ */ import_react13.default.createElement(
-          MenuItem_default,
-          {
-            dense: true,
-            onClick: goToSettingsPage,
-            sx: { py: 1.1, gap: 1, fontSize: 14, color: "text.primary" }
+        addressCopiedFeedback ? /* @__PURE__ */ import_react13.default.createElement(Check, { size: 18, strokeWidth: 2.5, "aria-hidden": true }) : /* @__PURE__ */ import_react13.default.createElement(Copy, { size: 18, "aria-hidden": true })
+      ), /* @__PURE__ */ import_react13.default.createElement(
+        Box_default,
+        {
+          sx: {
+            position: "relative",
+            display: "inline-flex",
+            alignItems: "center",
+            zIndex: 10
           },
-          /* @__PURE__ */ import_react13.default.createElement(ListItemIcon_default, { sx: { minWidth: 32, color: "text.primary" } }, /* @__PURE__ */ import_react13.default.createElement(Settings, { size: 18 })),
-          /* @__PURE__ */ import_react13.default.createElement(ListItemText_default, { primary: "\u8BBE\u7F6E" })
-        ),
+          onMouseEnter: openSettingsMenuFromHover,
+          onMouseLeave: scheduleCloseSettingsMenu
+        },
+        /* @__PURE__ */ import_react13.default.createElement(IconButton_default, { size: "small", color: "default", title: "\u8BBE\u7F6E", sx: { color: "text.primary" } }, /* @__PURE__ */ import_react13.default.createElement(Settings, { size: 18 })),
         /* @__PURE__ */ import_react13.default.createElement(
-          MenuItem_default,
+          Menu_default,
           {
-            dense: true,
-            onClick: onDappConnectionsPlaceholder,
-            sx: { py: 1.1, gap: 1, fontSize: 14, color: "text.primary" }
+            disablePortal: true,
+            anchorEl: settingsMenuAnchor,
+            open: Boolean(settingsMenuAnchor),
+            onClose: closeSettingsMenu,
+            autoFocus: false,
+            disableAutoFocusItem: true,
+            disableScrollLock: true,
+            anchorOrigin: { vertical: "bottom", horizontal: "right" },
+            transformOrigin: { vertical: "top", horizontal: "right" },
+            slotProps: {
+              root: {
+                disableEnforceFocus: true,
+                disableAutoFocus: true,
+                disableRestoreFocus: true
+              },
+              paper: {
+                sx: {
+                  mt: 0,
+                  minWidth: 196,
+                  maxWidth: 220,
+                  bgcolor: "#1e2026",
+                  border: "1px solid",
+                  borderColor: "divider",
+                  borderRadius: 2,
+                  boxShadow: "0 8px 24px rgba(0,0,0,0.45)",
+                  py: 0.5,
+                  pointerEvents: "auto"
+                },
+                onMouseEnter: clearSettingsMenuCloseTimer
+              }
+            }
           },
-          /* @__PURE__ */ import_react13.default.createElement(ListItemIcon_default, { sx: { minWidth: 32, color: "text.primary" } }, /* @__PURE__ */ import_react13.default.createElement(Globe, { size: 18 })),
-          /* @__PURE__ */ import_react13.default.createElement(ListItemText_default, { primary: "DApp \u8FDE\u63A5\u7BA1\u7406" })
-        ),
-        /* @__PURE__ */ import_react13.default.createElement(
-          MenuItem_default,
-          {
-            dense: true,
-            onClick: openSidePanelMode,
-            sx: { py: 1.1, gap: 1, fontSize: 14, color: "text.primary" }
-          },
-          /* @__PURE__ */ import_react13.default.createElement(ListItemIcon_default, { sx: { minWidth: 32, color: "text.primary" } }, /* @__PURE__ */ import_react13.default.createElement(ArrowLeftRight, { size: 18 })),
-          /* @__PURE__ */ import_react13.default.createElement(ListItemText_default, { primary: "\u4FA7\u8FB9\u680F\u6A21\u5F0F" })
-        ),
-        /* @__PURE__ */ import_react13.default.createElement(
-          MenuItem_default,
-          {
-            dense: true,
-            onClick: lockWallet,
-            sx: { py: 1.1, gap: 1, fontSize: 14, color: "text.primary" }
-          },
-          /* @__PURE__ */ import_react13.default.createElement(ListItemIcon_default, { sx: { minWidth: 32, color: "text.primary" } }, /* @__PURE__ */ import_react13.default.createElement(Lock, { size: 18 })),
-          /* @__PURE__ */ import_react13.default.createElement(ListItemText_default, { primary: "\u9501\u5B9A\u94B1\u5305" })
+          /* @__PURE__ */ import_react13.default.createElement(
+            MenuItem_default,
+            {
+              dense: true,
+              onClick: goToSettingsPage,
+              sx: { py: 1.1, gap: 1, fontSize: 14, color: "text.primary" }
+            },
+            /* @__PURE__ */ import_react13.default.createElement(ListItemIcon_default, { sx: { minWidth: 32, color: "text.primary" } }, /* @__PURE__ */ import_react13.default.createElement(Settings, { size: 18 })),
+            /* @__PURE__ */ import_react13.default.createElement(ListItemText_default, { primary: "\u8BBE\u7F6E" })
+          ),
+          /* @__PURE__ */ import_react13.default.createElement(
+            MenuItem_default,
+            {
+              dense: true,
+              onClick: onDappConnectionsPlaceholder,
+              sx: { py: 1.1, gap: 1, fontSize: 14, color: "text.primary" }
+            },
+            /* @__PURE__ */ import_react13.default.createElement(ListItemIcon_default, { sx: { minWidth: 32, color: "text.primary" } }, /* @__PURE__ */ import_react13.default.createElement(Globe, { size: 18 })),
+            /* @__PURE__ */ import_react13.default.createElement(ListItemText_default, { primary: "DApp \u8FDE\u63A5\u7BA1\u7406" })
+          ),
+          /* @__PURE__ */ import_react13.default.createElement(
+            MenuItem_default,
+            {
+              dense: true,
+              onClick: IS_SIDE_PANEL_SURFACE ? switchToWindowMode : openSidePanelMode,
+              sx: { py: 1.1, gap: 1, fontSize: 14, color: "text.primary" }
+            },
+            /* @__PURE__ */ import_react13.default.createElement(ListItemIcon_default, { sx: { minWidth: 32, color: "text.primary" } }, IS_SIDE_PANEL_SURFACE ? /* @__PURE__ */ import_react13.default.createElement(AppWindow, { size: 18 }) : /* @__PURE__ */ import_react13.default.createElement(ArrowLeftRight, { size: 18 })),
+            /* @__PURE__ */ import_react13.default.createElement(
+              ListItemText_default,
+              {
+                primary: IS_SIDE_PANEL_SURFACE ? "\u5207\u6362\u4E3A\u7A97\u53E3\u6A21\u5F0F" : "\u4FA7\u8FB9\u680F\u6A21\u5F0F"
+              }
+            )
+          ),
+          /* @__PURE__ */ import_react13.default.createElement(
+            MenuItem_default,
+            {
+              dense: true,
+              onClick: lockWallet,
+              sx: { py: 1.1, gap: 1, fontSize: 14, color: "text.primary" }
+            },
+            /* @__PURE__ */ import_react13.default.createElement(ListItemIcon_default, { sx: { minWidth: 32, color: "text.primary" } }, /* @__PURE__ */ import_react13.default.createElement(Lock, { size: 18 })),
+            /* @__PURE__ */ import_react13.default.createElement(ListItemText_default, { primary: "\u9501\u5B9A\u94B1\u5305" })
+          )
         )
-      )), /* @__PURE__ */ import_react13.default.createElement(
+      ), /* @__PURE__ */ import_react13.default.createElement(
         IconButton_default,
         {
           size: "small",
@@ -63546,7 +63644,20 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
         }
       },
       walletAddress
-    ), /* @__PURE__ */ import_react13.default.createElement(Box_default, { sx: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 1, mt: 2 } }, /* @__PURE__ */ import_react13.default.createElement(Button_default, { variant: "outlined", onClick: copyWalletAddress }, "\u590D\u5236\u5730\u5740"), /* @__PURE__ */ import_react13.default.createElement(Button_default, { variant: "outlined", onClick: () => setToast("\u5206\u4EAB\u4E8C\u7EF4\u7801\uFF08\u5360\u4F4D\uFF09") }, "\u5206\u4EAB\u4E8C\u7EF4\u7801"))))), current === VIEWS.SETTINGS && /* @__PURE__ */ import_react13.default.createElement(Box_default, { sx: { flex: 1, minHeight: 0, display: "flex", flexDirection: "column", px: 2, pb: 2, overflow: "auto" } }, /* @__PURE__ */ import_react13.default.createElement(PageHeader, { title: "\u8BBE\u7F6E", canBack, onBack: back }), /* @__PURE__ */ import_react13.default.createElement(Typography_default, { variant: "body2", color: "text.secondary", sx: { mt: 2, mb: 1 } }, "\u94B1\u5305\u540D\u79F0"), /* @__PURE__ */ import_react13.default.createElement(
+    ), /* @__PURE__ */ import_react13.default.createElement(Box_default, { sx: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 1, mt: 2 } }, /* @__PURE__ */ import_react13.default.createElement(
+      Button_default,
+      {
+        variant: "outlined",
+        onClick: copyWalletAddress,
+        startIcon: addressCopiedFeedback ? /* @__PURE__ */ import_react13.default.createElement(Check, { size: 16, strokeWidth: 2.5, "aria-hidden": true }) : void 0,
+        sx: {
+          color: addressCopiedFeedback ? "success.main" : void 0,
+          borderColor: addressCopiedFeedback ? "success.main" : void 0,
+          transition: "color 0.2s ease, border-color 0.2s ease"
+        }
+      },
+      addressCopiedFeedback ? "\u5DF2\u590D\u5236" : "\u590D\u5236\u5730\u5740"
+    ), /* @__PURE__ */ import_react13.default.createElement(Button_default, { variant: "outlined", onClick: () => setToast("\u5206\u4EAB\u4E8C\u7EF4\u7801\uFF08\u5360\u4F4D\uFF09") }, "\u5206\u4EAB\u4E8C\u7EF4\u7801"))))), current === VIEWS.SETTINGS && /* @__PURE__ */ import_react13.default.createElement(Box_default, { sx: { flex: 1, minHeight: 0, display: "flex", flexDirection: "column", px: 2, pb: 2, overflow: "auto" } }, /* @__PURE__ */ import_react13.default.createElement(PageHeader, { title: "\u8BBE\u7F6E", canBack, onBack: back }), /* @__PURE__ */ import_react13.default.createElement(Typography_default, { variant: "body2", color: "text.secondary", sx: { mt: 2, mb: 1 } }, "\u94B1\u5305\u540D\u79F0"), /* @__PURE__ */ import_react13.default.createElement(
       TextField_default,
       {
         fullWidth: true,
@@ -63672,9 +63783,11 @@ lucide-react/dist/esm/shared/src/utils/hasA11yProp.js:
 lucide-react/dist/esm/context.js:
 lucide-react/dist/esm/Icon.js:
 lucide-react/dist/esm/createLucideIcon.js:
+lucide-react/dist/esm/icons/app-window.js:
 lucide-react/dist/esm/icons/arrow-down-to-line.js:
 lucide-react/dist/esm/icons/arrow-left-right.js:
 lucide-react/dist/esm/icons/arrow-up-to-line.js:
+lucide-react/dist/esm/icons/check.js:
 lucide-react/dist/esm/icons/copy.js:
 lucide-react/dist/esm/icons/eye-off.js:
 lucide-react/dist/esm/icons/eye.js:
