@@ -72,6 +72,7 @@ import {
   ImportWalletFlowView,
   WalletHubView,
 } from "./WalletManagementViews";
+import { SendFlowView } from "./SendFlowViews";
 import { CustomTokenAddView, TokenManageView } from "./TokenManageViews";
 import { addCustomToken, loadCustomTokens, removeCustomToken } from "./services/customTokens";
 import {
@@ -164,8 +165,6 @@ function App() {
   const [checks, setChecks] = useState([false, false, false]);
   const [toast, setToast] = useState("");
   const [activeTab, setActiveTab] = useState(HOME_TABS[0]);
-  const [sendTo, setSendTo] = useState("");
-  const [sendAmount, setSendAmount] = useState("");
   const [qrDataUrl, setQrDataUrl] = useState("");
   const [authMode, setAuthMode] = useState(AUTH_MODE.UNLOCK);
   const [loadingAuth, setLoadingAuth] = useState(true);
@@ -520,10 +519,6 @@ function App() {
       return;
     }
     setToast(`${label} 功能占位`);
-  }
-
-  function onSubmitSend() {
-    setToast("发送流程占位：下一步将进入交易确认页。");
   }
 
   function shortAddress(addr) {
@@ -1369,47 +1364,12 @@ function App() {
         )}
 
         {current === VIEWS.SEND && (
-          <Box sx={{ flex: 1, minHeight: 0, display: "flex", flexDirection: "column", px: 2, pb: 2, overflow: "auto" }}>
-            <PageHeader title="发送" canBack={canBack} onBack={back} />
-            <Card variant="outlined" sx={{ mt: 2 }}>
-              <CardContent>
-                <Typography variant="body2" color="text.secondary" gutterBottom>
-                  收款地址
-                </Typography>
-                <TextField
-                  fullWidth
-                  size="small"
-                  placeholder="0x..."
-                  value={sendTo}
-                  onChange={(e) => setSendTo(e.target.value)}
-                  sx={{ mb: 2 }}
-                />
-                <Typography variant="body2" color="text.secondary" gutterBottom>
-                  金额
-                </Typography>
-                <TextField
-                  fullWidth
-                  size="small"
-                  placeholder="0.00"
-                  value={sendAmount}
-                  onChange={(e) => setSendAmount(e.target.value)}
-                />
-                <Typography variant="caption" color="text.secondary" sx={{ mt: 1, display: "block" }}>
-                  网络费用与 nonce 将在确认页展示（占位）。
-                </Typography>
-              </CardContent>
-            </Card>
-            <Button
-              variant="contained"
-              color="primary"
-              fullWidth
-              sx={{ mt: 2, borderRadius: 999, py: 1.5, color: "primary.contrastText" }}
-              disabled={!sendTo.trim() || !sendAmount.trim()}
-              onClick={onSubmitSend}
-            >
-              下一步
-            </Button>
-          </Box>
+          <SendFlowView
+            walletAddress={walletAddress}
+            customTokens={customTokens}
+            onBack={back}
+            setToast={setToast}
+          />
         )}
 
         {current === VIEWS.RECEIVE && (
