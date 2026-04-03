@@ -1,11 +1,22 @@
 {
   "manifest_version": 3,
-  "name": "ETH Wallet Demo",
+  "name": "SUN WALLET",
   "version": "1.0.0",
   "description": "Generate and import Ethereum wallets in popup.",
   "action": {
-    "default_title": "ETH Wallet Demo",
-    "default_popup": "popup.html"
+    "default_title": "SUN WALLET",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "32": "icons/icon-32.png",
+      "48": "icons/icon-48.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon-16.png",
+    "32": "icons/icon-32.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
   },
   "permissions": ["storage"]
 }
