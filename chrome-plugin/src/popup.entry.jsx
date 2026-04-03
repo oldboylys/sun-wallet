@@ -38,6 +38,10 @@ import MenuItem from "@mui/material/MenuItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Switch from "@mui/material/Switch";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
 import { walletThemeDark, walletThemeLight, POPUP_HEIGHT_PX, POPUP_WIDTH_PX } from "./theme";
 import { getStorageValue, removeStorageValue, setStorageValue } from "./services/storage";
 import {
@@ -46,7 +50,24 @@ import {
   queryIdleState,
   saveUnlockSession,
 } from "./services/session";
-import { getWalletDisplayName, getWalletPublicAddress, setWalletDisplayName } from "./services/walletPrefs";
+import {
+  getWalletDisplayName,
+  getWalletPublicAddress,
+  setWalletDisplayName,
+  setWalletPublicAddress,
+} from "./services/walletPrefs";
+import {
+  findActiveAccount,
+  migrateWalletStoreIfEmpty,
+  saveWalletStore,
+  setActiveAccount,
+} from "./services/walletManager";
+import {
+  AddWalletChoiceView,
+  CreateWalletFlowView,
+  ImportWalletFlowView,
+  WalletHubView,
+} from "./WalletManagementViews";
 import { getThemeMode, setThemeMode } from "./services/themePrefs";
 import {
   fetchEthereumMainnetPortfolio,
@@ -62,6 +83,10 @@ const VIEWS = {
   SEND: "send",
   RECEIVE: "receive",
   SETTINGS: "settings",
+  WALLET_HUB: "wallet_hub",
+  WALLET_ADD_CHOICE: "wallet_add_choice",
+  WALLET_CREATE: "wallet_create",
+  WALLET_IMPORT: "wallet_import",
 };
 
 const FORGOT_ITEMS = [
@@ -148,12 +173,52 @@ function App() {
   const [portfolioTotalUsd, setPortfolioTotalUsd] = useState(0);
   const [portfolioChange24h, setPortfolioChange24h] = useState(null);
   const [portfolioRefreshing, setPortfolioRefreshing] = useState(false);
+  const [walletStore, setWalletStore] = useState(null);
+  const unlockPasswordRef = useRef("");
+  const [vaultPwOpen, setVaultPwOpen] = useState(false);
+  const [vaultPwDraft, setVaultPwDraft] = useState("");
+  const [vaultPwShow, setVaultPwShow] = useState(false);
+  const vaultPwResolveRef = useRef(null);
 
   const current = stack[stack.length - 1];
   const muiTheme = themeMode === "light" ? walletThemeLight : walletThemeDark;
   const canBack = stack.length > 1;
   const canReset = checks.every(Boolean);
   const isSetupMode = authMode === AUTH_MODE.SETUP;
+
+  const syncHomeFromWalletStore = useCallback(async (store) => {
+    const acc = findActiveAccount(store);
+    if (!acc) return;
+    const w = store.wallets.find((x) => x.id === store.activeWalletId);
+    const label = w?.name?.trim() || "SUN Wallet";
+    setWalletAddress(acc.address);
+    setWalletDisplayNameState(label);
+    await setWalletPublicAddress(acc.address);
+    await setWalletDisplayName(label);
+  }, []);
+
+  useEffect(() => {
+    if (loadingAuth) return;
+    const needStore =
+      current === VIEWS.HOME ||
+      current === VIEWS.WALLET_HUB ||
+      current === VIEWS.WALLET_ADD_CHOICE ||
+      current === VIEWS.WALLET_CREATE ||
+      current === VIEWS.WALLET_IMPORT;
+    if (!needStore) return;
+    let cancelled = false;
+    void (async () => {
+      const migrated = await migrateWalletStoreIfEmpty();
+      if (cancelled) return;
+      setWalletStore(migrated);
+      if (current === VIEWS.HOME) {
+        await syncHomeFromWalletStore(migrated);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [loadingAuth, current, syncHomeFromWalletStore]);
 
   useEffect(() => {
     async function generateQr() {
@@ -273,6 +338,44 @@ function App() {
       .join("");
   }
 
+  /** 内存中无解锁密码时（例如自动恢复会话），弹出一次校验，通过后写入 ref */
+  const getVaultPassword = useCallback(async () => {
+    if (unlockPasswordRef.current) return unlockPasswordRef.current;
+    return new Promise((resolve) => {
+      vaultPwResolveRef.current = resolve;
+      setVaultPwDraft("");
+      setVaultPwShow(false);
+      setVaultPwOpen(true);
+    });
+  }, []);
+
+  async function submitVaultPasswordDialog() {
+    const raw = vaultPwDraft.trim();
+    const validation = passwordSchema.safeParse(raw);
+    if (!validation.success) {
+      setToast(validation.error.issues[0]?.message || "密码格式不正确");
+      return;
+    }
+    const storedHash = await getStorageValue(PASSWORD_HASH_KEY, "");
+    const inputHash = await hashPassword(raw);
+    if (!storedHash || inputHash !== storedHash) {
+      setToast("密码错误");
+      return;
+    }
+    unlockPasswordRef.current = raw;
+    setVaultPwOpen(false);
+    const resolve = vaultPwResolveRef.current;
+    vaultPwResolveRef.current = null;
+    if (resolve) resolve(raw);
+  }
+
+  function closeVaultPasswordDialog() {
+    setVaultPwOpen(false);
+    const resolve = vaultPwResolveRef.current;
+    vaultPwResolveRef.current = null;
+    if (resolve) resolve(null);
+  }
+
   function goto(view) {
     setToast("");
     setStack((prev) => [...prev, view]);
@@ -302,6 +405,7 @@ function App() {
         const newHash = await hashPassword(passwordValue);
         await setStorageValue(PASSWORD_HASH_KEY, newHash);
         await saveUnlockSession();
+        unlockPasswordRef.current = passwordValue;
         setAuthMode(AUTH_MODE.UNLOCK);
         setStack([VIEWS.HOME]);
         setToast("密码设置完成，已解锁");
@@ -318,6 +422,7 @@ function App() {
       }
 
       await saveUnlockSession();
+      unlockPasswordRef.current = passwordValue;
       setStack([VIEWS.HOME]);
       setToast("解锁成功");
       setPassword("");
@@ -329,6 +434,7 @@ function App() {
   async function onResetWallet() {
     await removeStorageValue(PASSWORD_HASH_KEY);
     await clearUnlockSession();
+    unlockPasswordRef.current = "";
     setPassword("");
     setConfirmPassword("");
     setChecks([false, false, false]);
@@ -469,6 +575,7 @@ function App() {
     clearSettingsMenuCloseTimer();
     closeSettingsMenu();
     await clearUnlockSession();
+    unlockPasswordRef.current = "";
     setStack([VIEWS.LOGIN]);
     setToast("钱包已锁定");
   }
@@ -477,6 +584,16 @@ function App() {
     const name = settingsNameDraft.trim() || "SUN Wallet";
     await setWalletDisplayName(name);
     setWalletDisplayNameState(name);
+    if (walletStore?.activeWalletId) {
+      const next = {
+        ...walletStore,
+        wallets: walletStore.wallets.map((w) =>
+          w.id === walletStore.activeWalletId ? { ...w, name } : w,
+        ),
+      };
+      await saveWalletStore(next);
+      setWalletStore(next);
+    }
     setToast("钱包名称已保存");
     back();
   }
@@ -715,7 +832,26 @@ function App() {
             }}
           >
             <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", mb: 1.25, flexShrink: 0 }}>
-              <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+              <Box
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    goto(VIEWS.WALLET_HUB);
+                  }
+                }}
+                onClick={() => goto(VIEWS.WALLET_HUB)}
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 1,
+                  cursor: "pointer",
+                  borderRadius: 1,
+                  pr: 0.5,
+                  "&:hover": { bgcolor: "action.hover" },
+                }}
+              >
                 <Box
                   component="img"
                   src="icons/icon-32.png"
@@ -1193,6 +1329,104 @@ function App() {
           </Box>
         )}
 
+        {current === VIEWS.WALLET_HUB && (
+          <Box sx={{ flex: 1, minHeight: 0, display: "flex", flexDirection: "column", overflow: "hidden" }}>
+            <PageHeader title="钱包管理" canBack={canBack} onBack={back} />
+            {!walletStore ? (
+              <Box sx={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <CircularProgress />
+              </Box>
+            ) : (
+              <WalletHubView
+                store={walletStore}
+                onStoreChange={async (next) => {
+                  setWalletStore(next);
+                  await syncHomeFromWalletStore(next);
+                }}
+                onAddWallet={() => goto(VIEWS.WALLET_ADD_CHOICE)}
+                getVaultPassword={getVaultPassword}
+                setToast={setToast}
+                onSelectAccount={async (walletId, accountId) => {
+                  const next = await setActiveAccount(walletStore, walletId, accountId);
+                  setWalletStore(next);
+                  await syncHomeFromWalletStore(next);
+                  setToast("已切换账户");
+                  back();
+                }}
+              />
+            )}
+          </Box>
+        )}
+
+        {current === VIEWS.WALLET_ADD_CHOICE && (
+          <Box sx={{ flex: 1, minHeight: 0, display: "flex", flexDirection: "column", overflow: "hidden" }}>
+            <PageHeader title="添加钱包" canBack={canBack} onBack={back} />
+            {!walletStore ? (
+              <Box sx={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <CircularProgress />
+              </Box>
+            ) : (
+              <AddWalletChoiceView
+                onBack={back}
+                onCreate={() => goto(VIEWS.WALLET_CREATE)}
+                onImport={() => goto(VIEWS.WALLET_IMPORT)}
+              />
+            )}
+          </Box>
+        )}
+
+        {current === VIEWS.WALLET_CREATE && (
+          <Box sx={{ flex: 1, minHeight: 0, display: "flex", flexDirection: "column", overflow: "hidden" }}>
+            <PageHeader title="创建钱包" canBack={canBack} onBack={back} />
+            {!walletStore ? (
+              <Box sx={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <CircularProgress />
+              </Box>
+            ) : (
+              <CreateWalletFlowView
+                store={walletStore}
+                onStoreChange={async (next) => {
+                  setWalletStore(next);
+                  await syncHomeFromWalletStore(next);
+                }}
+                onBack={back}
+                onAfterSuccess={() => {
+                  back();
+                  back();
+                }}
+                getVaultPassword={getVaultPassword}
+                setToast={setToast}
+              />
+            )}
+          </Box>
+        )}
+
+        {current === VIEWS.WALLET_IMPORT && (
+          <Box sx={{ flex: 1, minHeight: 0, display: "flex", flexDirection: "column", overflow: "hidden" }}>
+            <PageHeader title="导入钱包" canBack={canBack} onBack={back} />
+            {!walletStore ? (
+              <Box sx={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <CircularProgress />
+              </Box>
+            ) : (
+              <ImportWalletFlowView
+                store={walletStore}
+                onStoreChange={async (next) => {
+                  setWalletStore(next);
+                  await syncHomeFromWalletStore(next);
+                }}
+                onBack={back}
+                onAfterSuccess={() => {
+                  back();
+                  back();
+                }}
+                getVaultPassword={getVaultPassword}
+                setToast={setToast}
+              />
+            )}
+          </Box>
+        )}
+
         {current === VIEWS.SETTINGS && (
           <Box sx={{ flex: 1, minHeight: 0, display: "flex", flexDirection: "column", px: 2, pb: 2, overflow: "auto" }}>
             <PageHeader title="设置" canBack={canBack} onBack={back} />
@@ -1234,6 +1468,41 @@ function App() {
           </>
         )}
       </Box>
+
+      <Dialog open={vaultPwOpen} onClose={closeVaultPasswordDialog} fullWidth maxWidth="xs">
+        <DialogTitle>输入钱包密码</DialogTitle>
+        <DialogContent>
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5 }}>
+            自动恢复会话时未保存密码。请输入钱包密码以继续加密或解密本地数据。
+          </Typography>
+          <TextField
+            autoFocus
+            fullWidth
+            type={vaultPwShow ? "text" : "password"}
+            placeholder="钱包密码"
+            value={vaultPwDraft}
+            onChange={(e) => setVaultPwDraft(e.target.value)}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton edge="end" onClick={() => setVaultPwShow((v) => !v)} size="small" aria-label="显示密码">
+                    {vaultPwShow ? <EyeOff size={20} /> : <Eye size={20} />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") void submitVaultPasswordDialog();
+            }}
+          />
+        </DialogContent>
+        <DialogActions sx={{ px: 3, pb: 2 }}>
+          <Button onClick={closeVaultPasswordDialog}>取消</Button>
+          <Button variant="contained" onClick={() => void submitVaultPasswordDialog()}>
+            确认
+          </Button>
+        </DialogActions>
+      </Dialog>
 
       <Snackbar
         open={Boolean(toast)}
