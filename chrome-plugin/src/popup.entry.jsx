@@ -1109,9 +1109,6 @@ function App() {
                 gap: 1,
                 py: 1,
                 WebkitOverflowScrolling: "touch",
-                scrollbarWidth: "none",
-                msOverflowStyle: "none",
-                "&::-webkit-scrollbar": { display: "none" },
               }}
             >
               {portfolioLoading && portfolioItems.length === 0 ? (

@@ -59703,6 +59703,17 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     overflow: "hidden",
     boxSizing: "border-box"
   };
+  var scrollbarNoneGlobal = {
+    "*": {
+      scrollbarWidth: "none",
+      msOverflowStyle: "none"
+    },
+    "*::-webkit-scrollbar": {
+      display: "none",
+      width: 0,
+      height: 0
+    }
+  };
   var walletThemeDark = createTheme2({
     palette: {
       mode: "dark",
@@ -59732,7 +59743,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           "html, body, #root": {
             ...rootBoxStyles,
             backgroundColor: "#000000"
-          }
+          },
+          ...scrollbarNoneGlobal
         }
       }
     }
@@ -59772,7 +59784,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           "html, body, #root": {
             ...rootBoxStyles,
             backgroundColor: "#eef6f0"
-          }
+          },
+          ...scrollbarNoneGlobal
         }
       },
       MuiButton: {
@@ -81765,7 +81778,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
         onStoreChange(next2);
       }
     }
-    return /* @__PURE__ */ import_react13.default.createElement(Box_default, { sx: { flex: 1, minHeight: 0, display: "flex", flexDirection: "column", overflow: "hidden" } }, /* @__PURE__ */ import_react13.default.createElement(Box_default, { sx: { flex: 1, overflow: "auto", px: 2, pb: 1, scrollbarWidth: "none", "&::-webkit-scrollbar": { display: "none" } } }, /* @__PURE__ */ import_react13.default.createElement(Typography_default, { variant: "subtitle2", color: "text.secondary", sx: { mt: 1, mb: 0.5 } }, "\u94B1\u5305\u5217\u8868"), store.wallets.map((w) => /* @__PURE__ */ import_react13.default.createElement(
+    return /* @__PURE__ */ import_react13.default.createElement(Box_default, { sx: { flex: 1, minHeight: 0, display: "flex", flexDirection: "column", overflow: "hidden" } }, /* @__PURE__ */ import_react13.default.createElement(Box_default, { sx: { flex: 1, overflow: "auto", px: 2, pb: 1 } }, /* @__PURE__ */ import_react13.default.createElement(Typography_default, { variant: "subtitle2", color: "text.secondary", sx: { mt: 1, mb: 0.5 } }, "\u94B1\u5305\u5217\u8868"), store.wallets.map((w) => /* @__PURE__ */ import_react13.default.createElement(
       Card_default,
       {
         key: w.id,
@@ -81943,63 +81956,87 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
         setToast(e?.message || "\u5BFC\u5165\u5931\u8D25");
       }
     }
-    return /* @__PURE__ */ import_react13.default.createElement(Box_default, { sx: { flex: 1, minHeight: 0, display: "flex", flexDirection: "column", px: 2, pt: 2, pb: 2, overflow: "auto" } }, /* @__PURE__ */ import_react13.default.createElement(Typography_default, { variant: "subtitle2", color: "text.secondary", sx: { mb: 0.5 } }, "\u94B1\u5305\u540D\u79F0"), /* @__PURE__ */ import_react13.default.createElement(
-      TextField_default,
-      {
-        fullWidth: true,
-        size: "small",
-        placeholder: "\u4F8B\u5982\uFF1A\u4E3B\u94B1\u5305",
-        value: walletName,
-        onChange: (e) => setWalletName(e.target.value),
-        sx: { mb: 2 },
-        inputProps: { autoComplete: "off" }
-      }
-    ), /* @__PURE__ */ import_react13.default.createElement(Tabs_default, { value: tab, onChange: (_, v) => setTab(v), sx: { mb: 1, minHeight: 40 } }, /* @__PURE__ */ import_react13.default.createElement(Tab_default, { label: "\u52A9\u8BB0\u8BCD" }), /* @__PURE__ */ import_react13.default.createElement(Tab_default, { label: "\u79C1\u94A5" })), tab === 0 ? /* @__PURE__ */ import_react13.default.createElement(import_react13.default.Fragment, null, /* @__PURE__ */ import_react13.default.createElement(
-      FormControlLabel_default,
-      {
-        control: /* @__PURE__ */ import_react13.default.createElement(Switch_default, { checked: use24, onChange: (_, c) => setUse24(c), size: "small" }),
-        label: /* @__PURE__ */ import_react13.default.createElement(Typography_default, { variant: "body2" }, "24 \u8BCD\u52A9\u8BB0\u8BCD"),
-        sx: { mb: 1, ml: 0, alignItems: "center" }
-      }
-    ), /* @__PURE__ */ import_react13.default.createElement(Typography_default, { variant: "caption", color: "text.secondary", sx: { display: "block", mb: 1 } }, "\u6309\u987A\u5E8F\u586B\u5199\u6BCF\u4E2A\u5355\u8BCD\uFF08", use24 ? 24 : 12, " \u4E2A\uFF09"), /* @__PURE__ */ import_react13.default.createElement(
+    return /* @__PURE__ */ import_react13.default.createElement(
       Box_default,
       {
         sx: {
-          display: "grid",
-          gridTemplateColumns: use24 ? "repeat(4, minmax(0, 1fr))" : "repeat(3, minmax(0, 1fr))",
-          gap: 1,
-          mb: 2
+          flex: 1,
+          minHeight: 0,
+          display: "flex",
+          flexDirection: "column",
+          width: "100%",
+          px: 2,
+          pt: 2,
+          pb: 2,
+          overflow: "auto",
+          boxSizing: "border-box"
         }
       },
-      wordInputs.map((w, i) => /* @__PURE__ */ import_react13.default.createElement(
+      /* @__PURE__ */ import_react13.default.createElement(Typography_default, { variant: "subtitle2", color: "text.secondary", sx: { mb: 0.5 } }, "\u94B1\u5305\u540D\u79F0"),
+      /* @__PURE__ */ import_react13.default.createElement(
         TextField_default,
         {
-          key: i,
+          fullWidth: true,
           size: "small",
-          placeholder: `${i + 1}`,
-          value: w,
-          onChange: (e) => {
-            const v = e.target.value;
-            setWordInputs((prev2) => {
-              const next2 = [...prev2];
-              next2[i] = v;
-              return next2;
-            });
-          },
-          inputProps: { autoComplete: "off", spellCheck: false }
+          placeholder: "\u4F8B\u5982\uFF1A\u4E3B\u94B1\u5305",
+          value: walletName,
+          onChange: (e) => setWalletName(e.target.value),
+          sx: { mb: 2 },
+          inputProps: { autoComplete: "off" }
         }
-      ))
-    )) : /* @__PURE__ */ import_react13.default.createElement(
-      TextField_default,
-      {
-        fullWidth: true,
-        type: "password",
-        placeholder: "0x \u5F00\u5934\u7684 64 \u4F4D\u5341\u516D\u8FDB\u5236\u79C1\u94A5",
-        value: privateKey,
-        onChange: (e) => setPrivateKey(e.target.value),
-        sx: { mb: 2 }
-      }
-    ), /* @__PURE__ */ import_react13.default.createElement(Button_default, { variant: "contained", fullWidth: true, sx: { color: "primary.contrastText" }, onClick: submitImport }, "\u5BFC\u5165"), /* @__PURE__ */ import_react13.default.createElement(Button_default, { sx: { mt: 1 }, onClick: onBack }, "\u8FD4\u56DE"));
+      ),
+      /* @__PURE__ */ import_react13.default.createElement(Tabs_default, { value: tab, onChange: (_, v) => setTab(v), variant: "fullWidth", sx: { mb: 1, minHeight: 40, width: "100%" } }, /* @__PURE__ */ import_react13.default.createElement(Tab_default, { label: "\u52A9\u8BB0\u8BCD", sx: { minHeight: 40 } }), /* @__PURE__ */ import_react13.default.createElement(Tab_default, { label: "\u79C1\u94A5", sx: { minHeight: 40 } })),
+      tab === 0 ? /* @__PURE__ */ import_react13.default.createElement(import_react13.default.Fragment, null, /* @__PURE__ */ import_react13.default.createElement(Box_default, { sx: { display: "flex", alignItems: "center", gap: 1, mb: 1, width: "100%" } }, /* @__PURE__ */ import_react13.default.createElement(
+        Switch_default,
+        {
+          checked: use24,
+          onChange: (_, c) => setUse24(c),
+          size: "small",
+          inputProps: { "aria-label": "24 \u8BCD\u52A9\u8BB0\u8BCD" }
+        }
+      ), /* @__PURE__ */ import_react13.default.createElement(Typography_default, { variant: "body2", component: "span", sx: { userSelect: "none" } }, "24 \u8BCD\u52A9\u8BB0\u8BCD")), /* @__PURE__ */ import_react13.default.createElement(Typography_default, { variant: "caption", color: "text.secondary", sx: { display: "block", mb: 1 } }, "\u6309\u987A\u5E8F\u586B\u5199\u6BCF\u4E2A\u5355\u8BCD\uFF08", use24 ? 24 : 12, " \u4E2A\uFF09"), /* @__PURE__ */ import_react13.default.createElement(
+        Box_default,
+        {
+          sx: {
+            width: "100%",
+            display: "grid",
+            gridTemplateColumns: use24 ? "repeat(4, minmax(0, 1fr))" : "repeat(3, minmax(0, 1fr))",
+            gap: 1,
+            mb: 2
+          }
+        },
+        wordInputs.map((w, i) => /* @__PURE__ */ import_react13.default.createElement(
+          TextField_default,
+          {
+            key: i,
+            fullWidth: true,
+            size: "small",
+            placeholder: `${i + 1}`,
+            value: w,
+            onChange: (e) => {
+              const v = e.target.value;
+              setWordInputs((prev2) => {
+                const next2 = [...prev2];
+                next2[i] = v;
+                return next2;
+              });
+            },
+            inputProps: { autoComplete: "off", spellCheck: false }
+          }
+        ))
+      )) : /* @__PURE__ */ import_react13.default.createElement(Box_default, { sx: { width: "100%", mb: 2 } }, /* @__PURE__ */ import_react13.default.createElement(
+        TextField_default,
+        {
+          fullWidth: true,
+          type: "password",
+          placeholder: "0x \u5F00\u5934\u7684 64 \u4F4D\u5341\u516D\u8FDB\u5236\u79C1\u94A5",
+          value: privateKey,
+          onChange: (e) => setPrivateKey(e.target.value)
+        }
+      )),
+      /* @__PURE__ */ import_react13.default.createElement(Button_default, { variant: "contained", fullWidth: true, sx: { color: "primary.contrastText" }, onClick: submitImport }, "\u5BFC\u5165"),
+      /* @__PURE__ */ import_react13.default.createElement(Button_default, { sx: { mt: 1 }, onClick: onBack }, "\u8FD4\u56DE")
+    );
   }
 
   // src/services/themePrefs.js
@@ -92553,10 +92590,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
             flexDirection: "column",
             gap: 1,
             py: 1,
-            WebkitOverflowScrolling: "touch",
-            scrollbarWidth: "none",
-            msOverflowStyle: "none",
-            "&::-webkit-scrollbar": { display: "none" }
+            WebkitOverflowScrolling: "touch"
           }
         },
         portfolioLoading && portfolioItems.length === 0 ? /* @__PURE__ */ import_react14.default.createElement(Box_default, { sx: { py: 2, display: "flex", justifyContent: "center" } }, /* @__PURE__ */ import_react14.default.createElement(CircularProgress_default, { size: 28 })) : portfolioItems.map((asset) => /* @__PURE__ */ import_react14.default.createElement(

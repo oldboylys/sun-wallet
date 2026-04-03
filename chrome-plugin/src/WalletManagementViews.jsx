@@ -89,7 +89,7 @@ export function WalletHubView({
 
   return (
     <Box sx={{ flex: 1, minHeight: 0, display: "flex", flexDirection: "column", overflow: "hidden" }}>
-      <Box sx={{ flex: 1, overflow: "auto", px: 2, pb: 1, scrollbarWidth: "none", "&::-webkit-scrollbar": { display: "none" } }}>
+      <Box sx={{ flex: 1, overflow: "auto", px: 2, pb: 1 }}>
         <Typography variant="subtitle2" color="text.secondary" sx={{ mt: 1, mb: 0.5 }}>
           钱包列表
         </Typography>
@@ -385,7 +385,20 @@ export function ImportWalletFlowView({
   }
 
   return (
-    <Box sx={{ flex: 1, minHeight: 0, display: "flex", flexDirection: "column", px: 2, pt: 2, pb: 2, overflow: "auto" }}>
+    <Box
+      sx={{
+        flex: 1,
+        minHeight: 0,
+        display: "flex",
+        flexDirection: "column",
+        width: "100%",
+        px: 2,
+        pt: 2,
+        pb: 2,
+        overflow: "auto",
+        boxSizing: "border-box",
+      }}
+    >
       <Typography variant="subtitle2" color="text.secondary" sx={{ mb: 0.5 }}>
         钱包名称
       </Typography>
@@ -398,22 +411,29 @@ export function ImportWalletFlowView({
         sx={{ mb: 2 }}
         inputProps={{ autoComplete: "off" }}
       />
-      <Tabs value={tab} onChange={(_, v) => setTab(v)} sx={{ mb: 1, minHeight: 40 }}>
-        <Tab label="助记词" />
-        <Tab label="私钥" />
+      <Tabs value={tab} onChange={(_, v) => setTab(v)} variant="fullWidth" sx={{ mb: 1, minHeight: 40, width: "100%" }}>
+        <Tab label="助记词" sx={{ minHeight: 40 }} />
+        <Tab label="私钥" sx={{ minHeight: 40 }} />
       </Tabs>
       {tab === 0 ? (
         <>
-          <FormControlLabel
-            control={<Switch checked={use24} onChange={(_, c) => setUse24(c)} size="small" />}
-            label={<Typography variant="body2">24 词助记词</Typography>}
-            sx={{ mb: 1, ml: 0, alignItems: "center" }}
-          />
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 1, width: "100%" }}>
+            <Switch
+              checked={use24}
+              onChange={(_, c) => setUse24(c)}
+              size="small"
+              inputProps={{ "aria-label": "24 词助记词" }}
+            />
+            <Typography variant="body2" component="span" sx={{ userSelect: "none" }}>
+              24 词助记词
+            </Typography>
+          </Box>
           <Typography variant="caption" color="text.secondary" sx={{ display: "block", mb: 1 }}>
             按顺序填写每个单词（{use24 ? 24 : 12} 个）
           </Typography>
           <Box
             sx={{
+              width: "100%",
               display: "grid",
               gridTemplateColumns: use24 ? "repeat(4, minmax(0, 1fr))" : "repeat(3, minmax(0, 1fr))",
               gap: 1,
@@ -423,6 +443,7 @@ export function ImportWalletFlowView({
             {wordInputs.map((w, i) => (
               <TextField
                 key={i}
+                fullWidth
                 size="small"
                 placeholder={`${i + 1}`}
                 value={w}
@@ -440,14 +461,15 @@ export function ImportWalletFlowView({
           </Box>
         </>
       ) : (
-        <TextField
-          fullWidth
-          type="password"
-          placeholder="0x 开头的 64 位十六进制私钥"
-          value={privateKey}
-          onChange={(e) => setPrivateKey(e.target.value)}
-          sx={{ mb: 2 }}
-        />
+        <Box sx={{ width: "100%", mb: 2 }}>
+          <TextField
+            fullWidth
+            type="password"
+            placeholder="0x 开头的 64 位十六进制私钥"
+            value={privateKey}
+            onChange={(e) => setPrivateKey(e.target.value)}
+          />
+        </Box>
       )}
       <Button variant="contained" fullWidth sx={{ color: "primary.contrastText" }} onClick={submitImport}>
         导入

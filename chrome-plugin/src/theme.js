@@ -16,6 +16,19 @@ const rootBoxStyles = {
   boxSizing: "border-box",
 };
 
+/** 全页面隐藏滚动条（仍可滚动；Firefox / Chromium / 旧 Edge） */
+const scrollbarNoneGlobal = {
+  "*": {
+    scrollbarWidth: "none",
+    msOverflowStyle: "none",
+  },
+  "*::-webkit-scrollbar": {
+    display: "none",
+    width: 0,
+    height: 0,
+  },
+};
+
 /** 深色（当前默认） */
 export const walletThemeDark = createTheme({
   palette: {
@@ -47,6 +60,7 @@ export const walletThemeDark = createTheme({
           ...rootBoxStyles,
           backgroundColor: "#000000",
         },
+        ...scrollbarNoneGlobal,
       },
     },
   },
@@ -89,6 +103,7 @@ export const walletThemeLight = createTheme({
           ...rootBoxStyles,
           backgroundColor: "#eef6f0",
         },
+        ...scrollbarNoneGlobal,
       },
     },
     MuiButton: {
