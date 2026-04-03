@@ -49486,7 +49486,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   // src/services/walletPrefs.js
   var WALLET_DISPLAY_NAME_KEY = "wallet_display_name";
   var WALLET_PUBLIC_ADDRESS_KEY = "wallet_public_address";
-  var DEFAULT_NAME = "Sun Wallet";
+  var DEFAULT_NAME = "SUN Wallet";
   var DEFAULT_ADDRESS = "0x2fF7D743A1A8Bc13f6C01A3fF8eA7E6Ba6A0f2d5";
   async function getWalletDisplayName() {
     const name = await getStorageValue(WALLET_DISPLAY_NAME_KEY, "");
@@ -63350,11 +63350,11 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
     const [authMode, setAuthMode] = (0, import_react13.useState)(AUTH_MODE.UNLOCK);
     const [loadingAuth, setLoadingAuth] = (0, import_react13.useState)(true);
     const [submittingAuth, setSubmittingAuth] = (0, import_react13.useState)(false);
-    const [walletDisplayName, setWalletDisplayNameState] = (0, import_react13.useState)("Sun Wallet");
+    const [walletDisplayName, setWalletDisplayNameState] = (0, import_react13.useState)("SUN Wallet");
     const [walletAddress, setWalletAddress] = (0, import_react13.useState)(
       "0x2fF7D743A1A8Bc13f6C01A3fF8eA7E6Ba6A0f2d5"
     );
-    const [settingsNameDraft, setSettingsNameDraft] = (0, import_react13.useState)("Sun Wallet");
+    const [settingsNameDraft, setSettingsNameDraft] = (0, import_react13.useState)("SUN Wallet");
     const [settingsMenuAnchor, setSettingsMenuAnchor] = (0, import_react13.useState)(null);
     const settingsMenuCloseTimerRef = (0, import_react13.useRef)(null);
     const [addressCopiedFeedback, setAddressCopiedFeedback] = (0, import_react13.useState)(false);
@@ -63609,7 +63609,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
       setToast("\u94B1\u5305\u5DF2\u9501\u5B9A");
     }
     async function saveSettingsName() {
-      const name = settingsNameDraft.trim() || "Sun Wallet";
+      const name = settingsNameDraft.trim() || "SUN Wallet";
       await setWalletDisplayName(name);
       setWalletDisplayNameState(name);
       setToast("\u94B1\u5305\u540D\u79F0\u5DF2\u4FDD\u5B58");

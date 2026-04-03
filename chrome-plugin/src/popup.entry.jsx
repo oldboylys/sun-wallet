@@ -132,11 +132,11 @@ function App() {
   const [authMode, setAuthMode] = useState(AUTH_MODE.UNLOCK);
   const [loadingAuth, setLoadingAuth] = useState(true);
   const [submittingAuth, setSubmittingAuth] = useState(false);
-  const [walletDisplayName, setWalletDisplayNameState] = useState("Sun Wallet");
+  const [walletDisplayName, setWalletDisplayNameState] = useState("SUN Wallet");
   const [walletAddress, setWalletAddress] = useState(
     "0x2fF7D743A1A8Bc13f6C01A3fF8eA7E6Ba6A0f2d5",
   );
-  const [settingsNameDraft, setSettingsNameDraft] = useState("Sun Wallet");
+  const [settingsNameDraft, setSettingsNameDraft] = useState("SUN Wallet");
   const [settingsMenuAnchor, setSettingsMenuAnchor] = useState(null);
   const settingsMenuCloseTimerRef = useRef(null);
   const [addressCopiedFeedback, setAddressCopiedFeedback] = useState(false);
@@ -430,7 +430,7 @@ function App() {
   }
 
   async function saveSettingsName() {
-    const name = settingsNameDraft.trim() || "Sun Wallet";
+    const name = settingsNameDraft.trim() || "SUN Wallet";
     await setWalletDisplayName(name);
     setWalletDisplayNameState(name);
     setToast("钱包名称已保存");

@@ -1,4 +1,4 @@
-# Sun Wallet UI 风格规范（V2 · Material UI）
+# SUN Wallet UI 风格规范（V2 · Material UI）
 
 后续所有页面统一使用 **Material UI（MUI）** 与 **Emotion**，不再使用 Tailwind CSS 与自建 shadcn 风格组件。
 
