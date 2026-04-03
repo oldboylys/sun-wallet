@@ -10,6 +10,35 @@
       href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
+    <!-- 覆盖 theme 中 html/body/#root 的固定弹窗高度，使侧边栏纵向撑满 -->
+    <style>
+      html {
+        height: 100% !important;
+        max-height: none !important;
+        margin: 0;
+      }
+      body {
+        height: 100% !important;
+        min-height: 100vh !important;
+        min-height: 100dvh !important;
+        max-height: none !important;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+      }
+      #root {
+        flex: 1;
+        min-height: 0;
+        width: 100% !important;
+        max-width: none !important;
+        height: auto !important;
+        min-height: 0 !important;
+        max-height: none !important;
+        display: flex;
+        flex-direction: column;
+        box-sizing: border-box;
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>

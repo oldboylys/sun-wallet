@@ -186,6 +186,8 @@ function App() {
   const [portfolioTotalUsd, setPortfolioTotalUsd] = useState(0);
   const [portfolioChange24h, setPortfolioChange24h] = useState(null);
   const [portfolioRefreshing, setPortfolioRefreshing] = useState(false);
+  /** 点击金额隐藏为 **** */
+  const [hideTotalUsd, setHideTotalUsd] = useState(false);
   /** 首页币种列表：向下滚显、向上滚隐 */
   const [showAddTokenFab, setShowAddTokenFab] = useState(false);
   const lastAssetListScrollTopRef = useRef(0);
@@ -676,18 +678,33 @@ function App() {
     setToast(mode === "light" ? "已切换为阳光明媚主题" : "已切换为深色主题");
   }
 
-  const shellSx = {
-    width: POPUP_WIDTH_PX,
-    maxWidth: POPUP_WIDTH_PX,
-    height: POPUP_HEIGHT_PX,
-    maxHeight: POPUP_HEIGHT_PX,
-    minHeight: POPUP_HEIGHT_PX,
-    boxSizing: "border-box",
-    overflow: "hidden",
-    display: "flex",
-    flexDirection: "column",
-    bgcolor: "background.default",
-  };
+  const shellSx = IS_SIDE_PANEL_SURFACE
+    ? {
+        width: "100%",
+        maxWidth: "100%",
+        minWidth: 0,
+        flex: 1,
+        minHeight: 0,
+        height: "100%",
+        maxHeight: "none",
+        boxSizing: "border-box",
+        overflow: "hidden",
+        display: "flex",
+        flexDirection: "column",
+        bgcolor: "background.default",
+      }
+    : {
+        width: POPUP_WIDTH_PX,
+        maxWidth: POPUP_WIDTH_PX,
+        height: POPUP_HEIGHT_PX,
+        maxHeight: POPUP_HEIGHT_PX,
+        minHeight: POPUP_HEIGHT_PX,
+        boxSizing: "border-box",
+        overflow: "hidden",
+        display: "flex",
+        flexDirection: "column",
+        bgcolor: "background.default",
+      };
 
   return (
     <ThemeProvider theme={muiTheme}>
@@ -1071,60 +1088,69 @@ function App() {
               </Box>
             </Box>
 
-            <Card variant="outlined" sx={{ mb: 1.25, flexShrink: 0, position: "relative", pr: 5 }}>
+            <Card variant="outlined" sx={{ mb: 1.25, flexShrink: 0 }}>
               <CardContent sx={{ py: 1.5, "&:last-child": { pb: 1.5 } }}>
-                <Typography variant="body2" color="text.secondary">
-                  总资产估值
-                </Typography>
-                <Typography variant="caption" color="text.secondary" sx={{ display: "block", mt: 0.25 }}>
-                  以太坊主网 · ETH / USDT / USDC / BTC / SOL
-                </Typography>
-                <Typography variant="h4" sx={{ mt: 0.5, fontWeight: 700, fontSize: "1.85rem" }}>
-                  {portfolioLoading ? "…" : formatTotalUsdLabel(portfolioTotalUsd)}
-                </Typography>
-                {portfolioError ? (
-                  <Typography variant="caption" color="error" sx={{ mt: 0.75, display: "block" }}>
-                    {portfolioError}
-                  </Typography>
-                ) : null}
-                {!portfolioError && portfolioLoading ? (
-                  <Typography variant="body2" color="text.secondary" sx={{ mt: 0.75 }}>
-                    加载中…
-                  </Typography>
-                ) : null}
-                {!portfolioError && !portfolioLoading && portfolioChange24h != null ? (
-                  <Typography
-                    variant="body2"
+                <Box sx={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: 1 }}>
+                  <Box sx={{ flex: 1, minWidth: 0 }}>
+                    <Typography
+                      variant="h4"
+                      onClick={() => setHideTotalUsd((v) => !v)}
+                      sx={{
+                        fontWeight: 700,
+                        fontSize: "1.85rem",
+                        cursor: "pointer",
+                        userSelect: "none",
+                        letterSpacing: hideTotalUsd ? 4 : undefined,
+                      }}
+                      title={hideTotalUsd ? "点击显示金额" : "点击隐藏金额"}
+                    >
+                      {portfolioLoading ? "…" : hideTotalUsd ? "****" : formatTotalUsdLabel(portfolioTotalUsd)}
+                    </Typography>
+                    {portfolioError ? (
+                      <Typography variant="caption" color="error" sx={{ mt: 0.75, display: "block" }}>
+                        {portfolioError}
+                      </Typography>
+                    ) : null}
+                    {!portfolioError && portfolioLoading ? (
+                      <Typography variant="body2" color="text.secondary" sx={{ mt: 0.75 }}>
+                        加载中…
+                      </Typography>
+                    ) : null}
+                    {!portfolioError && !portfolioLoading && portfolioChange24h != null ? (
+                      <Typography
+                        variant="body2"
+                        sx={{
+                          mt: 0.75,
+                          color: portfolioChange24h >= 0 ? "success.main" : "error.main",
+                        }}
+                      >
+                        {formatWeightedChangeLabel(portfolioChange24h).text}
+                      </Typography>
+                    ) : null}
+                  </Box>
+                  <IconButton
+                    size="small"
+                    onClick={() => void loadPortfolio(false)}
+                    disabled={portfolioLoading || portfolioRefreshing}
+                    title="刷新资产"
                     sx={{
-                      mt: 0.75,
-                      color: portfolioChange24h >= 0 ? "success.main" : "error.main",
+                      flexShrink: 0,
+                      alignSelf: "flex-end",
+                      mb: 0.25,
+                      color: "text.secondary",
+                      "& svg": {
+                        animation: portfolioRefreshing ? "wallet-refresh-spin 0.7s linear infinite" : "none",
+                      },
+                      "@keyframes wallet-refresh-spin": {
+                        from: { transform: "rotate(0deg)" },
+                        to: { transform: "rotate(360deg)" },
+                      },
                     }}
                   >
-                    {formatWeightedChangeLabel(portfolioChange24h).text}
-                  </Typography>
-                ) : null}
+                    <RefreshCw size={18} />
+                  </IconButton>
+                </Box>
               </CardContent>
-              <IconButton
-                size="small"
-                onClick={() => void loadPortfolio(false)}
-                disabled={portfolioLoading || portfolioRefreshing}
-                title="刷新资产"
-                sx={{
-                  position: "absolute",
-                  bottom: 10,
-                  right: 6,
-                  color: "text.secondary",
-                  "& svg": {
-                    animation: portfolioRefreshing ? "wallet-refresh-spin 0.7s linear infinite" : "none",
-                  },
-                  "@keyframes wallet-refresh-spin": {
-                    from: { transform: "rotate(0deg)" },
-                    to: { transform: "rotate(360deg)" },
-                  },
-                }}
-              >
-                <RefreshCw size={18} />
-              </IconButton>
             </Card>
 
             <Box sx={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 1, mb: 1.25, flexShrink: 0 }}>
@@ -1164,18 +1190,27 @@ function App() {
             <Tabs
               value={activeTab}
               onChange={(_, v) => setActiveTab(v)}
-              variant="scrollable"
-              scrollButtons="auto"
+              variant="fullWidth"
               sx={{
-                minHeight: 36,
+                width: "100%",
+                minHeight: 40,
                 flexShrink: 0,
                 mb: 0,
                 borderBottom: 1,
                 borderColor: "divider",
+                "& .MuiTab-root": {
+                  minHeight: 40,
+                  minWidth: 0,
+                  flex: 1,
+                  maxWidth: "none",
+                  fontSize: 12,
+                  px: 0.5,
+                  py: 0.75,
+                },
               }}
             >
               {HOME_TABS.map((t) => (
-                <Tab key={t} label={t} value={t} sx={{ minHeight: 36, fontSize: 13 }} />
+                <Tab key={t} label={t} value={t} />
               ))}
             </Tabs>
 
@@ -1329,31 +1364,6 @@ function App() {
                   </Box>
                 </Fade>
               ) : null}
-            </Box>
-
-            <Box
-              sx={{
-                display: "grid",
-                gridTemplateColumns: "repeat(4, 1fr)",
-                gap: 0.5,
-                flexShrink: 0,
-                borderTop: 1,
-                borderColor: "divider",
-                pt: 1,
-                pb: 1,
-              }}
-            >
-              {["首页", "市场", "DApp", "我的"].map((item, idx) => (
-                <Button
-                  key={item}
-                  variant="text"
-                  size="small"
-                  onClick={() => setToast(`${item} 导航占位`)}
-                  sx={{ fontSize: 11, color: idx === 0 ? "primary.main" : "text.secondary", py: 0.5 }}
-                >
-                  {item}
-                </Button>
-              ))}
             </Box>
           </Box>
         )}

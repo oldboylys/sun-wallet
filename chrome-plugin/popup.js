@@ -105102,6 +105102,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
     const [portfolioTotalUsd, setPortfolioTotalUsd] = (0, import_react15.useState)(0);
     const [portfolioChange24h, setPortfolioChange24h] = (0, import_react15.useState)(null);
     const [portfolioRefreshing, setPortfolioRefreshing] = (0, import_react15.useState)(false);
+    const [hideTotalUsd, setHideTotalUsd] = (0, import_react15.useState)(false);
     const [showAddTokenFab, setShowAddTokenFab] = (0, import_react15.useState)(false);
     const lastAssetListScrollTopRef = (0, import_react15.useRef)(0);
     const [customTokens, setCustomTokens] = (0, import_react15.useState)([]);
@@ -105530,7 +105531,20 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
       await setThemeMode(mode);
       setToast(mode === "light" ? "\u5DF2\u5207\u6362\u4E3A\u9633\u5149\u660E\u5A9A\u4E3B\u9898" : "\u5DF2\u5207\u6362\u4E3A\u6DF1\u8272\u4E3B\u9898");
     }
-    const shellSx = {
+    const shellSx = IS_SIDE_PANEL_SURFACE ? {
+      width: "100%",
+      maxWidth: "100%",
+      minWidth: 0,
+      flex: 1,
+      minHeight: 0,
+      height: "100%",
+      maxHeight: "none",
+      boxSizing: "border-box",
+      overflow: "hidden",
+      display: "flex",
+      flexDirection: "column",
+      bgcolor: "background.default"
+    } : {
       width: POPUP_WIDTH_PX,
       maxWidth: POPUP_WIDTH_PX,
       height: POPUP_HEIGHT_PX,
@@ -105889,7 +105903,22 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
         },
         /* @__PURE__ */ import_react15.default.createElement(Globe, { size: 18 })
       ))),
-      /* @__PURE__ */ import_react15.default.createElement(Card_default, { variant: "outlined", sx: { mb: 1.25, flexShrink: 0, position: "relative", pr: 5 } }, /* @__PURE__ */ import_react15.default.createElement(CardContent_default, { sx: { py: 1.5, "&:last-child": { pb: 1.5 } } }, /* @__PURE__ */ import_react15.default.createElement(Typography_default, { variant: "body2", color: "text.secondary" }, "\u603B\u8D44\u4EA7\u4F30\u503C"), /* @__PURE__ */ import_react15.default.createElement(Typography_default, { variant: "caption", color: "text.secondary", sx: { display: "block", mt: 0.25 } }, "\u4EE5\u592A\u574A\u4E3B\u7F51 \xB7 ETH / USDT / USDC / BTC / SOL"), /* @__PURE__ */ import_react15.default.createElement(Typography_default, { variant: "h4", sx: { mt: 0.5, fontWeight: 700, fontSize: "1.85rem" } }, portfolioLoading ? "\u2026" : formatTotalUsdLabel(portfolioTotalUsd)), portfolioError ? /* @__PURE__ */ import_react15.default.createElement(Typography_default, { variant: "caption", color: "error", sx: { mt: 0.75, display: "block" } }, portfolioError) : null, !portfolioError && portfolioLoading ? /* @__PURE__ */ import_react15.default.createElement(Typography_default, { variant: "body2", color: "text.secondary", sx: { mt: 0.75 } }, "\u52A0\u8F7D\u4E2D\u2026") : null, !portfolioError && !portfolioLoading && portfolioChange24h != null ? /* @__PURE__ */ import_react15.default.createElement(
+      /* @__PURE__ */ import_react15.default.createElement(Card_default, { variant: "outlined", sx: { mb: 1.25, flexShrink: 0 } }, /* @__PURE__ */ import_react15.default.createElement(CardContent_default, { sx: { py: 1.5, "&:last-child": { pb: 1.5 } } }, /* @__PURE__ */ import_react15.default.createElement(Box_default, { sx: { display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: 1 } }, /* @__PURE__ */ import_react15.default.createElement(Box_default, { sx: { flex: 1, minWidth: 0 } }, /* @__PURE__ */ import_react15.default.createElement(
+        Typography_default,
+        {
+          variant: "h4",
+          onClick: () => setHideTotalUsd((v) => !v),
+          sx: {
+            fontWeight: 700,
+            fontSize: "1.85rem",
+            cursor: "pointer",
+            userSelect: "none",
+            letterSpacing: hideTotalUsd ? 4 : void 0
+          },
+          title: hideTotalUsd ? "\u70B9\u51FB\u663E\u793A\u91D1\u989D" : "\u70B9\u51FB\u9690\u85CF\u91D1\u989D"
+        },
+        portfolioLoading ? "\u2026" : hideTotalUsd ? "****" : formatTotalUsdLabel(portfolioTotalUsd)
+      ), portfolioError ? /* @__PURE__ */ import_react15.default.createElement(Typography_default, { variant: "caption", color: "error", sx: { mt: 0.75, display: "block" } }, portfolioError) : null, !portfolioError && portfolioLoading ? /* @__PURE__ */ import_react15.default.createElement(Typography_default, { variant: "body2", color: "text.secondary", sx: { mt: 0.75 } }, "\u52A0\u8F7D\u4E2D\u2026") : null, !portfolioError && !portfolioLoading && portfolioChange24h != null ? /* @__PURE__ */ import_react15.default.createElement(
         Typography_default,
         {
           variant: "body2",
@@ -105907,9 +105936,9 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
           disabled: portfolioLoading || portfolioRefreshing,
           title: "\u5237\u65B0\u8D44\u4EA7",
           sx: {
-            position: "absolute",
-            bottom: 10,
-            right: 6,
+            flexShrink: 0,
+            alignSelf: "flex-end",
+            mb: 0.25,
             color: "text.secondary",
             "& svg": {
               animation: portfolioRefreshing ? "wallet-refresh-spin 0.7s linear infinite" : "none"
@@ -105921,7 +105950,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
           }
         },
         /* @__PURE__ */ import_react15.default.createElement(RefreshCw, { size: 18 })
-      )),
+      )))),
       /* @__PURE__ */ import_react15.default.createElement(Box_default, { sx: { display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 1, mb: 1.25, flexShrink: 0 } }, HOME_ACTIONS.map((item) => {
         const Icon2 = item.icon;
         return /* @__PURE__ */ import_react15.default.createElement(
@@ -105960,17 +105989,26 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
         {
           value: activeTab,
           onChange: (_, v) => setActiveTab(v),
-          variant: "scrollable",
-          scrollButtons: "auto",
+          variant: "fullWidth",
           sx: {
-            minHeight: 36,
+            width: "100%",
+            minHeight: 40,
             flexShrink: 0,
             mb: 0,
             borderBottom: 1,
-            borderColor: "divider"
+            borderColor: "divider",
+            "& .MuiTab-root": {
+              minHeight: 40,
+              minWidth: 0,
+              flex: 1,
+              maxWidth: "none",
+              fontSize: 12,
+              px: 0.5,
+              py: 0.75
+            }
           }
         },
-        HOME_TABS.map((t) => /* @__PURE__ */ import_react15.default.createElement(Tab_default, { key: t, label: t, value: t, sx: { minHeight: 36, fontSize: 13 } }))
+        HOME_TABS.map((t) => /* @__PURE__ */ import_react15.default.createElement(Tab_default, { key: t, label: t, value: t }))
       ),
       /* @__PURE__ */ import_react15.default.createElement(
         Box_default,
@@ -106090,32 +106128,6 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
             "\u5E01\u79CD\u7BA1\u7406"
           )
         )) : null
-      ),
-      /* @__PURE__ */ import_react15.default.createElement(
-        Box_default,
-        {
-          sx: {
-            display: "grid",
-            gridTemplateColumns: "repeat(4, 1fr)",
-            gap: 0.5,
-            flexShrink: 0,
-            borderTop: 1,
-            borderColor: "divider",
-            pt: 1,
-            pb: 1
-          }
-        },
-        ["\u9996\u9875", "\u5E02\u573A", "DApp", "\u6211\u7684"].map((item, idx) => /* @__PURE__ */ import_react15.default.createElement(
-          Button_default,
-          {
-            key: item,
-            variant: "text",
-            size: "small",
-            onClick: () => setToast(`${item} \u5BFC\u822A\u5360\u4F4D`),
-            sx: { fontSize: 11, color: idx === 0 ? "primary.main" : "text.secondary", py: 0.5 }
-          },
-          item
-        ))
       )
     ), current === VIEWS.SEND && /* @__PURE__ */ import_react15.default.createElement(Box_default, { sx: { flex: 1, minHeight: 0, display: "flex", flexDirection: "column", px: 2, pb: 2, overflow: "auto" } }, /* @__PURE__ */ import_react15.default.createElement(PageHeader, { title: "\u53D1\u9001", canBack, onBack: back }), /* @__PURE__ */ import_react15.default.createElement(Card_default, { variant: "outlined", sx: { mt: 2 } }, /* @__PURE__ */ import_react15.default.createElement(CardContent_default, null, /* @__PURE__ */ import_react15.default.createElement(Typography_default, { variant: "body2", color: "text.secondary", gutterBottom: true }, "\u6536\u6B3E\u5730\u5740"), /* @__PURE__ */ import_react15.default.createElement(
       TextField_default,
