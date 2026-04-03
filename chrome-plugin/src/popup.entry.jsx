@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
 import {
   ArrowDownToLine,
@@ -7,9 +7,11 @@ import {
   Eye,
   EyeOff,
   History,
+  Lock,
+  Globe,
   Repeat2,
   Settings,
-  Wallet,
+  ArrowLeftRight,
 } from "lucide-react";
 import QRCode from "qrcode";
 import { ThemeProvider, CssBaseline } from "@mui/material";
@@ -28,7 +30,11 @@ import Alert from "@mui/material/Alert";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import CircularProgress from "@mui/material/CircularProgress";
-import { walletTheme, POPUP_HEIGHT_PX } from "./theme";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import { walletTheme, POPUP_HEIGHT_PX, POPUP_WIDTH_PX } from "./theme";
 import { getStorageValue, removeStorageValue, setStorageValue } from "./services/storage";
 import {
   clearUnlockSession,
@@ -123,6 +129,8 @@ function App() {
     "0x2fF7D743A1A8Bc13f6C01A3fF8eA7E6Ba6A0f2d5",
   );
   const [settingsNameDraft, setSettingsNameDraft] = useState("Sun Wallet");
+  const [settingsMenuAnchor, setSettingsMenuAnchor] = useState(null);
+  const settingsMenuCloseTimerRef = useRef(null);
 
   const current = stack[stack.length - 1];
   const canBack = stack.length > 1;
@@ -291,9 +299,60 @@ function App() {
     }
   }
 
-  function openSettings() {
+  function clearSettingsMenuCloseTimer() {
+    if (settingsMenuCloseTimerRef.current) {
+      clearTimeout(settingsMenuCloseTimerRef.current);
+      settingsMenuCloseTimerRef.current = null;
+    }
+  }
+
+  function scheduleCloseSettingsMenu() {
+    clearSettingsMenuCloseTimer();
+    settingsMenuCloseTimerRef.current = setTimeout(() => {
+      setSettingsMenuAnchor(null);
+    }, 220);
+  }
+
+  function openSettingsMenuFromHover(event) {
+    clearSettingsMenuCloseTimer();
+    setSettingsMenuAnchor(event.currentTarget);
+  }
+
+  function goToSettingsPage() {
+    clearSettingsMenuCloseTimer();
+    setSettingsMenuAnchor(null);
     setSettingsNameDraft(walletDisplayName);
     goto(VIEWS.SETTINGS);
+  }
+
+  function onDappConnectionsPlaceholder() {
+    clearSettingsMenuCloseTimer();
+    setSettingsMenuAnchor(null);
+    setToast("DApp 连接管理（占位）");
+  }
+
+  async function openSidePanelMode() {
+    clearSettingsMenuCloseTimer();
+    setSettingsMenuAnchor(null);
+    try {
+      if (typeof chrome !== "undefined" && chrome.sidePanel?.open && chrome.windows?.getCurrent) {
+        const w = await chrome.windows.getCurrent();
+        await chrome.sidePanel.open({ windowId: w.id });
+        window.close();
+        return;
+      }
+      setToast("当前环境不支持侧边栏");
+    } catch {
+      setToast("无法打开侧边栏（需 Chrome 114+ 并已授予 sidePanel）");
+    }
+  }
+
+  async function lockWallet() {
+    clearSettingsMenuCloseTimer();
+    setSettingsMenuAnchor(null);
+    await clearUnlockSession();
+    setStack([VIEWS.LOGIN]);
+    setToast("钱包已锁定");
   }
 
   async function saveSettingsName() {
@@ -305,7 +364,8 @@ function App() {
   }
 
   const shellSx = {
-    width: 380,
+    width: POPUP_WIDTH_PX,
+    maxWidth: POPUP_WIDTH_PX,
     height: POPUP_HEIGHT_PX,
     maxHeight: POPUP_HEIGHT_PX,
     minHeight: POPUP_HEIGHT_PX,
@@ -545,15 +605,97 @@ function App() {
                   </Typography>
                 </Box>
               </Box>
-              <Box sx={{ display: "flex", gap: 0.5 }}>
+              <Box sx={{ display: "flex", gap: 0.5, alignItems: "center" }}>
                 <IconButton size="small" color="default" onClick={copyWalletAddress} title="复制地址">
                   <Copy size={18} />
                 </IconButton>
-                <IconButton size="small" color="default" onClick={openSettings} title="设置">
-                  <Settings size={18} />
-                </IconButton>
-                <IconButton size="small" color="default" title="钱包">
-                  <Wallet size={18} />
+                <Box sx={{ position: "relative", display: "inline-flex" }}>
+                  <IconButton
+                    size="small"
+                    color="default"
+                    title="设置"
+                    onMouseEnter={openSettingsMenuFromHover}
+                    onMouseLeave={scheduleCloseSettingsMenu}
+                    sx={{ color: "text.primary" }}
+                  >
+                    <Settings size={18} />
+                  </IconButton>
+                  <Menu
+                    anchorEl={settingsMenuAnchor}
+                    open={Boolean(settingsMenuAnchor)}
+                    onClose={() => setSettingsMenuAnchor(null)}
+                    disableAutoFocus
+                    disableScrollLock
+                    anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+                    transformOrigin={{ vertical: "top", horizontal: "right" }}
+                    slotProps={{
+                      paper: {
+                        sx: {
+                          mt: 0.75,
+                          minWidth: 196,
+                          maxWidth: 220,
+                          bgcolor: "#1e2026",
+                          border: "1px solid",
+                          borderColor: "divider",
+                          borderRadius: 2,
+                          boxShadow: "0 8px 24px rgba(0,0,0,0.45)",
+                          py: 0.5,
+                        },
+                        onMouseEnter: clearSettingsMenuCloseTimer,
+                        onMouseLeave: () => setSettingsMenuAnchor(null),
+                      },
+                    }}
+                  >
+                    <MenuItem
+                      dense
+                      onClick={goToSettingsPage}
+                      sx={{ py: 1.1, gap: 1, fontSize: 14, color: "text.primary" }}
+                    >
+                      <ListItemIcon sx={{ minWidth: 32, color: "text.primary" }}>
+                        <Settings size={18} />
+                      </ListItemIcon>
+                      <ListItemText primary="设置" />
+                    </MenuItem>
+                    <MenuItem
+                      dense
+                      onClick={onDappConnectionsPlaceholder}
+                      sx={{ py: 1.1, gap: 1, fontSize: 14, color: "text.primary" }}
+                    >
+                      <ListItemIcon sx={{ minWidth: 32, color: "text.primary" }}>
+                        <Globe size={18} />
+                      </ListItemIcon>
+                      <ListItemText primary="DApp 连接管理" />
+                    </MenuItem>
+                    <MenuItem
+                      dense
+                      onClick={openSidePanelMode}
+                      sx={{ py: 1.1, gap: 1, fontSize: 14, color: "text.primary" }}
+                    >
+                      <ListItemIcon sx={{ minWidth: 32, color: "text.primary" }}>
+                        <ArrowLeftRight size={18} />
+                      </ListItemIcon>
+                      <ListItemText primary="侧边栏模式" />
+                    </MenuItem>
+                    <MenuItem
+                      dense
+                      onClick={lockWallet}
+                      sx={{ py: 1.1, gap: 1, fontSize: 14, color: "text.primary" }}
+                    >
+                      <ListItemIcon sx={{ minWidth: 32, color: "text.primary" }}>
+                        <Lock size={18} />
+                      </ListItemIcon>
+                      <ListItemText primary="锁定钱包" />
+                    </MenuItem>
+                  </Menu>
+                </Box>
+                <IconButton
+                  size="small"
+                  color="default"
+                  title="网络"
+                  onClick={() => setToast("网络切换（占位）")}
+                  sx={{ color: "text.primary" }}
+                >
+                  <Globe size={18} />
                 </IconButton>
               </Box>
             </Box>
