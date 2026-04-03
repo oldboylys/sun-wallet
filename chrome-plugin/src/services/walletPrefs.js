@@ -4,7 +4,8 @@ export const WALLET_DISPLAY_NAME_KEY = "wallet_display_name";
 export const WALLET_PUBLIC_ADDRESS_KEY = "wallet_public_address";
 
 const DEFAULT_NAME = "SUN Wallet";
-const DEFAULT_ADDRESS = "0x2fF7D743A1A8Bc13f6C01A3fF8eA7E6Ba6A0f2d5";
+/** EIP-55 正确校验和（与 viem getAddress 一致） */
+const DEFAULT_ADDRESS = "0x2fF7D743A1A8Bc13f6C01A3fF8EA7e6Ba6a0F2D5";
 
 export async function getWalletDisplayName() {
   const name = await getStorageValue(WALLET_DISPLAY_NAME_KEY, "");

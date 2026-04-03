@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
 import {
   ArrowDownToLine,
@@ -14,6 +14,7 @@ import {
   Settings,
   ArrowLeftRight,
   AppWindow,
+  RefreshCw,
 } from "lucide-react";
 import QRCode from "qrcode";
 import { ThemeProvider, CssBaseline } from "@mui/material";
@@ -47,6 +48,11 @@ import {
 } from "./services/session";
 import { getWalletDisplayName, getWalletPublicAddress, setWalletDisplayName } from "./services/walletPrefs";
 import { getThemeMode, setThemeMode } from "./services/themePrefs";
+import {
+  fetchEthereumMainnetPortfolio,
+  formatTotalUsdLabel,
+  formatWeightedChangeLabel,
+} from "./services/ethPortfolio";
 import { passwordSchema } from "./lib/validators";
 
 const VIEWS = {
@@ -72,12 +78,6 @@ const HOME_ACTIONS = [
 ];
 
 const HOME_TABS = ["币种", "DeFi", "NFT", "授权"];
-
-const HOME_ASSETS = [
-  { symbol: "ETH", amount: "0.0235", value: "$48.02", change: "-4.12%" },
-  { symbol: "USDT", amount: "12.40", value: "$12.40", change: "+0.03%" },
-  { symbol: "SOL", amount: "0.8900", value: "$79.16", change: "-5.07%" },
-];
 
 const PASSWORD_HASH_KEY = "wallet_password_hash_v1";
 const AUTH_MODE = {
@@ -134,7 +134,7 @@ function App() {
   const [submittingAuth, setSubmittingAuth] = useState(false);
   const [walletDisplayName, setWalletDisplayNameState] = useState("SUN Wallet");
   const [walletAddress, setWalletAddress] = useState(
-    "0x2fF7D743A1A8Bc13f6C01A3fF8eA7E6Ba6A0f2d5",
+    "0x2fF7D743A1A8Bc13f6C01A3fF8EA7e6Ba6a0F2D5",
   );
   const [settingsNameDraft, setSettingsNameDraft] = useState("SUN Wallet");
   const [settingsMenuAnchor, setSettingsMenuAnchor] = useState(null);
@@ -142,6 +142,12 @@ function App() {
   const [addressCopiedFeedback, setAddressCopiedFeedback] = useState(false);
   const addressCopyFeedbackTimerRef = useRef(null);
   const [themeMode, setThemeModeState] = useState("dark");
+  const [portfolioLoading, setPortfolioLoading] = useState(false);
+  const [portfolioError, setPortfolioError] = useState("");
+  const [portfolioItems, setPortfolioItems] = useState([]);
+  const [portfolioTotalUsd, setPortfolioTotalUsd] = useState(0);
+  const [portfolioChange24h, setPortfolioChange24h] = useState(null);
+  const [portfolioRefreshing, setPortfolioRefreshing] = useState(false);
 
   const current = stack[stack.length - 1];
   const muiTheme = themeMode === "light" ? walletThemeLight : walletThemeDark;
@@ -220,6 +226,44 @@ function App() {
   useEffect(() => {
     getThemeMode().then(setThemeModeState);
   }, []);
+
+  const loadPortfolio = useCallback(
+    async (silent = false) => {
+      if (silent) setPortfolioRefreshing(true);
+      else setPortfolioLoading(true);
+      setPortfolioError("");
+      try {
+        const res = await fetchEthereumMainnetPortfolio(walletAddress);
+        if (!res.ok) {
+          setPortfolioError(res.error || "加载失败");
+          setPortfolioItems([]);
+          setPortfolioTotalUsd(0);
+          setPortfolioChange24h(null);
+          return;
+        }
+        setPortfolioItems(res.items);
+        setPortfolioTotalUsd(res.totalUsd);
+        setPortfolioChange24h(res.change24hWeighted);
+      } finally {
+        if (silent) setPortfolioRefreshing(false);
+        else setPortfolioLoading(false);
+      }
+    },
+    [walletAddress],
+  );
+
+  useEffect(() => {
+    if (current !== VIEWS.HOME) return undefined;
+    let cancelled = false;
+    void loadPortfolio(false);
+    const timer = setInterval(() => {
+      if (!cancelled) void loadPortfolio(true);
+    }, 10_000);
+    return () => {
+      cancelled = true;
+      clearInterval(timer);
+    };
+  }, [current, walletAddress, loadPortfolio]);
 
   async function hashPassword(raw) {
     const data = new TextEncoder().encode(raw);
@@ -810,18 +854,60 @@ function App() {
               </Box>
             </Box>
 
-            <Card variant="outlined" sx={{ mb: 1.25, flexShrink: 0 }}>
+            <Card variant="outlined" sx={{ mb: 1.25, flexShrink: 0, position: "relative", pr: 5 }}>
               <CardContent sx={{ py: 1.5, "&:last-child": { pb: 1.5 } }}>
                 <Typography variant="body2" color="text.secondary">
                   总资产估值
                 </Typography>
-                <Typography variant="h4" sx={{ mt: 0.25, fontWeight: 700, fontSize: "1.85rem" }}>
-                  $89.49
+                <Typography variant="caption" color="text.secondary" sx={{ display: "block", mt: 0.25 }}>
+                  以太坊主网 · ETH / USDT / USDC / BTC / SOL
                 </Typography>
-                <Typography variant="body2" color="success.main" sx={{ mt: 0.75 }}>
-                  +$10.67 (+13.54%) 1日
+                <Typography variant="h4" sx={{ mt: 0.5, fontWeight: 700, fontSize: "1.85rem" }}>
+                  {portfolioLoading ? "…" : formatTotalUsdLabel(portfolioTotalUsd)}
                 </Typography>
+                {portfolioError ? (
+                  <Typography variant="caption" color="error" sx={{ mt: 0.75, display: "block" }}>
+                    {portfolioError}
+                  </Typography>
+                ) : null}
+                {!portfolioError && portfolioLoading ? (
+                  <Typography variant="body2" color="text.secondary" sx={{ mt: 0.75 }}>
+                    加载中…
+                  </Typography>
+                ) : null}
+                {!portfolioError && !portfolioLoading && portfolioChange24h != null ? (
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      mt: 0.75,
+                      color: portfolioChange24h >= 0 ? "success.main" : "error.main",
+                    }}
+                  >
+                    {formatWeightedChangeLabel(portfolioChange24h).text}
+                  </Typography>
+                ) : null}
               </CardContent>
+              <IconButton
+                size="small"
+                onClick={() => void loadPortfolio(false)}
+                disabled={portfolioLoading || portfolioRefreshing}
+                title="刷新资产"
+                sx={{
+                  position: "absolute",
+                  bottom: 10,
+                  right: 6,
+                  color: "text.secondary",
+                  "& svg": {
+                    animation: portfolioRefreshing ? "wallet-refresh-spin 0.7s linear infinite" : "none",
+                  },
+                  "@keyframes wallet-refresh-spin": {
+                    from: { transform: "rotate(0deg)" },
+                    to: { transform: "rotate(360deg)" },
+                  },
+                }}
+              >
+                <RefreshCw size={18} />
+              </IconButton>
             </Card>
 
             <Box sx={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 1, mb: 1.25, flexShrink: 0 }}>
@@ -887,62 +973,97 @@ function App() {
                 gap: 1,
                 py: 1,
                 WebkitOverflowScrolling: "touch",
+                scrollbarWidth: "none",
+                msOverflowStyle: "none",
+                "&::-webkit-scrollbar": { display: "none" },
               }}
             >
-              {HOME_ASSETS.map((asset) => (
-                <Card
-                  key={asset.symbol}
-                  variant="outlined"
-                  component="button"
-                  onClick={() => setToast(`${asset.symbol} 详情页占位`)}
-                  sx={{
-                    textAlign: "left",
-                    cursor: "pointer",
-                    flexShrink: 0,
-                    "&:hover": { bgcolor: "action.hover" },
-                  }}
-                >
-                  <CardContent sx={{ py: 1.35, "&:last-child": { pb: 1.35 } }}>
-                    <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                      <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                        <Box
-                          sx={{
-                            width: 32,
-                            height: 32,
-                            borderRadius: "50%",
-                            bgcolor: "action.selected",
-                            display: "grid",
-                            placeItems: "center",
-                            fontSize: 12,
-                            fontWeight: 700,
-                          }}
-                        >
-                          {asset.symbol[0]}
+              {portfolioLoading && portfolioItems.length === 0 ? (
+                <Box sx={{ py: 2, display: "flex", justifyContent: "center" }}>
+                  <CircularProgress size={28} />
+                </Box>
+              ) : (
+                portfolioItems.map((asset) => (
+                  <Card
+                    key={asset.symbol}
+                    variant="outlined"
+                    component="button"
+                    onClick={() => setToast(`${asset.symbol} 详情页占位`)}
+                    sx={{
+                      textAlign: "left",
+                      cursor: "pointer",
+                      flexShrink: 0,
+                      "&:hover": { bgcolor: "action.hover" },
+                    }}
+                  >
+                    <CardContent sx={{ py: 1.35, "&:last-child": { pb: 1.35 } }}>
+                      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                        <Box sx={{ display: "flex", alignItems: "center", gap: 1, minWidth: 0 }}>
+                          {asset.iconUrl ? (
+                            <Box
+                              component="img"
+                              src={asset.iconUrl}
+                              alt=""
+                              sx={{
+                                width: 32,
+                                height: 32,
+                                borderRadius: "50%",
+                                objectFit: "cover",
+                                flexShrink: 0,
+                                bgcolor: "action.hover",
+                              }}
+                            />
+                          ) : (
+                            <Box
+                              sx={{
+                                width: 32,
+                                height: 32,
+                                borderRadius: "50%",
+                                bgcolor: "action.selected",
+                                display: "grid",
+                                placeItems: "center",
+                                fontSize: 12,
+                                fontWeight: 700,
+                                flexShrink: 0,
+                              }}
+                            >
+                              {asset.symbol[0]}
+                            </Box>
+                          )}
+                          <Box sx={{ minWidth: 0 }}>
+                            <Typography variant="body2" fontWeight={600}>
+                              {asset.symbol}
+                            </Typography>
+                            <Typography variant="caption" color="text.secondary" component="div">
+                              {asset.amount}
+                            </Typography>
+                            <Typography variant="caption" color="text.secondary" sx={{ fontSize: 11, opacity: 0.9 }}>
+                              单价 {asset.priceLabel ?? "—"}
+                            </Typography>
+                          </Box>
                         </Box>
-                        <Box>
+                        <Box sx={{ textAlign: "right" }}>
                           <Typography variant="body2" fontWeight={600}>
-                            {asset.symbol}
+                            {asset.value}
                           </Typography>
-                          <Typography variant="caption" color="text.secondary">
-                            {asset.amount}
+                          <Typography
+                            variant="caption"
+                            color={
+                              asset.change === "—"
+                                ? "text.secondary"
+                                : asset.change.startsWith("-")
+                                  ? "error.main"
+                                  : "success.main"
+                            }
+                          >
+                            {asset.change}
                           </Typography>
                         </Box>
                       </Box>
-                      <Box sx={{ textAlign: "right" }}>
-                        <Typography variant="body2" fontWeight={600}>
-                          {asset.value}
-                        </Typography>
-                        <Typography
-                          variant="caption"
-                          color={asset.change.startsWith("-") ? "error.main" : "success.main"}
-                        >
-                          {asset.change}
-                        </Typography>
-                      </Box>
-                    </Box>
-                  </CardContent>
-                </Card>
-              ))}
+                    </CardContent>
+                  </Card>
+                ))
+              )}
             </Box>
 
             <Box
