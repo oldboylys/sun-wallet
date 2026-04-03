@@ -1,14 +1,6 @@
 # ETH Wallet Chrome Plugin
 
-这是一个基于 React 的 Chrome 插件钱包 Demo（Manifest V3），交互上模拟 OKX Wallet 的“应用式”流程和页面切换体验。
-
-已支持：
-
-- 创建钱包（展示助记词）
-- 助记词抽词校验（验证是否记住）
-- 通过助记词导入
-- 通过私钥导入
-- 钱包主页与本地缓存（`chrome.storage.local`）
+这是一个基于 **React + Material UI** 的 Chrome 插件钱包 Demo（Manifest V3）。
 
 ## 目录结构
 
@@ -16,8 +8,8 @@
 chrome-plugin/
   manifest.json
   popup.html
-  popup.css
   src/popup.entry.jsx
+  src/theme.js
   popup.js
   package.json
   README.md
@@ -31,7 +23,7 @@ npm install
 npm run build
 ```
 
-说明：插件实际加载的是根目录的 `popup.js`（由 `src/popup.entry.jsx` + React 打包生成）。
+说明：插件加载根目录的 `popup.js`（由 `src/popup.entry.jsx` 与 MUI 等依赖打包生成）。样式由 MUI `ThemeProvider` + `CssBaseline` 注入，不再使用 `popup.css` / Tailwind。
 
 ## 页面流转（OKX 风格）
 

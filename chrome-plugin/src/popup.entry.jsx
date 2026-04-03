@@ -1,18 +1,42 @@
 import React, { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
-import { ArrowDownToLine, ArrowUpToLine, Compass, Copy, History, Repeat2, Wallet } from "lucide-react";
+import {
+  ArrowDownToLine,
+  ArrowUpToLine,
+  Copy,
+  Eye,
+  EyeOff,
+  History,
+  Repeat2,
+  Settings,
+  Wallet,
+} from "lucide-react";
 import QRCode from "qrcode";
-import "./styles.css";
-import { Button } from "./components/ui/button";
-import { Input } from "./components/ui/input";
-import { PageShell } from "./components/app/page-shell";
-import { SectionTitle } from "./components/app/section-title";
-import { PrimaryAction } from "./components/app/primary-action";
-import { PageHeader } from "./components/app/page-header";
-import { NoticeListItem } from "./components/app/notice-list-item";
-import { PasswordField } from "./components/app/password-field";
-import { BottomToast } from "./components/app/bottom-toast";
+import { ThemeProvider, CssBaseline } from "@mui/material";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import IconButton from "@mui/material/IconButton";
+import InputAdornment from "@mui/material/InputAdornment";
+import Checkbox from "@mui/material/Checkbox";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import CircularProgress from "@mui/material/CircularProgress";
+import { walletTheme, POPUP_HEIGHT_PX } from "./theme";
 import { getStorageValue, removeStorageValue, setStorageValue } from "./services/storage";
+import {
+  clearUnlockSession,
+  isUnlockSessionStillValidByTime,
+  queryIdleState,
+  saveUnlockSession,
+} from "./services/session";
+import { getWalletDisplayName, getWalletPublicAddress, setWalletDisplayName } from "./services/walletPrefs";
 import { passwordSchema } from "./lib/validators";
 
 const VIEWS = {
@@ -21,6 +45,7 @@ const VIEWS = {
   HOME: "home",
   SEND: "send",
   RECEIVE: "receive",
+  SETTINGS: "settings",
 };
 
 const FORGOT_ITEMS = [
@@ -44,12 +69,40 @@ const HOME_ASSETS = [
   { symbol: "SOL", amount: "0.8900", value: "$79.16", change: "-5.07%" },
 ];
 
-const RECEIVE_ADDRESS = "0x2fF7D743A1A8Bc13f6C01A3fF8eA7E6Ba6A0f2d5";
 const PASSWORD_HASH_KEY = "wallet_password_hash_v1";
 const AUTH_MODE = {
   SETUP: "setup",
   UNLOCK: "unlock",
 };
+
+function PageHeader({ title, canBack, onBack }) {
+  return (
+    <Box
+      sx={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        borderBottom: 1,
+        borderColor: "divider",
+        px: 1.5,
+        py: 1,
+        minHeight: 48,
+      }}
+    >
+      {canBack ? (
+        <IconButton size="small" onClick={onBack} sx={{ color: "text.primary" }}>
+          ←
+        </IconButton>
+      ) : (
+        <Box sx={{ width: 40 }} />
+      )}
+      <Typography variant="h6" sx={{ fontWeight: 600 }}>
+        {title}
+      </Typography>
+      <Box sx={{ width: 40 }} />
+    </Box>
+  );
+}
 
 function App() {
   const [stack, setStack] = useState([VIEWS.LOGIN]);
@@ -65,6 +118,11 @@ function App() {
   const [authMode, setAuthMode] = useState(AUTH_MODE.UNLOCK);
   const [loadingAuth, setLoadingAuth] = useState(true);
   const [submittingAuth, setSubmittingAuth] = useState(false);
+  const [walletDisplayName, setWalletDisplayNameState] = useState("Sun Wallet");
+  const [walletAddress, setWalletAddress] = useState(
+    "0x2fF7D743A1A8Bc13f6C01A3fF8eA7E6Ba6A0f2d5",
+  );
+  const [settingsNameDraft, setSettingsNameDraft] = useState("Sun Wallet");
 
   const current = stack[stack.length - 1];
   const canBack = stack.length > 1;
@@ -74,22 +132,61 @@ function App() {
   useEffect(() => {
     async function generateQr() {
       if (current !== VIEWS.RECEIVE) return;
-      const data = await QRCode.toDataURL(RECEIVE_ADDRESS, {
-        width: 220,
+      const data = await QRCode.toDataURL(walletAddress, {
+        width: 180,
         margin: 1,
       });
       setQrDataUrl(data);
     }
     generateQr();
-  }, [current]);
+  }, [current, walletAddress]);
 
   useEffect(() => {
-    async function initAuthMode() {
-      const hash = await getStorageValue(PASSWORD_HASH_KEY, "");
-      setAuthMode(hash ? AUTH_MODE.UNLOCK : AUTH_MODE.SETUP);
+    let cancelled = false;
+
+    async function initApp() {
+      const [hash, name, addr] = await Promise.all([
+        getStorageValue(PASSWORD_HASH_KEY, ""),
+        getWalletDisplayName(),
+        getWalletPublicAddress(),
+      ]);
+      if (cancelled) return;
+      setWalletDisplayNameState(name);
+      setWalletAddress(addr);
+
+      if (!hash) {
+        setAuthMode(AUTH_MODE.SETUP);
+        setStack([VIEWS.LOGIN]);
+        setLoadingAuth(false);
+        return;
+      }
+
+      setAuthMode(AUTH_MODE.UNLOCK);
+
+      const timeOk = await isUnlockSessionStillValidByTime();
+      if (!timeOk) {
+        setStack([VIEWS.LOGIN]);
+        setLoadingAuth(false);
+        return;
+      }
+
+      const idleState = await queryIdleState(60);
+      if (idleState === "locked") {
+        await clearUnlockSession();
+        setStack([VIEWS.LOGIN]);
+        setLoadingAuth(false);
+        return;
+      }
+
+      await saveUnlockSession();
+      setStack([VIEWS.HOME]);
       setLoadingAuth(false);
     }
-    initAuthMode();
+
+    initApp();
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   async function hashPassword(raw) {
@@ -128,6 +225,7 @@ function App() {
         }
         const newHash = await hashPassword(passwordValue);
         await setStorageValue(PASSWORD_HASH_KEY, newHash);
+        await saveUnlockSession();
         setAuthMode(AUTH_MODE.UNLOCK);
         setStack([VIEWS.HOME]);
         setToast("密码设置完成，已解锁");
@@ -143,6 +241,7 @@ function App() {
         return;
       }
 
+      await saveUnlockSession();
       setStack([VIEWS.HOME]);
       setToast("解锁成功");
       setPassword("");
@@ -153,6 +252,7 @@ function App() {
 
   async function onResetWallet() {
     await removeStorageValue(PASSWORD_HASH_KEY);
+    await clearUnlockSession();
     setPassword("");
     setConfirmPassword("");
     setChecks([false, false, false]);
@@ -177,268 +277,573 @@ function App() {
     setToast("发送流程占位：下一步将进入交易确认页。");
   }
 
+  function shortAddress(addr) {
+    if (!addr || addr.length < 12) return addr;
+    return `${addr.slice(0, 6)}...${addr.slice(-4)}`;
+  }
+
+  async function copyWalletAddress() {
+    try {
+      await navigator.clipboard.writeText(walletAddress);
+      setToast("地址已复制到剪贴板");
+    } catch {
+      setToast("复制失败，请重试或手动复制");
+    }
+  }
+
+  function openSettings() {
+    setSettingsNameDraft(walletDisplayName);
+    goto(VIEWS.SETTINGS);
+  }
+
+  async function saveSettingsName() {
+    const name = settingsNameDraft.trim() || "Sun Wallet";
+    await setWalletDisplayName(name);
+    setWalletDisplayNameState(name);
+    setToast("钱包名称已保存");
+    back();
+  }
+
+  const shellSx = {
+    width: 380,
+    height: POPUP_HEIGHT_PX,
+    maxHeight: POPUP_HEIGHT_PX,
+    minHeight: POPUP_HEIGHT_PX,
+    boxSizing: "border-box",
+    overflow: "hidden",
+    display: "flex",
+    flexDirection: "column",
+    bgcolor: "background.default",
+  };
+
   return (
-    <PageShell>
-      {current === VIEWS.LOGIN && (
-        <section className="relative flex h-full flex-col px-4 pb-5 pt-5">
-          <img
-            className="mx-auto mb-4 mt-2 block h-[110px] w-[110px] drop-shadow-[0_0_18px_rgba(255,190,40,0.35)]"
-            src="icons/icon-128.png"
-            alt="sun wallet logo"
-          />
-
-          <SectionTitle
-            title={isSetupMode ? "设置钱包密码" : "Web3 入口，一个就够"}
-            subtitle={isSetupMode ? "首次使用请设置解锁密码（至少 8 位）" : "钱包 · 交易 · NFT · 赚币 · DApp"}
-            titleClassName={isSetupMode ? "text-[52px] tracking-[-0.6px]" : "text-[48px]"}
-            subtitleClassName={isSetupMode ? "text-[16px]" : "text-[18px]"}
-          />
-
-          <div className="mt-6 space-y-3">
-          <PasswordField
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            showPassword={showPassword}
-            onToggle={() => setShowPassword((v) => !v)}
-            placeholder={isSetupMode ? "请设置密码（至少 8 位）" : "请输入密码"}
-          />
-
-          {isSetupMode ? (
-            <Input
-              className="h-12 text-[16px]"
-              type="password"
-              placeholder="请再次输入密码"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-            />
-          ) : null}
-          </div>
-
-          <PrimaryAction
-            className="mt-auto text-[24px]"
-            disabled={loadingAuth || submittingAuth || !password.trim() || (isSetupMode && !confirmPassword.trim())}
-            onClick={onUnlock}
+    <ThemeProvider theme={walletTheme}>
+      <CssBaseline />
+      <Box sx={shellSx}>
+        {loadingAuth ? (
+          <Box
+            sx={{
+              flex: 1,
+              minHeight: 0,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
           >
-            {submittingAuth ? "处理中..." : isSetupMode ? "创建密码并解锁" : "解锁"}
-          </PrimaryAction>
-
-          {!isSetupMode ? (
-            <Button
-              variant="ghost"
-              className="mx-auto mt-3 block h-auto rounded-none p-0 text-[16px] text-zinc-300 hover:bg-transparent hover:text-zinc-100"
-              onClick={() => goto(VIEWS.FORGOT)}
+            <CircularProgress />
+          </Box>
+        ) : (
+          <>
+        {current === VIEWS.LOGIN && (
+          <Box
+            sx={{
+              flex: 1,
+              minHeight: 0,
+              display: "flex",
+              flexDirection: "column",
+              px: 2,
+              pb: 1.5,
+              pt: 1.5,
+              overflow: "hidden",
+            }}
+          >
+            <Box
+              sx={{
+                flex: 1,
+                minHeight: 0,
+                overflowY: "auto",
+                overflowX: "hidden",
+                display: "flex",
+                flexDirection: "column",
+              }}
             >
-              忘记密码?
-            </Button>
-          ) : null}
-        </section>
-      )}
-
-      {current === VIEWS.FORGOT && (
-        <section className="relative h-full pb-4">
-          <PageHeader title="忘记密码" canBack={canBack} onBack={back} />
-
-          <div className="mx-auto mb-3 mt-3 grid h-[92px] w-[92px] place-items-center rounded-full bg-[radial-gradient(circle_at_30%_30%,#b5ff38_0%,#8ff129_45%,#1b2b0d_100%)] text-[42px] text-[#081102] shadow-glow">
-            💳
-          </div>
-
-          <div className="grid gap-2 px-4">
-            {FORGOT_ITEMS.map((text, i) => (
-              <NoticeListItem
-                key={text}
-                text={text}
-                checked={checks[i]}
-                onCheckedChange={() =>
-                  setChecks((prev) => {
-                    const next = [...prev];
-                    next[i] = !next[i];
-                    return next;
-                  })
-                }
+              <Box
+                component="img"
+                src="icons/icon-128.png"
+                alt="logo"
+                sx={{
+                  width: 96,
+                  height: 96,
+                  mx: "auto",
+                  mb: 1.5,
+                  mt: 0.5,
+                  flexShrink: 0,
+                  filter: "drop-shadow(0 0 18px rgba(255,190,40,0.35))",
+                }}
               />
-            ))}
-          </div>
+              <Typography
+                variant="h4"
+                align="center"
+                sx={{
+                  fontWeight: 700,
+                  letterSpacing: -0.4,
+                  fontSize: isSetupMode ? 42 : 40,
+                  flexShrink: 0,
+                }}
+              >
+                {isSetupMode ? "设置钱包密码" : "Web3 入口，一个就够"}
+              </Typography>
+              <Typography
+                align="center"
+                color="text.secondary"
+                sx={{ mt: 0.75, fontSize: isSetupMode ? 14 : 13, flexShrink: 0 }}
+              >
+                {isSetupMode ? "首次使用请设置解锁密码（至少 8 位）" : "钱包 · 交易 · NFT · 赚币 · DApp"}
+              </Typography>
 
-          <Button
-            variant={canReset ? "primary" : "danger"}
-            className="mx-4 mt-3 h-[46px] w-[calc(100%-32px)] text-[20px] tracking-[0.2px] rounded-full"
-            disabled={!canReset}
-            onClick={onResetWallet}
-          >
-            重置钱包
-          </Button>
-        </section>
-      )}
+              <Box sx={{ mt: 2, display: "flex", flexDirection: "column", gap: 1.5, pb: 1 }}>
+                <TextField
+                  fullWidth
+                  type={showPassword ? "text" : "password"}
+                  placeholder={isSetupMode ? "请设置密码（至少 8 位）" : "请输入密码"}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton edge="end" onClick={() => setShowPassword((v) => !v)} size="small">
+                          {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+                {isSetupMode ? (
+                  <TextField
+                    fullWidth
+                    type="password"
+                    placeholder="请再次输入密码"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                  />
+                ) : null}
+              </Box>
+            </Box>
 
-      {current === VIEWS.HOME && (
-        <section className="relative px-4 pb-4 pt-4">
-          <div className="mb-4 flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div className="h-8 w-8 overflow-hidden rounded-md border border-sw-border bg-sw-surface2">
-                <img className="h-full w-full object-cover" src="icons/icon-32.png" alt="account avatar" />
-              </div>
-              <div>
-                <p className="text-[14px] font-semibold text-sw-text">账户 01</p>
-                <p className="text-[12px] text-sw-muted">钱包 01</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-2">
-              <Button variant="secondary" size="icon" className="h-8 w-8 rounded-lg">
-                <Copy className="h-4 w-4" />
+            <Box sx={{ flexShrink: 0, pt: 0.5 }}>
+              <Button
+                variant="contained"
+                color="primary"
+                fullWidth
+                disabled={
+                  loadingAuth ||
+                  submittingAuth ||
+                  !password.trim() ||
+                  (isSetupMode && !confirmPassword.trim())
+                }
+                onClick={onUnlock}
+                sx={{
+                  py: 1.35,
+                  borderRadius: 999,
+                  fontSize: 17,
+                  fontWeight: 600,
+                  color: "#0a0a0a",
+                }}
+              >
+                {submittingAuth ? "处理中..." : isSetupMode ? "创建密码并解锁" : "解锁"}
               </Button>
-              <Button variant="secondary" size="icon" className="h-8 w-8 rounded-lg">
-                <Compass className="h-4 w-4" />
-              </Button>
-              <Button variant="secondary" size="icon" className="h-8 w-8 rounded-lg">
-                <Wallet className="h-4 w-4" />
-              </Button>
-            </div>
-          </div>
 
-          <div className="sw-card mb-4 p-4">
-            <p className="text-sm text-sw-muted">总资产估值</p>
-            <h2 className="mt-1 text-[42px] font-bold leading-none text-sw-text">$89.49</h2>
-            <p className="mt-2 text-sm font-medium text-sw-success">+$10.67 (+13.54%) 1日</p>
-          </div>
-
-          <div className="mb-4 grid grid-cols-4 gap-2">
-            {HOME_ACTIONS.map((item) => {
-              const Icon = item.icon;
-              return (
+              {!isSetupMode ? (
                 <Button
-                  key={item.key}
-                  variant="secondary"
-                  className="h-auto flex-col gap-1 rounded-xl py-2 text-[12px]"
-                  onClick={() => onHomeAction(item.key, item.label)}
+                  fullWidth
+                  variant="text"
+                  sx={{ mt: 0.5, py: 0.5, color: "text.secondary", fontSize: 14 }}
+                  onClick={() => goto(VIEWS.FORGOT)}
                 >
-                  <span className="grid h-8 w-8 place-items-center rounded-full bg-zinc-800">
-                    <Icon className="h-4 w-4" />
-                  </span>
-                  {item.label}
+                  忘记密码?
                 </Button>
-              );
-            })}
-          </div>
-
-          <div className="mb-2 flex gap-3 border-b border-sw-border">
-            {HOME_TABS.map((tab) => (
-              <button
-                key={tab}
-                type="button"
-                className={`pb-2 text-[14px] ${
-                  activeTab === tab
-                    ? "border-b-2 border-sw-primary text-sw-text"
-                    : "text-sw-muted hover:text-zinc-300"
-                }`}
-                onClick={() => setActiveTab(tab)}
-              >
-                {tab}
-              </button>
-            ))}
-          </div>
-
-          <div className="space-y-2">
-            {HOME_ASSETS.map((asset) => (
-              <button
-                key={asset.symbol}
-                type="button"
-                className="sw-card flex w-full items-center justify-between px-3 py-3 text-left"
-                onClick={() => setToast(`${asset.symbol} 详情页占位`)}
-              >
-                <div className="flex items-center gap-2">
-                  <div className="grid h-8 w-8 place-items-center rounded-full bg-zinc-800 text-xs font-semibold">
-                    {asset.symbol[0]}
-                  </div>
-                  <div>
-                    <p className="text-sm font-semibold text-sw-text">{asset.symbol}</p>
-                    <p className="text-xs text-sw-muted">{asset.amount}</p>
-                  </div>
-                </div>
-                <div className="text-right">
-                  <p className="text-sm font-semibold text-sw-text">{asset.value}</p>
-                  <p className={`text-xs ${asset.change.startsWith("-") ? "text-sw-danger" : "text-sw-success"}`}>
-                    {asset.change}
-                  </p>
-                </div>
-              </button>
-            ))}
-          </div>
-
-          <div className="mt-4 grid grid-cols-4 gap-2 border-t border-sw-border pt-3">
-            {["首页", "市场", "DApp", "我的"].map((item, idx) => (
-              <button
-                key={item}
-                type="button"
-                className={`text-center text-[12px] ${idx === 0 ? "text-sw-primary" : "text-sw-muted"}`}
-                onClick={() => setToast(`${item} 导航占位`)}
-              >
-                <div className="mb-1 text-base">{idx === 0 ? "●" : "○"}</div>
-                {item}
-              </button>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {current === VIEWS.SEND && (
-        <section className="relative px-4 pb-5">
-          <PageHeader title="发送" canBack={canBack} onBack={back} />
-          <div className="mt-4 sw-card p-4">
-            <p className="mb-2 text-sm text-sw-muted">收款地址</p>
-            <Input
-              className="mb-3 h-11 text-sm"
-              placeholder="0x..."
-              value={sendTo}
-              onChange={(e) => setSendTo(e.target.value)}
-            />
-            <p className="mb-2 text-sm text-sw-muted">金额</p>
-            <Input
-              className="h-11 text-sm"
-              placeholder="0.00"
-              value={sendAmount}
-              onChange={(e) => setSendAmount(e.target.value)}
-            />
-            <p className="mt-3 text-xs text-sw-muted">网络费用与 nonce 将在确认页展示（占位）。</p>
-          </div>
-          <PrimaryAction
-            className="mt-4 text-[24px]"
-            disabled={!sendTo.trim() || !sendAmount.trim()}
-            onClick={onSubmitSend}
-          >
-            下一步
-          </PrimaryAction>
-        </section>
-      )}
-
-      {current === VIEWS.RECEIVE && (
-        <section className="relative px-4 pb-5">
-          <PageHeader title="接收" canBack={canBack} onBack={back} />
-          <div className="mt-4 sw-card p-4">
-            <p className="text-center text-sm text-sw-muted">当前收款地址</p>
-            <div className="mt-3 grid place-items-center rounded-xl bg-white p-3">
-              {qrDataUrl ? (
-                <img src={qrDataUrl} alt="receive qrcode" className="h-[220px] w-[220px]" />
               ) : (
-                <div className="h-[220px] w-[220px] bg-zinc-200" />
+                <Box sx={{ height: 8 }} />
               )}
-            </div>
-            <div className="mt-3 rounded-lg border border-sw-border bg-sw-surface px-3 py-2 text-xs text-zinc-300">
-              {RECEIVE_ADDRESS}
-            </div>
-            <div className="mt-3 grid grid-cols-2 gap-2">
-              <Button variant="secondary" className="h-10" onClick={() => setToast("地址已复制（占位）")}>
-                复制地址
-              </Button>
-              <Button variant="secondary" className="h-10" onClick={() => setToast("分享二维码（占位）")}>
-                分享二维码
-              </Button>
-            </div>
-          </div>
-        </section>
-      )}
+            </Box>
+          </Box>
+        )}
 
-      <BottomToast message={toast} />
-    </PageShell>
+        {current === VIEWS.FORGOT && (
+          <Box sx={{ flex: 1, minHeight: 0, display: "flex", flexDirection: "column", overflow: "auto" }}>
+            <PageHeader title="忘记密码" canBack={canBack} onBack={back} />
+            <Box
+              sx={{
+                mx: "auto",
+                my: 2,
+                width: 92,
+                height: 92,
+                borderRadius: "50%",
+                display: "grid",
+                placeItems: "center",
+                fontSize: 42,
+                background: "radial-gradient(circle at 30% 30%, #b5ff38 0%, #8ff129 45%, #1b2b0d 100%)",
+              }}
+            >
+              💳
+            </Box>
+            <Box sx={{ px: 2, display: "flex", flexDirection: "column", gap: 1 }}>
+              {FORGOT_ITEMS.map((text, i) => (
+                <Card key={text} variant="outlined">
+                  <CardContent sx={{ py: 1.5, "&:last-child": { pb: 1.5 } }}>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={checks[i]}
+                          onChange={() =>
+                            setChecks((prev) => {
+                              const next = [...prev];
+                              next[i] = !next[i];
+                              return next;
+                            })
+                          }
+                          size="small"
+                        />
+                      }
+                      label={<Typography variant="body2">{text}</Typography>}
+                    />
+                  </CardContent>
+                </Card>
+              ))}
+            </Box>
+            <Box sx={{ px: 2, mt: "auto", pb: 2 }}>
+              <Button
+                fullWidth
+                variant="contained"
+                disabled={!canReset}
+                onClick={onResetWallet}
+                sx={{ borderRadius: 999, py: 1.25, fontSize: 16 }}
+              >
+                重置钱包
+              </Button>
+            </Box>
+          </Box>
+        )}
+
+        {current === VIEWS.HOME && (
+          <Box
+            sx={{
+              flex: 1,
+              minHeight: 0,
+              display: "flex",
+              flexDirection: "column",
+              px: 2,
+              pt: 1,
+              pb: 0,
+              overflow: "hidden",
+            }}
+          >
+            <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", mb: 1.25, flexShrink: 0 }}>
+              <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                <Box
+                  component="img"
+                  src="icons/icon-32.png"
+                  alt=""
+                  sx={{ width: 32, height: 32, borderRadius: 1, border: 1, borderColor: "divider" }}
+                />
+                <Box>
+                  <Typography variant="body2" fontWeight={600}>
+                    {walletDisplayName}
+                  </Typography>
+                  <Typography variant="caption" color="text.secondary">
+                    {shortAddress(walletAddress)}
+                  </Typography>
+                </Box>
+              </Box>
+              <Box sx={{ display: "flex", gap: 0.5 }}>
+                <IconButton size="small" color="default" onClick={copyWalletAddress} title="复制地址">
+                  <Copy size={18} />
+                </IconButton>
+                <IconButton size="small" color="default" onClick={openSettings} title="设置">
+                  <Settings size={18} />
+                </IconButton>
+                <IconButton size="small" color="default" title="钱包">
+                  <Wallet size={18} />
+                </IconButton>
+              </Box>
+            </Box>
+
+            <Card variant="outlined" sx={{ mb: 1.25, flexShrink: 0 }}>
+              <CardContent sx={{ py: 1.5, "&:last-child": { pb: 1.5 } }}>
+                <Typography variant="body2" color="text.secondary">
+                  总资产估值
+                </Typography>
+                <Typography variant="h4" sx={{ mt: 0.25, fontWeight: 700, fontSize: "1.85rem" }}>
+                  $89.49
+                </Typography>
+                <Typography variant="body2" color="success.main" sx={{ mt: 0.75 }}>
+                  +$10.67 (+13.54%) 1日
+                </Typography>
+              </CardContent>
+            </Card>
+
+            <Box sx={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 1, mb: 1.25, flexShrink: 0 }}>
+              {HOME_ACTIONS.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <Button
+                    key={item.key}
+                    variant="outlined"
+                    onClick={() => onHomeAction(item.key, item.label)}
+                    sx={{
+                      flexDirection: "column",
+                      gap: 0.5,
+                      py: 0.85,
+                      fontSize: 11,
+                      minWidth: 0,
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        width: 32,
+                        height: 32,
+                        borderRadius: "50%",
+                        bgcolor: "action.hover",
+                        display: "grid",
+                        placeItems: "center",
+                      }}
+                    >
+                      <Icon size={16} />
+                    </Box>
+                    {item.label}
+                  </Button>
+                );
+              })}
+            </Box>
+
+            <Tabs
+              value={activeTab}
+              onChange={(_, v) => setActiveTab(v)}
+              variant="scrollable"
+              scrollButtons="auto"
+              sx={{
+                minHeight: 36,
+                flexShrink: 0,
+                mb: 0,
+                borderBottom: 1,
+                borderColor: "divider",
+              }}
+            >
+              {HOME_TABS.map((t) => (
+                <Tab key={t} label={t} value={t} sx={{ minHeight: 36, fontSize: 13 }} />
+              ))}
+            </Tabs>
+
+            <Box
+              sx={{
+                flex: 1,
+                minHeight: 0,
+                overflowY: "auto",
+                overflowX: "hidden",
+                display: "flex",
+                flexDirection: "column",
+                gap: 1,
+                py: 1,
+                WebkitOverflowScrolling: "touch",
+              }}
+            >
+              {HOME_ASSETS.map((asset) => (
+                <Card
+                  key={asset.symbol}
+                  variant="outlined"
+                  component="button"
+                  onClick={() => setToast(`${asset.symbol} 详情页占位`)}
+                  sx={{
+                    textAlign: "left",
+                    cursor: "pointer",
+                    flexShrink: 0,
+                    "&:hover": { bgcolor: "action.hover" },
+                  }}
+                >
+                  <CardContent sx={{ py: 1.35, "&:last-child": { pb: 1.35 } }}>
+                    <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                      <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                        <Box
+                          sx={{
+                            width: 32,
+                            height: 32,
+                            borderRadius: "50%",
+                            bgcolor: "action.selected",
+                            display: "grid",
+                            placeItems: "center",
+                            fontSize: 12,
+                            fontWeight: 700,
+                          }}
+                        >
+                          {asset.symbol[0]}
+                        </Box>
+                        <Box>
+                          <Typography variant="body2" fontWeight={600}>
+                            {asset.symbol}
+                          </Typography>
+                          <Typography variant="caption" color="text.secondary">
+                            {asset.amount}
+                          </Typography>
+                        </Box>
+                      </Box>
+                      <Box sx={{ textAlign: "right" }}>
+                        <Typography variant="body2" fontWeight={600}>
+                          {asset.value}
+                        </Typography>
+                        <Typography
+                          variant="caption"
+                          color={asset.change.startsWith("-") ? "error.main" : "success.main"}
+                        >
+                          {asset.change}
+                        </Typography>
+                      </Box>
+                    </Box>
+                  </CardContent>
+                </Card>
+              ))}
+            </Box>
+
+            <Box
+              sx={{
+                display: "grid",
+                gridTemplateColumns: "repeat(4, 1fr)",
+                gap: 0.5,
+                flexShrink: 0,
+                borderTop: 1,
+                borderColor: "divider",
+                pt: 1,
+                pb: 1,
+              }}
+            >
+              {["首页", "市场", "DApp", "我的"].map((item, idx) => (
+                <Button
+                  key={item}
+                  variant="text"
+                  size="small"
+                  onClick={() => setToast(`${item} 导航占位`)}
+                  sx={{ fontSize: 11, color: idx === 0 ? "primary.main" : "text.secondary", py: 0.5 }}
+                >
+                  {item}
+                </Button>
+              ))}
+            </Box>
+          </Box>
+        )}
+
+        {current === VIEWS.SEND && (
+          <Box sx={{ flex: 1, minHeight: 0, display: "flex", flexDirection: "column", px: 2, pb: 2, overflow: "auto" }}>
+            <PageHeader title="发送" canBack={canBack} onBack={back} />
+            <Card variant="outlined" sx={{ mt: 2 }}>
+              <CardContent>
+                <Typography variant="body2" color="text.secondary" gutterBottom>
+                  收款地址
+                </Typography>
+                <TextField
+                  fullWidth
+                  size="small"
+                  placeholder="0x..."
+                  value={sendTo}
+                  onChange={(e) => setSendTo(e.target.value)}
+                  sx={{ mb: 2 }}
+                />
+                <Typography variant="body2" color="text.secondary" gutterBottom>
+                  金额
+                </Typography>
+                <TextField
+                  fullWidth
+                  size="small"
+                  placeholder="0.00"
+                  value={sendAmount}
+                  onChange={(e) => setSendAmount(e.target.value)}
+                />
+                <Typography variant="caption" color="text.secondary" sx={{ mt: 1, display: "block" }}>
+                  网络费用与 nonce 将在确认页展示（占位）。
+                </Typography>
+              </CardContent>
+            </Card>
+            <Button
+              variant="contained"
+              fullWidth
+              sx={{ mt: 2, borderRadius: 999, py: 1.5, color: "#0a0a0a" }}
+              disabled={!sendTo.trim() || !sendAmount.trim()}
+              onClick={onSubmitSend}
+            >
+              下一步
+            </Button>
+          </Box>
+        )}
+
+        {current === VIEWS.RECEIVE && (
+          <Box sx={{ flex: 1, minHeight: 0, display: "flex", flexDirection: "column", px: 2, pb: 2, overflow: "auto" }}>
+            <PageHeader title="接收" canBack={canBack} onBack={back} />
+            <Card variant="outlined" sx={{ mt: 2 }}>
+              <CardContent>
+                <Typography align="center" variant="body2" color="text.secondary">
+                  当前收款地址
+                </Typography>
+                <Box sx={{ mt: 2, display: "flex", justifyContent: "center", bgcolor: "#fff", borderRadius: 2, p: 1 }}>
+                  {qrDataUrl ? (
+                    <Box component="img" src={qrDataUrl} alt="QR" sx={{ width: 180, height: 180 }} />
+                  ) : (
+                    <Box sx={{ width: 180, height: 180, bgcolor: "grey.300" }} />
+                  )}
+                </Box>
+                <Typography
+                  variant="caption"
+                  sx={{
+                    mt: 2,
+                    display: "block",
+                    wordBreak: "break-all",
+                    p: 1,
+                    borderRadius: 1,
+                    border: 1,
+                    borderColor: "divider",
+                    bgcolor: "background.paper",
+                  }}
+                >
+                  {walletAddress}
+                </Typography>
+                <Box sx={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 1, mt: 2 }}>
+                  <Button variant="outlined" onClick={copyWalletAddress}>
+                    复制地址
+                  </Button>
+                  <Button variant="outlined" onClick={() => setToast("分享二维码（占位）")}>
+                    分享二维码
+                  </Button>
+                </Box>
+              </CardContent>
+            </Card>
+          </Box>
+        )}
+
+        {current === VIEWS.SETTINGS && (
+          <Box sx={{ flex: 1, minHeight: 0, display: "flex", flexDirection: "column", px: 2, pb: 2, overflow: "auto" }}>
+            <PageHeader title="设置" canBack={canBack} onBack={back} />
+            <Typography variant="body2" color="text.secondary" sx={{ mt: 2, mb: 1 }}>
+              钱包名称
+            </Typography>
+            <TextField
+              fullWidth
+              size="small"
+              placeholder="例如：主钱包"
+              value={settingsNameDraft}
+              onChange={(e) => setSettingsNameDraft(e.target.value)}
+            />
+            <Button
+              variant="contained"
+              fullWidth
+              sx={{ mt: 2, borderRadius: 999, py: 1.25, color: "#0a0a0a" }}
+              onClick={saveSettingsName}
+            >
+              保存
+            </Button>
+          </Box>
+        )}
+          </>
+        )}
+      </Box>
+
+      <Snackbar
+        open={Boolean(toast)}
+        autoHideDuration={3000}
+        onClose={() => setToast("")}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      >
+        <Alert onClose={() => setToast("")} severity="info" variant="filled" sx={{ width: "100%" }}>
+          {toast}
+        </Alert>
+      </Snackbar>
+    </ThemeProvider>
   );
 }
 
