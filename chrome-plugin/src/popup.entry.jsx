@@ -36,7 +36,8 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import { walletTheme, POPUP_HEIGHT_PX, POPUP_WIDTH_PX } from "./theme";
+import Switch from "@mui/material/Switch";
+import { walletThemeDark, walletThemeLight, POPUP_HEIGHT_PX, POPUP_WIDTH_PX } from "./theme";
 import { getStorageValue, removeStorageValue, setStorageValue } from "./services/storage";
 import {
   clearUnlockSession,
@@ -45,6 +46,7 @@ import {
   saveUnlockSession,
 } from "./services/session";
 import { getWalletDisplayName, getWalletPublicAddress, setWalletDisplayName } from "./services/walletPrefs";
+import { getThemeMode, setThemeMode } from "./services/themePrefs";
 import { passwordSchema } from "./lib/validators";
 
 const VIEWS = {
@@ -139,8 +141,10 @@ function App() {
   const settingsMenuCloseTimerRef = useRef(null);
   const [addressCopiedFeedback, setAddressCopiedFeedback] = useState(false);
   const addressCopyFeedbackTimerRef = useRef(null);
+  const [themeMode, setThemeModeState] = useState("dark");
 
   const current = stack[stack.length - 1];
+  const muiTheme = themeMode === "light" ? walletThemeLight : walletThemeDark;
   const canBack = stack.length > 1;
   const canReset = checks.every(Boolean);
   const isSetupMode = authMode === AUTH_MODE.SETUP;
@@ -211,6 +215,10 @@ function App() {
         clearTimeout(addressCopyFeedbackTimerRef.current);
       }
     };
+  }, []);
+
+  useEffect(() => {
+    getThemeMode().then(setThemeModeState);
   }, []);
 
   async function hashPassword(raw) {
@@ -429,6 +437,13 @@ function App() {
     back();
   }
 
+  async function onThemeSwitchChange(_event, checked) {
+    const mode = checked ? "light" : "dark";
+    setThemeModeState(mode);
+    await setThemeMode(mode);
+    setToast(mode === "light" ? "已切换为阳光明媚主题" : "已切换为深色主题");
+  }
+
   const shellSx = {
     width: POPUP_WIDTH_PX,
     maxWidth: POPUP_WIDTH_PX,
@@ -443,7 +458,7 @@ function App() {
   };
 
   return (
-    <ThemeProvider theme={walletTheme}>
+    <ThemeProvider theme={muiTheme}>
       <CssBaseline />
       <Box sx={shellSx}>
         {loadingAuth ? (
@@ -563,7 +578,7 @@ function App() {
                   borderRadius: 999,
                   fontSize: 17,
                   fontWeight: 600,
-                  color: "#0a0a0a",
+                  color: "primary.contrastText",
                 }}
               >
                 {submittingAuth ? "处理中..." : isSetupMode ? "创建密码并解锁" : "解锁"}
@@ -724,11 +739,14 @@ function App() {
                           mt: 0,
                           minWidth: 196,
                           maxWidth: 220,
-                          bgcolor: "#1e2026",
+                          bgcolor: "background.paper",
                           border: "1px solid",
                           borderColor: "divider",
                           borderRadius: 2,
-                          boxShadow: "0 8px 24px rgba(0,0,0,0.45)",
+                          boxShadow: (t) =>
+                            t.palette.mode === "dark"
+                              ? "0 8px 24px rgba(0,0,0,0.45)"
+                              : "0 8px 24px rgba(47, 111, 78, 0.18)",
                           py: 0.5,
                           pointerEvents: "auto",
                         },
@@ -987,8 +1005,9 @@ function App() {
             </Card>
             <Button
               variant="contained"
+              color="primary"
               fullWidth
-              sx={{ mt: 2, borderRadius: 999, py: 1.5, color: "#0a0a0a" }}
+              sx={{ mt: 2, borderRadius: 999, py: 1.5, color: "primary.contrastText" }}
               disabled={!sendTo.trim() || !sendAmount.trim()}
               onClick={onSubmitSend}
             >
@@ -1057,6 +1076,20 @@ function App() {
           <Box sx={{ flex: 1, minHeight: 0, display: "flex", flexDirection: "column", px: 2, pb: 2, overflow: "auto" }}>
             <PageHeader title="设置" canBack={canBack} onBack={back} />
             <Typography variant="body2" color="text.secondary" sx={{ mt: 2, mb: 1 }}>
+              主题
+            </Typography>
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={themeMode === "light"}
+                  onChange={onThemeSwitchChange}
+                  color="primary"
+                />
+              }
+              label={themeMode === "light" ? "阳光明媚（浅色）" : "深色模式"}
+              sx={{ ml: 0, alignItems: "center", mb: 2 }}
+            />
+            <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
               钱包名称
             </Typography>
             <TextField
@@ -1068,8 +1101,9 @@ function App() {
             />
             <Button
               variant="contained"
+              color="primary"
               fullWidth
-              sx={{ mt: 2, borderRadius: 999, py: 1.25, color: "#0a0a0a" }}
+              sx={{ mt: 2, borderRadius: 999, py: 1.25, color: "primary.contrastText" }}
               onClick={saveSettingsName}
             >
               保存

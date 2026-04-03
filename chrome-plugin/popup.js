@@ -1333,7 +1333,7 @@
           return dispatcher;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React93 = require_react(), Internals = {
+        var React94 = require_react(), Internals = {
           d: {
             f: noop5,
             r: function() {
@@ -1351,7 +1351,7 @@
           },
           p: 0,
           findDOMNode: null
-        }, REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), ReactSharedInternals = React93.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
+        }, REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), ReactSharedInternals = React94.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
         "function" === typeof Map && null != Map.prototype && "function" === typeof Map.prototype.forEach && "function" === typeof Set && null != Set.prototype && "function" === typeof Set.prototype.clear && "function" === typeof Set.prototype.forEach || console.error(
           "React depends on Map and Set built-in types. Make sure that you load a polyfill in older browsers. https://reactjs.org/link/react-polyfills"
         );
@@ -2886,7 +2886,7 @@
           "number" === type && getActiveElement(node2.ownerDocument) === node2 || node2.defaultValue === "" + value || (node2.defaultValue = "" + value);
         }
         function validateOptionProps(element, props) {
-          null == props.value && ("object" === typeof props.children && null !== props.children ? React93.Children.forEach(props.children, function(child) {
+          null == props.value && ("object" === typeof props.children && null !== props.children ? React94.Children.forEach(props.children, function(child) {
             null == child || "string" === typeof child || "number" === typeof child || "bigint" === typeof child || didWarnInvalidChild || (didWarnInvalidChild = true, console.error(
               "Cannot infer the option value of complex children. Pass a `value` prop or use a plain string as children to <option>."
             ));
@@ -18518,14 +18518,14 @@
           ));
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var Scheduler = require_scheduler(), React93 = require_react(), ReactDOM3 = require_react_dom(), assign2 = Object.assign, REACT_LEGACY_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.element"), REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy");
+        var Scheduler = require_scheduler(), React94 = require_react(), ReactDOM3 = require_react_dom(), assign2 = Object.assign, REACT_LEGACY_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.element"), REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy");
         /* @__PURE__ */ Symbol.for("react.scope");
         var REACT_ACTIVITY_TYPE = /* @__PURE__ */ Symbol.for("react.activity");
         /* @__PURE__ */ Symbol.for("react.legacy_hidden");
         /* @__PURE__ */ Symbol.for("react.tracing_marker");
         var REACT_MEMO_CACHE_SENTINEL = /* @__PURE__ */ Symbol.for("react.memo_cache_sentinel");
         /* @__PURE__ */ Symbol.for("react.view_transition");
-        var MAYBE_ITERATOR_SYMBOL = Symbol.iterator, REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), isArrayImpl = Array.isArray, ReactSharedInternals = React93.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, ReactDOMSharedInternals = ReactDOM3.__DOM_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, NotPending = Object.freeze({
+        var MAYBE_ITERATOR_SYMBOL = Symbol.iterator, REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), isArrayImpl = Array.isArray, ReactSharedInternals = React94.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, ReactDOMSharedInternals = ReactDOM3.__DOM_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, NotPending = Object.freeze({
           pending: false,
           data: null,
           method: null,
@@ -21313,7 +21313,7 @@
           }
         };
         (function() {
-          var isomorphicReactPackageVersion = React93.version;
+          var isomorphicReactPackageVersion = React94.version;
           if ("19.2.4" !== isomorphicReactPackageVersion)
             throw Error(
               'Incompatible React versions: The "react" and "react-dom" packages must have the exact same version. Instead got:\n  - react:      ' + (isomorphicReactPackageVersion + "\n  - react-dom:  19.2.4\nLearn more: https://react.dev/warnings/version-mismatch")
@@ -24777,18 +24777,18 @@
         function isValidElement12(object2) {
           return "object" === typeof object2 && null !== object2 && object2.$$typeof === REACT_ELEMENT_TYPE;
         }
-        var React93 = require_react(), REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy"), REACT_ACTIVITY_TYPE = /* @__PURE__ */ Symbol.for("react.activity"), REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), ReactSharedInternals = React93.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, hasOwnProperty = Object.prototype.hasOwnProperty, isArrayImpl = Array.isArray, createTask = console.createTask ? console.createTask : function() {
+        var React94 = require_react(), REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy"), REACT_ACTIVITY_TYPE = /* @__PURE__ */ Symbol.for("react.activity"), REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), ReactSharedInternals = React94.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, hasOwnProperty = Object.prototype.hasOwnProperty, isArrayImpl = Array.isArray, createTask = console.createTask ? console.createTask : function() {
           return null;
         };
-        React93 = {
+        React94 = {
           react_stack_bottom_frame: function(callStackForError) {
             return callStackForError();
           }
         };
         var specialPropKeyWarningShown;
         var didWarnAboutElementRef = {};
-        var unknownOwnerDebugStack = React93.react_stack_bottom_frame.bind(
-          React93,
+        var unknownOwnerDebugStack = React94.react_stack_bottom_frame.bind(
+          React94,
           UnknownOwner
         )();
         var unknownOwnerDebugTask = createTask(getTaskName(UnknownOwner));
@@ -26535,10 +26535,10 @@
     }
     return React3.createElement.apply(null, createElementArgArray);
   };
-  (function(_jsx77) {
+  (function(_jsx78) {
     var JSX;
     /* @__PURE__ */ (function(_JSX) {
-    })(JSX || (JSX = _jsx77.JSX || (_jsx77.JSX = {})));
+    })(JSX || (JSX = _jsx78.JSX || (_jsx78.JSX = {})));
   })(jsx || (jsx = {}));
   var Global = /* @__PURE__ */ withEmotionCache(function(props, cache) {
     var styles6 = props.styles;
@@ -46985,9 +46985,412 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   } : void 0;
   var Snackbar_default = Snackbar;
 
-  // node_modules/@mui/material/esm/Tab/Tab.js
+  // node_modules/@mui/material/esm/Switch/Switch.js
   var React87 = __toESM(require_react(), 1);
   var import_prop_types65 = __toESM(require_prop_types(), 1);
+
+  // node_modules/@mui/material/esm/Switch/switchClasses.js
+  function getSwitchUtilityClass(slot) {
+    return generateUtilityClass("MuiSwitch", slot);
+  }
+  var switchClasses = generateUtilityClasses("MuiSwitch", ["root", "edgeStart", "edgeEnd", "switchBase", "colorPrimary", "colorSecondary", "sizeSmall", "sizeMedium", "checked", "disabled", "input", "thumb", "track"]);
+  var switchClasses_default = switchClasses;
+
+  // node_modules/@mui/material/esm/Switch/Switch.js
+  var import_jsx_runtime72 = __toESM(require_jsx_runtime(), 1);
+  var useUtilityClasses36 = (ownerState) => {
+    const {
+      classes,
+      edge,
+      size,
+      color: color2,
+      checked,
+      disabled
+    } = ownerState;
+    const slots = {
+      root: ["root", edge && `edge${capitalize_default(edge)}`, `size${capitalize_default(size)}`],
+      switchBase: ["switchBase", `color${capitalize_default(color2)}`, checked && "checked", disabled && "disabled"],
+      thumb: ["thumb"],
+      track: ["track"],
+      input: ["input"]
+    };
+    const composedClasses = composeClasses(slots, getSwitchUtilityClass, classes);
+    return {
+      ...classes,
+      // forward the disabled and checked classes to the SwitchBase
+      ...composedClasses
+    };
+  };
+  var SwitchRoot = styled_default("span", {
+    name: "MuiSwitch",
+    slot: "Root",
+    overridesResolver: (props, styles6) => {
+      const {
+        ownerState
+      } = props;
+      return [styles6.root, ownerState.edge && styles6[`edge${capitalize_default(ownerState.edge)}`], styles6[`size${capitalize_default(ownerState.size)}`]];
+    }
+  })({
+    display: "inline-flex",
+    width: 34 + 12 * 2,
+    height: 14 + 12 * 2,
+    overflow: "hidden",
+    padding: 12,
+    boxSizing: "border-box",
+    position: "relative",
+    flexShrink: 0,
+    zIndex: 0,
+    // Reset the stacking context.
+    verticalAlign: "middle",
+    // For correct alignment with the text.
+    "@media print": {
+      colorAdjust: "exact"
+    },
+    variants: [{
+      props: {
+        edge: "start"
+      },
+      style: {
+        marginLeft: -8
+      }
+    }, {
+      props: {
+        edge: "end"
+      },
+      style: {
+        marginRight: -8
+      }
+    }, {
+      props: {
+        size: "small"
+      },
+      style: {
+        width: 40,
+        height: 24,
+        padding: 7,
+        [`& .${switchClasses_default.thumb}`]: {
+          width: 16,
+          height: 16
+        },
+        [`& .${switchClasses_default.switchBase}`]: {
+          padding: 4,
+          [`&.${switchClasses_default.checked}`]: {
+            transform: "translateX(16px)"
+          }
+        }
+      }
+    }]
+  });
+  var SwitchSwitchBase = styled_default(SwitchBase_default, {
+    name: "MuiSwitch",
+    slot: "SwitchBase",
+    overridesResolver: (props, styles6) => {
+      const {
+        ownerState
+      } = props;
+      return [styles6.switchBase, {
+        [`& .${switchClasses_default.input}`]: styles6.input
+      }, ownerState.color !== "default" && styles6[`color${capitalize_default(ownerState.color)}`]];
+    }
+  })(memoTheme_default(({
+    theme
+  }) => ({
+    position: "absolute",
+    top: 0,
+    left: 0,
+    zIndex: 1,
+    // Render above the focus ripple.
+    color: theme.vars ? theme.vars.palette.Switch.defaultColor : `${theme.palette.mode === "light" ? theme.palette.common.white : theme.palette.grey[300]}`,
+    transition: theme.transitions.create(["left", "transform"], {
+      duration: theme.transitions.duration.shortest
+    }),
+    [`&.${switchClasses_default.checked}`]: {
+      transform: "translateX(20px)"
+    },
+    [`&.${switchClasses_default.disabled}`]: {
+      color: theme.vars ? theme.vars.palette.Switch.defaultDisabledColor : `${theme.palette.mode === "light" ? theme.palette.grey[100] : theme.palette.grey[600]}`
+    },
+    [`&.${switchClasses_default.checked} + .${switchClasses_default.track}`]: {
+      opacity: 0.5
+    },
+    [`&.${switchClasses_default.disabled} + .${switchClasses_default.track}`]: {
+      opacity: theme.vars ? theme.vars.opacity.switchTrackDisabled : `${theme.palette.mode === "light" ? 0.12 : 0.2}`
+    },
+    [`& .${switchClasses_default.input}`]: {
+      left: "-100%",
+      width: "300%"
+    }
+  })), memoTheme_default(({
+    theme
+  }) => ({
+    "&:hover": {
+      backgroundColor: theme.alpha((theme.vars || theme).palette.action.active, (theme.vars || theme).palette.action.hoverOpacity),
+      // Reset on touch devices, it doesn't add specificity
+      "@media (hover: none)": {
+        backgroundColor: "transparent"
+      }
+    },
+    variants: [...Object.entries(theme.palette).filter(createSimplePaletteValueFilter(["light"])).map(([color2]) => ({
+      props: {
+        color: color2
+      },
+      style: {
+        [`&.${switchClasses_default.checked}`]: {
+          color: (theme.vars || theme).palette[color2].main,
+          "&:hover": {
+            backgroundColor: theme.alpha((theme.vars || theme).palette[color2].main, (theme.vars || theme).palette.action.hoverOpacity),
+            "@media (hover: none)": {
+              backgroundColor: "transparent"
+            }
+          },
+          [`&.${switchClasses_default.disabled}`]: {
+            color: theme.vars ? theme.vars.palette.Switch[`${color2}DisabledColor`] : `${theme.palette.mode === "light" ? theme.lighten(theme.palette[color2].main, 0.62) : theme.darken(theme.palette[color2].main, 0.55)}`
+          }
+        },
+        [`&.${switchClasses_default.checked} + .${switchClasses_default.track}`]: {
+          backgroundColor: (theme.vars || theme).palette[color2].main
+        }
+      }
+    }))]
+  })));
+  var SwitchTrack = styled_default("span", {
+    name: "MuiSwitch",
+    slot: "Track"
+  })(memoTheme_default(({
+    theme
+  }) => ({
+    height: "100%",
+    width: "100%",
+    borderRadius: 14 / 2,
+    zIndex: -1,
+    transition: theme.transitions.create(["opacity", "background-color"], {
+      duration: theme.transitions.duration.shortest
+    }),
+    backgroundColor: theme.vars ? theme.vars.palette.common.onBackground : `${theme.palette.mode === "light" ? theme.palette.common.black : theme.palette.common.white}`,
+    opacity: theme.vars ? theme.vars.opacity.switchTrack : `${theme.palette.mode === "light" ? 0.38 : 0.3}`
+  })));
+  var SwitchThumb = styled_default("span", {
+    name: "MuiSwitch",
+    slot: "Thumb"
+  })(memoTheme_default(({
+    theme
+  }) => ({
+    boxShadow: (theme.vars || theme).shadows[1],
+    backgroundColor: "currentColor",
+    width: 20,
+    height: 20,
+    borderRadius: "50%"
+  })));
+  var Switch = /* @__PURE__ */ React87.forwardRef(function Switch2(inProps, ref) {
+    const props = useDefaultProps2({
+      props: inProps,
+      name: "MuiSwitch"
+    });
+    const {
+      className,
+      color: color2 = "primary",
+      edge = false,
+      size = "medium",
+      sx,
+      slots = {},
+      slotProps = {},
+      ...other
+    } = props;
+    const ownerState = {
+      ...props,
+      color: color2,
+      edge,
+      size
+    };
+    const classes = useUtilityClasses36(ownerState);
+    const externalForwardedProps = {
+      slots,
+      slotProps
+    };
+    const [RootSlot, rootSlotProps] = useSlot("root", {
+      className: clsx_default(classes.root, className),
+      elementType: SwitchRoot,
+      externalForwardedProps,
+      ownerState,
+      additionalProps: {
+        sx
+      }
+    });
+    const [ThumbSlot, thumbSlotProps] = useSlot("thumb", {
+      className: classes.thumb,
+      elementType: SwitchThumb,
+      externalForwardedProps,
+      ownerState
+    });
+    const icon = /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(ThumbSlot, {
+      ...thumbSlotProps
+    });
+    const [TrackSlot, trackSlotProps] = useSlot("track", {
+      className: classes.track,
+      elementType: SwitchTrack,
+      externalForwardedProps,
+      ownerState
+    });
+    return /* @__PURE__ */ (0, import_jsx_runtime72.jsxs)(RootSlot, {
+      ...rootSlotProps,
+      children: [/* @__PURE__ */ (0, import_jsx_runtime72.jsx)(SwitchSwitchBase, {
+        type: "checkbox",
+        icon,
+        checkedIcon: icon,
+        ref,
+        ownerState,
+        ...other,
+        classes: {
+          ...classes,
+          root: classes.switchBase
+        },
+        slots: {
+          ...slots.switchBase && {
+            root: slots.switchBase
+          },
+          ...slots.input && {
+            input: slots.input
+          }
+        },
+        slotProps: {
+          ...slotProps.switchBase && {
+            root: typeof slotProps.switchBase === "function" ? slotProps.switchBase(ownerState) : slotProps.switchBase
+          },
+          input: {
+            role: "switch"
+          },
+          ...slotProps.input && {
+            input: typeof slotProps.input === "function" ? slotProps.input(ownerState) : slotProps.input
+          }
+        }
+      }), /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(TrackSlot, {
+        ...trackSlotProps
+      })]
+    });
+  });
+  true ? Switch.propTypes = {
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │    To update them, edit the d.ts file and run `pnpm proptypes`.     │
+    // └─────────────────────────────────────────────────────────────────────┘
+    /**
+     * If `true`, the component is checked.
+     */
+    checked: import_prop_types65.default.bool,
+    /**
+     * The icon to display when the component is checked.
+     */
+    checkedIcon: import_prop_types65.default.node,
+    /**
+     * Override or extend the styles applied to the component.
+     */
+    classes: import_prop_types65.default.object,
+    /**
+     * @ignore
+     */
+    className: import_prop_types65.default.string,
+    /**
+     * The color of the component.
+     * It supports both default and custom theme colors, which can be added as shown in the
+     * [palette customization guide](https://mui.com/material-ui/customization/palette/#custom-colors).
+     * @default 'primary'
+     */
+    color: import_prop_types65.default.oneOfType([import_prop_types65.default.oneOf(["default", "primary", "secondary", "error", "info", "success", "warning"]), import_prop_types65.default.string]),
+    /**
+     * The default checked state. Use when the component is not controlled.
+     */
+    defaultChecked: import_prop_types65.default.bool,
+    /**
+     * If `true`, the component is disabled.
+     */
+    disabled: import_prop_types65.default.bool,
+    /**
+     * If `true`, the ripple effect is disabled.
+     * @default false
+     */
+    disableRipple: import_prop_types65.default.bool,
+    /**
+     * If given, uses a negative margin to counteract the padding on one
+     * side (this is often helpful for aligning the left or right
+     * side of the icon with content above or below, without ruining the border
+     * size and shape).
+     * @default false
+     */
+    edge: import_prop_types65.default.oneOf(["end", "start", false]),
+    /**
+     * The icon to display when the component is unchecked.
+     */
+    icon: import_prop_types65.default.node,
+    /**
+     * The id of the `input` element.
+     */
+    id: import_prop_types65.default.string,
+    /**
+     * [Attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input#attributes) applied to the `input` element.
+     * @deprecated Use `slotProps.input` instead. This prop will be removed in a future major release. See [Migrating from deprecated APIs](/material-ui/migration/migrating-from-deprecated-apis/) for more details.
+     */
+    inputProps: import_prop_types65.default.object,
+    /**
+     * Pass a ref to the `input` element.
+     * @deprecated Use `slotProps.input.ref` instead. This prop will be removed in a future major release. See [Migrating from deprecated APIs](/material-ui/migration/migrating-from-deprecated-apis/) for more details.
+     */
+    inputRef: refType_default,
+    /**
+     * Callback fired when the state is changed.
+     *
+     * @param {React.ChangeEvent<HTMLInputElement>} event The event source of the callback.
+     * You can pull out the new value by accessing `event.target.value` (string).
+     * You can pull out the new checked state by accessing `event.target.checked` (boolean).
+     */
+    onChange: import_prop_types65.default.func,
+    /**
+     * If `true`, the `input` element is required.
+     * @default false
+     */
+    required: import_prop_types65.default.bool,
+    /**
+     * The size of the component.
+     * `small` is equivalent to the dense switch styling.
+     * @default 'medium'
+     */
+    size: import_prop_types65.default.oneOfType([import_prop_types65.default.oneOf(["medium", "small"]), import_prop_types65.default.string]),
+    /**
+     * The props used for each slot inside.
+     * @default {}
+     */
+    slotProps: import_prop_types65.default.shape({
+      input: import_prop_types65.default.oneOfType([import_prop_types65.default.func, import_prop_types65.default.object]),
+      root: import_prop_types65.default.oneOfType([import_prop_types65.default.func, import_prop_types65.default.object]),
+      switchBase: import_prop_types65.default.oneOfType([import_prop_types65.default.func, import_prop_types65.default.object]),
+      thumb: import_prop_types65.default.oneOfType([import_prop_types65.default.func, import_prop_types65.default.object]),
+      track: import_prop_types65.default.oneOfType([import_prop_types65.default.func, import_prop_types65.default.object])
+    }),
+    /**
+     * The components used for each slot inside.
+     * @default {}
+     */
+    slots: import_prop_types65.default.shape({
+      input: import_prop_types65.default.elementType,
+      root: import_prop_types65.default.elementType,
+      switchBase: import_prop_types65.default.elementType,
+      thumb: import_prop_types65.default.elementType,
+      track: import_prop_types65.default.elementType
+    }),
+    /**
+     * The system prop that allows defining system overrides as well as additional CSS styles.
+     */
+    sx: import_prop_types65.default.oneOfType([import_prop_types65.default.arrayOf(import_prop_types65.default.oneOfType([import_prop_types65.default.func, import_prop_types65.default.object, import_prop_types65.default.bool])), import_prop_types65.default.func, import_prop_types65.default.object]),
+    /**
+     * The value of the component. The DOM API casts this to a string.
+     * The browser uses "on" as the default value.
+     */
+    value: import_prop_types65.default.any
+  } : void 0;
+  var Switch_default = Switch;
+
+  // node_modules/@mui/material/esm/Tab/Tab.js
+  var React88 = __toESM(require_react(), 1);
+  var import_prop_types66 = __toESM(require_prop_types(), 1);
 
   // node_modules/@mui/material/esm/Tab/tabClasses.js
   function getTabUtilityClass(slot) {
@@ -46997,8 +47400,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   var tabClasses_default = tabClasses;
 
   // node_modules/@mui/material/esm/Tab/Tab.js
-  var import_jsx_runtime72 = __toESM(require_jsx_runtime(), 1);
-  var useUtilityClasses36 = (ownerState) => {
+  var import_jsx_runtime73 = __toESM(require_jsx_runtime(), 1);
+  var useUtilityClasses37 = (ownerState) => {
     const {
       classes,
       textColor,
@@ -47165,7 +47568,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       }
     }]
   })));
-  var Tab = /* @__PURE__ */ React87.forwardRef(function Tab2(inProps, ref) {
+  var Tab = /* @__PURE__ */ React88.forwardRef(function Tab2(inProps, ref) {
     const props = useDefaultProps2({
       props: inProps,
       name: "MuiTab"
@@ -47206,8 +47609,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       textColor,
       wrapped
     };
-    const classes = useUtilityClasses36(ownerState);
-    const icon = iconProp && label && /* @__PURE__ */ React87.isValidElement(iconProp) ? /* @__PURE__ */ React87.cloneElement(iconProp, {
+    const classes = useUtilityClasses37(ownerState);
+    const icon = iconProp && label && /* @__PURE__ */ React88.isValidElement(iconProp) ? /* @__PURE__ */ React88.cloneElement(iconProp, {
       className: clsx_default(classes.icon, iconProp.props.className)
     }) : iconProp;
     const handleClick = (event) => {
@@ -47226,7 +47629,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         onFocus(event);
       }
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime72.jsxs)(TabRoot, {
+    return /* @__PURE__ */ (0, import_jsx_runtime73.jsxs)(TabRoot, {
       focusRipple: !disableFocusRipple,
       className: clsx_default(classes.root, className),
       ref,
@@ -47238,9 +47641,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       ownerState,
       tabIndex: selected ? 0 : -1,
       ...other,
-      children: [iconPosition === "top" || iconPosition === "start" ? /* @__PURE__ */ (0, import_jsx_runtime72.jsxs)(React87.Fragment, {
+      children: [iconPosition === "top" || iconPosition === "start" ? /* @__PURE__ */ (0, import_jsx_runtime73.jsxs)(React88.Fragment, {
         children: [icon, label]
-      }) : /* @__PURE__ */ (0, import_jsx_runtime72.jsxs)(React87.Fragment, {
+      }) : /* @__PURE__ */ (0, import_jsx_runtime73.jsxs)(React88.Fragment, {
         children: [label, icon]
       }), indicator]
     });
@@ -47258,21 +47661,21 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * Override or extend the styles applied to the component.
      */
-    classes: import_prop_types65.default.object,
+    classes: import_prop_types66.default.object,
     /**
      * @ignore
      */
-    className: import_prop_types65.default.string,
+    className: import_prop_types66.default.string,
     /**
      * If `true`, the component is disabled.
      * @default false
      */
-    disabled: import_prop_types65.default.bool,
+    disabled: import_prop_types66.default.bool,
     /**
      * If `true`, the  keyboard focus ripple is disabled.
      * @default false
      */
-    disableFocusRipple: import_prop_types65.default.bool,
+    disableFocusRipple: import_prop_types66.default.bool,
     /**
      * If `true`, the ripple effect is disabled.
      *
@@ -47280,65 +47683,65 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * to highlight the element by applying separate styles with the `.Mui-focusVisible` class.
      * @default false
      */
-    disableRipple: import_prop_types65.default.bool,
+    disableRipple: import_prop_types66.default.bool,
     /**
      * The icon to display.
      */
-    icon: import_prop_types65.default.oneOfType([import_prop_types65.default.element, import_prop_types65.default.string]),
+    icon: import_prop_types66.default.oneOfType([import_prop_types66.default.element, import_prop_types66.default.string]),
     /**
      * The position of the icon relative to the label.
      * @default 'top'
      */
-    iconPosition: import_prop_types65.default.oneOf(["bottom", "end", "start", "top"]),
+    iconPosition: import_prop_types66.default.oneOf(["bottom", "end", "start", "top"]),
     /**
      * The label element.
      */
-    label: import_prop_types65.default.node,
+    label: import_prop_types66.default.node,
     /**
      * @ignore
      */
-    onChange: import_prop_types65.default.func,
+    onChange: import_prop_types66.default.func,
     /**
      * @ignore
      */
-    onClick: import_prop_types65.default.func,
+    onClick: import_prop_types66.default.func,
     /**
      * @ignore
      */
-    onFocus: import_prop_types65.default.func,
+    onFocus: import_prop_types66.default.func,
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx: import_prop_types65.default.oneOfType([import_prop_types65.default.arrayOf(import_prop_types65.default.oneOfType([import_prop_types65.default.func, import_prop_types65.default.object, import_prop_types65.default.bool])), import_prop_types65.default.func, import_prop_types65.default.object]),
+    sx: import_prop_types66.default.oneOfType([import_prop_types66.default.arrayOf(import_prop_types66.default.oneOfType([import_prop_types66.default.func, import_prop_types66.default.object, import_prop_types66.default.bool])), import_prop_types66.default.func, import_prop_types66.default.object]),
     /**
      * You can provide your own value. Otherwise, we fallback to the child position index.
      */
-    value: import_prop_types65.default.any,
+    value: import_prop_types66.default.any,
     /**
      * Tab labels appear in a single row.
      * They can use a second line if needed.
      * @default false
      */
-    wrapped: import_prop_types65.default.bool
+    wrapped: import_prop_types66.default.bool
   } : void 0;
   var Tab_default = Tab;
 
   // node_modules/@mui/material/esm/internal/svg-icons/KeyboardArrowLeft.js
-  var import_jsx_runtime73 = __toESM(require_jsx_runtime(), 1);
-  var KeyboardArrowLeft_default = createSvgIcon(/* @__PURE__ */ (0, import_jsx_runtime73.jsx)("path", {
+  var import_jsx_runtime74 = __toESM(require_jsx_runtime(), 1);
+  var KeyboardArrowLeft_default = createSvgIcon(/* @__PURE__ */ (0, import_jsx_runtime74.jsx)("path", {
     d: "M15.41 16.09l-4.58-4.59 4.58-4.59L14 5.5l-6 6 6 6z"
   }), "KeyboardArrowLeft");
 
   // node_modules/@mui/material/esm/internal/svg-icons/KeyboardArrowRight.js
-  var import_jsx_runtime74 = __toESM(require_jsx_runtime(), 1);
-  var KeyboardArrowRight_default = createSvgIcon(/* @__PURE__ */ (0, import_jsx_runtime74.jsx)("path", {
+  var import_jsx_runtime75 = __toESM(require_jsx_runtime(), 1);
+  var KeyboardArrowRight_default = createSvgIcon(/* @__PURE__ */ (0, import_jsx_runtime75.jsx)("path", {
     d: "M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z"
   }), "KeyboardArrowRight");
 
   // node_modules/@mui/material/esm/Tabs/Tabs.js
-  var React90 = __toESM(require_react(), 1);
+  var React91 = __toESM(require_react(), 1);
   var import_react_is6 = __toESM(require_react_is3(), 1);
-  var import_prop_types68 = __toESM(require_prop_types(), 1);
+  var import_prop_types69 = __toESM(require_prop_types(), 1);
 
   // node_modules/@mui/material/esm/internal/animate.js
   function easeInOutSin(time3) {
@@ -47384,9 +47787,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
 
   // node_modules/@mui/material/esm/Tabs/ScrollbarSize.js
-  var React88 = __toESM(require_react(), 1);
-  var import_prop_types66 = __toESM(require_prop_types(), 1);
-  var import_jsx_runtime75 = __toESM(require_jsx_runtime(), 1);
+  var React89 = __toESM(require_react(), 1);
+  var import_prop_types67 = __toESM(require_prop_types(), 1);
+  var import_jsx_runtime76 = __toESM(require_jsx_runtime(), 1);
   var styles5 = {
     width: 99,
     height: 99,
@@ -47399,8 +47802,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       onChange,
       ...other
     } = props;
-    const scrollbarHeight = React88.useRef();
-    const nodeRef = React88.useRef(null);
+    const scrollbarHeight = React89.useRef();
+    const nodeRef = React89.useRef(null);
     const setMeasurements = () => {
       scrollbarHeight.current = nodeRef.current.offsetHeight - nodeRef.current.clientHeight;
     };
@@ -47419,23 +47822,23 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         containerWindow.removeEventListener("resize", handleResize);
       };
     }, [onChange]);
-    React88.useEffect(() => {
+    React89.useEffect(() => {
       setMeasurements();
       onChange(scrollbarHeight.current);
     }, [onChange]);
-    return /* @__PURE__ */ (0, import_jsx_runtime75.jsx)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime76.jsx)("div", {
       style: styles5,
       ...other,
       ref: nodeRef
     });
   }
   true ? ScrollbarSize.propTypes = {
-    onChange: import_prop_types66.default.func.isRequired
+    onChange: import_prop_types67.default.func.isRequired
   } : void 0;
 
   // node_modules/@mui/material/esm/TabScrollButton/TabScrollButton.js
-  var React89 = __toESM(require_react(), 1);
-  var import_prop_types67 = __toESM(require_prop_types(), 1);
+  var React90 = __toESM(require_react(), 1);
+  var import_prop_types68 = __toESM(require_prop_types(), 1);
 
   // node_modules/@mui/material/esm/TabScrollButton/tabScrollButtonClasses.js
   function getTabScrollButtonUtilityClass(slot) {
@@ -47445,8 +47848,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   var tabScrollButtonClasses_default = tabScrollButtonClasses;
 
   // node_modules/@mui/material/esm/TabScrollButton/TabScrollButton.js
-  var import_jsx_runtime76 = __toESM(require_jsx_runtime(), 1);
-  var useUtilityClasses37 = (ownerState) => {
+  var import_jsx_runtime77 = __toESM(require_jsx_runtime(), 1);
+  var useUtilityClasses38 = (ownerState) => {
     const {
       classes,
       orientation,
@@ -47486,7 +47889,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       }
     }]
   });
-  var TabScrollButton = /* @__PURE__ */ React89.forwardRef(function TabScrollButton2(inProps, ref) {
+  var TabScrollButton = /* @__PURE__ */ React90.forwardRef(function TabScrollButton2(inProps, ref) {
     const props = useDefaultProps2({
       props: inProps,
       name: "MuiTabScrollButton"
@@ -47505,7 +47908,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       isRtl,
       ...props
     };
-    const classes = useUtilityClasses37(ownerState);
+    const classes = useUtilityClasses38(ownerState);
     const StartButtonIcon = slots.StartScrollButtonIcon ?? KeyboardArrowLeft_default;
     const EndButtonIcon = slots.EndScrollButtonIcon ?? KeyboardArrowRight_default;
     const startButtonIconProps = useSlotProps_default({
@@ -47524,7 +47927,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       },
       ownerState
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(TabScrollButtonRoot, {
+    return /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(TabScrollButtonRoot, {
       component: "div",
       className: clsx_default(classes.root, className),
       ref,
@@ -47538,9 +47941,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           "--TabScrollButton-svgRotate": `rotate(${isRtl ? -90 : 90}deg)`
         }
       },
-      children: direction === "left" ? /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(StartButtonIcon, {
+      children: direction === "left" ? /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(StartButtonIcon, {
         ...startButtonIconProps
-      }) : /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(EndButtonIcon, {
+      }) : /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(EndButtonIcon, {
         ...endButtonIconProps
       })
     });
@@ -47553,53 +47956,53 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * The content of the component.
      */
-    children: import_prop_types67.default.node,
+    children: import_prop_types68.default.node,
     /**
      * Override or extend the styles applied to the component.
      */
-    classes: import_prop_types67.default.object,
+    classes: import_prop_types68.default.object,
     /**
      * @ignore
      */
-    className: import_prop_types67.default.string,
+    className: import_prop_types68.default.string,
     /**
      * The direction the button should indicate.
      */
-    direction: import_prop_types67.default.oneOf(["left", "right"]).isRequired,
+    direction: import_prop_types68.default.oneOf(["left", "right"]).isRequired,
     /**
      * If `true`, the component is disabled.
      * @default false
      */
-    disabled: import_prop_types67.default.bool,
+    disabled: import_prop_types68.default.bool,
     /**
      * The component orientation (layout flow direction).
      */
-    orientation: import_prop_types67.default.oneOf(["horizontal", "vertical"]).isRequired,
+    orientation: import_prop_types68.default.oneOf(["horizontal", "vertical"]).isRequired,
     /**
      * The extra props for the slot components.
      * You can override the existing props or add new ones.
      * @default {}
      */
-    slotProps: import_prop_types67.default.shape({
-      endScrollButtonIcon: import_prop_types67.default.oneOfType([import_prop_types67.default.func, import_prop_types67.default.object]),
-      startScrollButtonIcon: import_prop_types67.default.oneOfType([import_prop_types67.default.func, import_prop_types67.default.object])
+    slotProps: import_prop_types68.default.shape({
+      endScrollButtonIcon: import_prop_types68.default.oneOfType([import_prop_types68.default.func, import_prop_types68.default.object]),
+      startScrollButtonIcon: import_prop_types68.default.oneOfType([import_prop_types68.default.func, import_prop_types68.default.object])
     }),
     /**
      * The components used for each slot inside.
      * @default {}
      */
-    slots: import_prop_types67.default.shape({
-      EndScrollButtonIcon: import_prop_types67.default.elementType,
-      StartScrollButtonIcon: import_prop_types67.default.elementType
+    slots: import_prop_types68.default.shape({
+      EndScrollButtonIcon: import_prop_types68.default.elementType,
+      StartScrollButtonIcon: import_prop_types68.default.elementType
     }),
     /**
      * @ignore
      */
-    style: import_prop_types67.default.object,
+    style: import_prop_types68.default.object,
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx: import_prop_types67.default.oneOfType([import_prop_types67.default.arrayOf(import_prop_types67.default.oneOfType([import_prop_types67.default.func, import_prop_types67.default.object, import_prop_types67.default.bool])), import_prop_types67.default.func, import_prop_types67.default.object])
+    sx: import_prop_types68.default.oneOfType([import_prop_types68.default.arrayOf(import_prop_types68.default.oneOfType([import_prop_types68.default.func, import_prop_types68.default.object, import_prop_types68.default.bool])), import_prop_types68.default.func, import_prop_types68.default.object])
   } : void 0;
   var TabScrollButton_default = TabScrollButton;
 
@@ -47611,7 +48014,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   var tabsClasses_default = tabsClasses;
 
   // node_modules/@mui/material/esm/Tabs/Tabs.js
-  var import_jsx_runtime77 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime78 = __toESM(require_jsx_runtime(), 1);
   var nextItem2 = (list, item) => {
     if (list === item) {
       return list.firstChild;
@@ -47649,7 +48052,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       }
     }
   };
-  var useUtilityClasses38 = (ownerState) => {
+  var useUtilityClasses39 = (ownerState) => {
     const {
       vertical,
       fixed,
@@ -47841,7 +48244,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   });
   var defaultIndicatorStyle = {};
   var warnedOnceTabPresent = false;
-  var Tabs = /* @__PURE__ */ React90.forwardRef(function Tabs2(inProps, ref) {
+  var Tabs = /* @__PURE__ */ React91.forwardRef(function Tabs2(inProps, ref) {
     const props = useDefaultProps2({
       props: inProps,
       name: "MuiTabs"
@@ -47901,7 +48304,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       centered: centered && !scrollable,
       scrollButtonsHideMobile: !allowScrollButtonsMobile
     };
-    const classes = useUtilityClasses38(ownerState);
+    const classes = useUtilityClasses39(ownerState);
     const startScrollButtonIconProps = useSlotProps_default({
       elementType: slots.StartScrollButtonIcon,
       externalSlotProps: slotProps.startScrollButtonIcon,
@@ -47917,18 +48320,18 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         console.error('MUI: You can not use the `centered={true}` and `variant="scrollable"` properties at the same time on a `Tabs` component.');
       }
     }
-    const [mounted, setMounted] = React90.useState(false);
-    const [indicatorStyle, setIndicatorStyle] = React90.useState(defaultIndicatorStyle);
-    const [displayStartScroll, setDisplayStartScroll] = React90.useState(false);
-    const [displayEndScroll, setDisplayEndScroll] = React90.useState(false);
-    const [updateScrollObserver, setUpdateScrollObserver] = React90.useState(false);
-    const [scrollerStyle, setScrollerStyle] = React90.useState({
+    const [mounted, setMounted] = React91.useState(false);
+    const [indicatorStyle, setIndicatorStyle] = React91.useState(defaultIndicatorStyle);
+    const [displayStartScroll, setDisplayStartScroll] = React91.useState(false);
+    const [displayEndScroll, setDisplayEndScroll] = React91.useState(false);
+    const [updateScrollObserver, setUpdateScrollObserver] = React91.useState(false);
+    const [scrollerStyle, setScrollerStyle] = React91.useState({
       overflow: "hidden",
       scrollbarWidth: 0
     });
     const valueToIndex = /* @__PURE__ */ new Map();
-    const tabsRef = React90.useRef(null);
-    const tabListRef = React90.useRef(null);
+    const tabsRef = React91.useRef(null);
+    const tabListRef = React91.useRef(null);
     const externalForwardedProps = {
       slots,
       slotProps: {
@@ -48064,7 +48467,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       externalForwardedProps,
       ownerState
     });
-    const handleScrollbarSizeChange = React90.useCallback((scrollbarWidth) => {
+    const handleScrollbarSizeChange = React91.useCallback((scrollbarWidth) => {
       scrollbarOnChange?.(scrollbarWidth);
       setScrollerStyle({
         overflow: null,
@@ -48090,19 +48493,19 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     });
     const getConditionalElements = () => {
       const conditionalElements2 = {};
-      conditionalElements2.scrollbarSizeListener = scrollable ? /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(ScrollbarSlot, {
+      conditionalElements2.scrollbarSizeListener = scrollable ? /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(ScrollbarSlot, {
         ...scrollbarSlotProps,
         onChange: handleScrollbarSizeChange
       }) : null;
       const scrollButtonsActive = displayStartScroll || displayEndScroll;
       const showScrollButtons = scrollable && (scrollButtons === "auto" && scrollButtonsActive || scrollButtons === true);
-      conditionalElements2.scrollButtonStart = showScrollButtons ? /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(ScrollButtonsSlot, {
+      conditionalElements2.scrollButtonStart = showScrollButtons ? /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(ScrollButtonsSlot, {
         direction: isRtl ? "right" : "left",
         onClick: handleStartScrollClick,
         disabled: !displayStartScroll,
         ...scrollButtonSlotProps
       }) : null;
-      conditionalElements2.scrollButtonEnd = showScrollButtons ? /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(ScrollButtonsSlot, {
+      conditionalElements2.scrollButtonEnd = showScrollButtons ? /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(ScrollButtonsSlot, {
         direction: isRtl ? "left" : "right",
         onClick: handleEndScrollClick,
         disabled: !displayEndScroll,
@@ -48135,7 +48538,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         setUpdateScrollObserver(!updateScrollObserver);
       }
     });
-    React90.useEffect(() => {
+    React91.useEffect(() => {
       const handleResize = debounce_default(() => {
         if (tabsRef.current) {
           updateIndicatorState();
@@ -48176,7 +48579,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         resizeObserver?.disconnect();
       };
     }, [updateIndicatorState, updateScrollButtonState]);
-    React90.useEffect(() => {
+    React91.useEffect(() => {
       const tabListChildren = Array.from(tabListRef.current.children);
       const length2 = tabListChildren.length;
       if (typeof IntersectionObserver !== "undefined" && length2 > 0 && scrollable && scrollButtons !== false) {
@@ -48203,16 +48606,16 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       }
       return void 0;
     }, [scrollable, scrollButtons, updateScrollObserver, childrenProp?.length]);
-    React90.useEffect(() => {
+    React91.useEffect(() => {
       setMounted(true);
     }, []);
-    React90.useEffect(() => {
+    React91.useEffect(() => {
       updateIndicatorState();
     });
-    React90.useEffect(() => {
+    React91.useEffect(() => {
       scrollSelectedIntoView(defaultIndicatorStyle !== indicatorStyle);
     }, [scrollSelectedIntoView, indicatorStyle]);
-    React90.useImperativeHandle(action, () => ({
+    React91.useImperativeHandle(action, () => ({
       updateIndicator: updateIndicatorState,
       updateScrollButtons: updateScrollButtonState
     }), [updateIndicatorState, updateScrollButtonState]);
@@ -48225,12 +48628,12 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         style: indicatorStyle
       }
     });
-    const indicator = /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(IndicatorSlot, {
+    const indicator = /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(IndicatorSlot, {
       ...indicatorSlotProps
     });
     let childIndex = 0;
-    const children = React90.Children.map(childrenProp, (child) => {
-      if (!/* @__PURE__ */ React90.isValidElement(child)) {
+    const children = React91.Children.map(childrenProp, (child) => {
+      if (!/* @__PURE__ */ React91.isValidElement(child)) {
         return null;
       }
       if (true) {
@@ -48242,7 +48645,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       valueToIndex.set(childValue, childIndex);
       const selected = childValue === value;
       childIndex += 1;
-      return /* @__PURE__ */ React90.cloneElement(child, {
+      return /* @__PURE__ */ React91.cloneElement(child, {
         fullWidth: variant === "fullWidth",
         indicator: selected && !mounted && indicator,
         selected,
@@ -48331,11 +48734,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         }
       })
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime77.jsxs)(RootSlot, {
+    return /* @__PURE__ */ (0, import_jsx_runtime78.jsxs)(RootSlot, {
       ...rootSlotProps,
-      children: [conditionalElements.scrollButtonStart, conditionalElements.scrollbarSizeListener, /* @__PURE__ */ (0, import_jsx_runtime77.jsxs)(ScrollerSlot, {
+      children: [conditionalElements.scrollButtonStart, conditionalElements.scrollbarSizeListener, /* @__PURE__ */ (0, import_jsx_runtime78.jsxs)(ScrollerSlot, {
         ...scrollerSlotProps,
-        children: [/* @__PURE__ */ (0, import_jsx_runtime77.jsx)(ListSlot, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime78.jsx)(ListSlot, {
           "aria-label": ariaLabel,
           "aria-labelledby": ariaLabelledBy,
           "aria-orientation": orientation === "vertical" ? "vertical" : null,
@@ -48365,61 +48768,61 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * By default the scroll buttons are hidden on mobile and takes precedence over `scrollButtons`.
      * @default false
      */
-    allowScrollButtonsMobile: import_prop_types68.default.bool,
+    allowScrollButtonsMobile: import_prop_types69.default.bool,
     /**
      * The label for the Tabs as a string.
      */
-    "aria-label": import_prop_types68.default.string,
+    "aria-label": import_prop_types69.default.string,
     /**
      * An id or list of ids separated by a space that label the Tabs.
      */
-    "aria-labelledby": import_prop_types68.default.string,
+    "aria-labelledby": import_prop_types69.default.string,
     /**
      * If `true`, the tabs are centered.
      * This prop is intended for large views.
      * @default false
      */
-    centered: import_prop_types68.default.bool,
+    centered: import_prop_types69.default.bool,
     /**
      * The content of the component.
      */
-    children: import_prop_types68.default.node,
+    children: import_prop_types69.default.node,
     /**
      * Override or extend the styles applied to the component.
      */
-    classes: import_prop_types68.default.object,
+    classes: import_prop_types69.default.object,
     /**
      * @ignore
      */
-    className: import_prop_types68.default.string,
+    className: import_prop_types69.default.string,
     /**
      * The component used for the root node.
      * Either a string to use a HTML element or a component.
      */
-    component: import_prop_types68.default.elementType,
+    component: import_prop_types69.default.elementType,
     /**
      * Determines the color of the indicator.
      * @default 'primary'
      */
-    indicatorColor: import_prop_types68.default.oneOfType([import_prop_types68.default.oneOf(["primary", "secondary"]), import_prop_types68.default.string]),
+    indicatorColor: import_prop_types69.default.oneOfType([import_prop_types69.default.oneOf(["primary", "secondary"]), import_prop_types69.default.string]),
     /**
      * Callback fired when the value changes.
      *
      * @param {React.SyntheticEvent} event The event source of the callback. **Warning**: This is a generic event not a change event.
      * @param {any} value We default to the index of the child (number)
      */
-    onChange: import_prop_types68.default.func,
+    onChange: import_prop_types69.default.func,
     /**
      * The component orientation (layout flow direction).
      * @default 'horizontal'
      */
-    orientation: import_prop_types68.default.oneOf(["horizontal", "vertical"]),
+    orientation: import_prop_types69.default.oneOf(["horizontal", "vertical"]),
     /**
      * The component used to render the scroll buttons.
      * @deprecated use the `slots.scrollButtons` prop instead. This prop will be removed in a future major release. See [Migrating from deprecated APIs](https://mui.com/material-ui/migration/migrating-from-deprecated-apis/) for more details.
      * @default TabScrollButton
      */
-    ScrollButtonComponent: import_prop_types68.default.elementType,
+    ScrollButtonComponent: import_prop_types69.default.elementType,
     /**
      * Determine behavior of scroll buttons when tabs are set to scroll:
      *
@@ -48431,68 +48834,68 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * This behavior can be disabled with `allowScrollButtonsMobile`.
      * @default 'auto'
      */
-    scrollButtons: import_prop_types68.default.oneOf(["auto", false, true]),
+    scrollButtons: import_prop_types69.default.oneOf(["auto", false, true]),
     /**
      * If `true` the selected tab changes on focus. Otherwise it only
      * changes on activation.
      */
-    selectionFollowsFocus: import_prop_types68.default.bool,
+    selectionFollowsFocus: import_prop_types69.default.bool,
     /**
      * The props used for each slot inside.
      * @default {}
      */
-    slotProps: import_prop_types68.default.shape({
-      endScrollButtonIcon: import_prop_types68.default.oneOfType([import_prop_types68.default.func, import_prop_types68.default.object]),
-      indicator: import_prop_types68.default.oneOfType([import_prop_types68.default.func, import_prop_types68.default.object]),
-      list: import_prop_types68.default.oneOfType([import_prop_types68.default.func, import_prop_types68.default.object]),
-      root: import_prop_types68.default.oneOfType([import_prop_types68.default.func, import_prop_types68.default.object]),
-      scrollbar: import_prop_types68.default.oneOfType([import_prop_types68.default.func, import_prop_types68.default.object]),
-      scrollButtons: import_prop_types68.default.oneOfType([import_prop_types68.default.func, import_prop_types68.default.object]),
-      scroller: import_prop_types68.default.oneOfType([import_prop_types68.default.func, import_prop_types68.default.object]),
-      startScrollButtonIcon: import_prop_types68.default.oneOfType([import_prop_types68.default.func, import_prop_types68.default.object])
+    slotProps: import_prop_types69.default.shape({
+      endScrollButtonIcon: import_prop_types69.default.oneOfType([import_prop_types69.default.func, import_prop_types69.default.object]),
+      indicator: import_prop_types69.default.oneOfType([import_prop_types69.default.func, import_prop_types69.default.object]),
+      list: import_prop_types69.default.oneOfType([import_prop_types69.default.func, import_prop_types69.default.object]),
+      root: import_prop_types69.default.oneOfType([import_prop_types69.default.func, import_prop_types69.default.object]),
+      scrollbar: import_prop_types69.default.oneOfType([import_prop_types69.default.func, import_prop_types69.default.object]),
+      scrollButtons: import_prop_types69.default.oneOfType([import_prop_types69.default.func, import_prop_types69.default.object]),
+      scroller: import_prop_types69.default.oneOfType([import_prop_types69.default.func, import_prop_types69.default.object]),
+      startScrollButtonIcon: import_prop_types69.default.oneOfType([import_prop_types69.default.func, import_prop_types69.default.object])
     }),
     /**
      * The components used for each slot inside.
      * @default {}
      */
-    slots: import_prop_types68.default.shape({
-      endScrollButtonIcon: import_prop_types68.default.elementType,
-      EndScrollButtonIcon: import_prop_types68.default.elementType,
-      indicator: import_prop_types68.default.elementType,
-      list: import_prop_types68.default.elementType,
-      root: import_prop_types68.default.elementType,
-      scrollbar: import_prop_types68.default.elementType,
-      scrollButtons: import_prop_types68.default.elementType,
-      scroller: import_prop_types68.default.elementType,
-      startScrollButtonIcon: import_prop_types68.default.elementType,
-      StartScrollButtonIcon: import_prop_types68.default.elementType
+    slots: import_prop_types69.default.shape({
+      endScrollButtonIcon: import_prop_types69.default.elementType,
+      EndScrollButtonIcon: import_prop_types69.default.elementType,
+      indicator: import_prop_types69.default.elementType,
+      list: import_prop_types69.default.elementType,
+      root: import_prop_types69.default.elementType,
+      scrollbar: import_prop_types69.default.elementType,
+      scrollButtons: import_prop_types69.default.elementType,
+      scroller: import_prop_types69.default.elementType,
+      startScrollButtonIcon: import_prop_types69.default.elementType,
+      StartScrollButtonIcon: import_prop_types69.default.elementType
     }),
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx: import_prop_types68.default.oneOfType([import_prop_types68.default.arrayOf(import_prop_types68.default.oneOfType([import_prop_types68.default.func, import_prop_types68.default.object, import_prop_types68.default.bool])), import_prop_types68.default.func, import_prop_types68.default.object]),
+    sx: import_prop_types69.default.oneOfType([import_prop_types69.default.arrayOf(import_prop_types69.default.oneOfType([import_prop_types69.default.func, import_prop_types69.default.object, import_prop_types69.default.bool])), import_prop_types69.default.func, import_prop_types69.default.object]),
     /**
      * Props applied to the tab indicator element.
      * @deprecated use the `slotProps.indicator` prop instead. This prop will be removed in a future major release. See [Migrating from deprecated APIs](https://mui.com/material-ui/migration/migrating-from-deprecated-apis/) for more details.
      * @default  {}
      */
-    TabIndicatorProps: import_prop_types68.default.object,
+    TabIndicatorProps: import_prop_types69.default.object,
     /**
      * Props applied to the [`TabScrollButton`](https://mui.com/material-ui/api/tab-scroll-button/) element.
      * @deprecated use the `slotProps.scrollButtons` prop instead. This prop will be removed in a future major release. See [Migrating from deprecated APIs](https://mui.com/material-ui/migration/migrating-from-deprecated-apis/) for more details.
      * @default {}
      */
-    TabScrollButtonProps: import_prop_types68.default.object,
+    TabScrollButtonProps: import_prop_types69.default.object,
     /**
      * Determines the color of the `Tab`.
      * @default 'primary'
      */
-    textColor: import_prop_types68.default.oneOf(["inherit", "primary", "secondary"]),
+    textColor: import_prop_types69.default.oneOf(["inherit", "primary", "secondary"]),
     /**
      * The value of the currently selected `Tab`.
      * If you don't want any selected `Tab`, you can set this prop to `false`.
      */
-    value: import_prop_types68.default.any,
+    value: import_prop_types69.default.any,
     /**
      * Determines additional display behavior of the tabs:
      *
@@ -48503,19 +48906,19 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      *  - `standard` will render the default state.
      * @default 'standard'
      */
-    variant: import_prop_types68.default.oneOf(["fullWidth", "scrollable", "standard"]),
+    variant: import_prop_types69.default.oneOf(["fullWidth", "scrollable", "standard"]),
     /**
      * If `true`, the scrollbar is visible. It can be useful when displaying
      * a long vertical list of tabs.
      * @default false
      */
-    visibleScrollbar: import_prop_types68.default.bool
+    visibleScrollbar: import_prop_types69.default.bool
   } : void 0;
   var Tabs_default = Tabs;
 
   // node_modules/@mui/material/esm/TextField/TextField.js
-  var React91 = __toESM(require_react(), 1);
-  var import_prop_types69 = __toESM(require_prop_types(), 1);
+  var React92 = __toESM(require_react(), 1);
+  var import_prop_types70 = __toESM(require_prop_types(), 1);
 
   // node_modules/@mui/material/esm/TextField/textFieldClasses.js
   function getTextFieldUtilityClass(slot) {
@@ -48524,13 +48927,13 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   var textFieldClasses = generateUtilityClasses("MuiTextField", ["root"]);
 
   // node_modules/@mui/material/esm/TextField/TextField.js
-  var import_jsx_runtime78 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime79 = __toESM(require_jsx_runtime(), 1);
   var variantComponent = {
     standard: Input_default,
     filled: FilledInput_default,
     outlined: OutlinedInput_default
   };
-  var useUtilityClasses39 = (ownerState) => {
+  var useUtilityClasses40 = (ownerState) => {
     const {
       classes
     } = ownerState;
@@ -48543,7 +48946,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     name: "MuiTextField",
     slot: "Root"
   })({});
-  var TextField = /* @__PURE__ */ React91.forwardRef(function TextField2(inProps, ref) {
+  var TextField = /* @__PURE__ */ React92.forwardRef(function TextField2(inProps, ref) {
     const props = useDefaultProps2({
       props: inProps,
       name: "MuiTextField"
@@ -48597,7 +49000,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       select,
       variant
     };
-    const classes = useUtilityClasses39(ownerState);
+    const classes = useUtilityClasses40(ownerState);
     if (true) {
       if (select && !children) {
         console.error("MUI: `children` must be passed when using the `TextField` component with `select`.");
@@ -48677,7 +49080,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       externalForwardedProps,
       ownerState
     });
-    const InputElement = /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(InputSlot, {
+    const InputElement = /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(InputSlot, {
       "aria-describedby": helperTextId,
       autoComplete,
       autoFocus,
@@ -48702,14 +49105,14 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       },
       ...inputProps
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime78.jsxs)(RootSlot, {
+    return /* @__PURE__ */ (0, import_jsx_runtime79.jsxs)(RootSlot, {
       ...rootProps,
-      children: [label != null && label !== "" && /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(InputLabelSlot, {
+      children: [label != null && label !== "" && /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(InputLabelSlot, {
         htmlFor: id,
         id: inputLabelId,
         ...inputLabelProps,
         children: label
-      }), select ? /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(SelectSlot, {
+      }), select ? /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(SelectSlot, {
         "aria-describedby": helperTextId,
         id,
         labelId: inputLabelId,
@@ -48717,7 +49120,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         input: InputElement,
         ...selectProps,
         children
-      }) : InputElement, helperText && /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(FormHelperTextSlot, {
+      }) : InputElement, helperText && /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(FormHelperTextSlot, {
         id: helperTextId,
         ...formHelperTextProps,
         children: helperText
@@ -48734,75 +49137,75 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * The name can be confusing, as it's more like an autofill.
      * You can learn more about it [following the specification](https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#autofill).
      */
-    autoComplete: import_prop_types69.default.string,
+    autoComplete: import_prop_types70.default.string,
     /**
      * If `true`, the `input` element is focused during the first mount.
      * @default false
      */
-    autoFocus: import_prop_types69.default.bool,
+    autoFocus: import_prop_types70.default.bool,
     /**
      * @ignore
      */
-    children: import_prop_types69.default.node,
+    children: import_prop_types70.default.node,
     /**
      * Override or extend the styles applied to the component.
      */
-    classes: import_prop_types69.default.object,
+    classes: import_prop_types70.default.object,
     /**
      * @ignore
      */
-    className: import_prop_types69.default.string,
+    className: import_prop_types70.default.string,
     /**
      * The color of the component.
      * It supports both default and custom theme colors, which can be added as shown in the
      * [palette customization guide](https://mui.com/material-ui/customization/palette/#custom-colors).
      * @default 'primary'
      */
-    color: import_prop_types69.default.oneOfType([import_prop_types69.default.oneOf(["primary", "secondary", "error", "info", "success", "warning"]), import_prop_types69.default.string]),
+    color: import_prop_types70.default.oneOfType([import_prop_types70.default.oneOf(["primary", "secondary", "error", "info", "success", "warning"]), import_prop_types70.default.string]),
     /**
      * The default value. Use when the component is not controlled.
      */
-    defaultValue: import_prop_types69.default.any,
+    defaultValue: import_prop_types70.default.any,
     /**
      * If `true`, the component is disabled.
      * @default false
      */
-    disabled: import_prop_types69.default.bool,
+    disabled: import_prop_types70.default.bool,
     /**
      * If `true`, the label is displayed in an error state.
      * @default false
      */
-    error: import_prop_types69.default.bool,
+    error: import_prop_types70.default.bool,
     /**
      * Props applied to the [`FormHelperText`](https://mui.com/material-ui/api/form-helper-text/) element.
      * @deprecated Use `slotProps.formHelperText` instead. This prop will be removed in a future major release. See [Migrating from deprecated APIs](https://mui.com/material-ui/migration/migrating-from-deprecated-apis/) for more details.
      */
-    FormHelperTextProps: import_prop_types69.default.object,
+    FormHelperTextProps: import_prop_types70.default.object,
     /**
      * If `true`, the input will take up the full width of its container.
      * @default false
      */
-    fullWidth: import_prop_types69.default.bool,
+    fullWidth: import_prop_types70.default.bool,
     /**
      * The helper text content.
      */
-    helperText: import_prop_types69.default.node,
+    helperText: import_prop_types70.default.node,
     /**
      * The id of the `input` element.
      * Use this prop to make `label` and `helperText` accessible for screen readers.
      */
-    id: import_prop_types69.default.string,
+    id: import_prop_types70.default.string,
     /**
      * Props applied to the [`InputLabel`](https://mui.com/material-ui/api/input-label/) element.
      * Pointer events like `onClick` are enabled if and only if `shrink` is `true`.
      * @deprecated Use `slotProps.inputLabel` instead. This prop will be removed in a future major release. See [Migrating from deprecated APIs](https://mui.com/material-ui/migration/migrating-from-deprecated-apis/) for more details.
      */
-    InputLabelProps: import_prop_types69.default.object,
+    InputLabelProps: import_prop_types70.default.object,
     /**
      * [Attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input#attributes) applied to the `input` element.
      * @deprecated Use `slotProps.htmlInput` instead. This prop will be removed in a future major release. See [Migrating from deprecated APIs](https://mui.com/material-ui/migration/migrating-from-deprecated-apis/) for more details.
      */
-    inputProps: import_prop_types69.default.object,
+    inputProps: import_prop_types70.default.object,
     /**
      * Props applied to the Input element.
      * It will be a [`FilledInput`](https://mui.com/material-ui/api/filled-input/),
@@ -48810,7 +49213,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * component depending on the `variant` prop value.
      * @deprecated Use `slotProps.input` instead. This prop will be removed in a future major release. See [Migrating from deprecated APIs](https://mui.com/material-ui/migration/migrating-from-deprecated-apis/) for more details.
      */
-    InputProps: import_prop_types69.default.object,
+    InputProps: import_prop_types70.default.object,
     /**
      * Pass a ref to the `input` element.
      */
@@ -48818,123 +49221,132 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * The label content.
      */
-    label: import_prop_types69.default.node,
+    label: import_prop_types70.default.node,
     /**
      * If `dense` or `normal`, will adjust vertical spacing of this and contained components.
      * @default 'none'
      */
-    margin: import_prop_types69.default.oneOf(["dense", "none", "normal"]),
+    margin: import_prop_types70.default.oneOf(["dense", "none", "normal"]),
     /**
      * Maximum number of rows to display when multiline option is set to true.
      */
-    maxRows: import_prop_types69.default.oneOfType([import_prop_types69.default.number, import_prop_types69.default.string]),
+    maxRows: import_prop_types70.default.oneOfType([import_prop_types70.default.number, import_prop_types70.default.string]),
     /**
      * Minimum number of rows to display when multiline option is set to true.
      */
-    minRows: import_prop_types69.default.oneOfType([import_prop_types69.default.number, import_prop_types69.default.string]),
+    minRows: import_prop_types70.default.oneOfType([import_prop_types70.default.number, import_prop_types70.default.string]),
     /**
      * If `true`, a `textarea` element is rendered instead of an input.
      * @default false
      */
-    multiline: import_prop_types69.default.bool,
+    multiline: import_prop_types70.default.bool,
     /**
      * Name attribute of the `input` element.
      */
-    name: import_prop_types69.default.string,
+    name: import_prop_types70.default.string,
     /**
      * @ignore
      */
-    onBlur: import_prop_types69.default.func,
+    onBlur: import_prop_types70.default.func,
     /**
      * Callback fired when the value is changed.
      *
      * @param {object} event The event source of the callback.
      * You can pull out the new value by accessing `event.target.value` (string).
      */
-    onChange: import_prop_types69.default.func,
+    onChange: import_prop_types70.default.func,
     /**
      * @ignore
      */
-    onFocus: import_prop_types69.default.func,
+    onFocus: import_prop_types70.default.func,
     /**
      * The short hint displayed in the `input` before the user enters a value.
      */
-    placeholder: import_prop_types69.default.string,
+    placeholder: import_prop_types70.default.string,
     /**
      * If `true`, the label is displayed as required and the `input` element is required.
      * @default false
      */
-    required: import_prop_types69.default.bool,
+    required: import_prop_types70.default.bool,
     /**
      * Number of rows to display when multiline option is set to true.
      */
-    rows: import_prop_types69.default.oneOfType([import_prop_types69.default.number, import_prop_types69.default.string]),
+    rows: import_prop_types70.default.oneOfType([import_prop_types70.default.number, import_prop_types70.default.string]),
     /**
      * Render a [`Select`](https://mui.com/material-ui/api/select/) element while passing the Input element to `Select` as `input` parameter.
      * If this option is set you must pass the options of the select as children.
      * @default false
      */
-    select: import_prop_types69.default.bool,
+    select: import_prop_types70.default.bool,
     /**
      * Props applied to the [`Select`](https://mui.com/material-ui/api/select/) element.
      * @deprecated Use `slotProps.select` instead. This prop will be removed in a future major release. See [Migrating from deprecated APIs](https://mui.com/material-ui/migration/migrating-from-deprecated-apis/) for more details.
      */
-    SelectProps: import_prop_types69.default.object,
+    SelectProps: import_prop_types70.default.object,
     /**
      * The size of the component.
      * @default 'medium'
      */
-    size: import_prop_types69.default.oneOfType([import_prop_types69.default.oneOf(["medium", "small"]), import_prop_types69.default.string]),
+    size: import_prop_types70.default.oneOfType([import_prop_types70.default.oneOf(["medium", "small"]), import_prop_types70.default.string]),
     /**
      * The props used for each slot inside.
      * @default {}
      */
-    slotProps: import_prop_types69.default.shape({
-      formHelperText: import_prop_types69.default.oneOfType([import_prop_types69.default.func, import_prop_types69.default.object]),
-      htmlInput: import_prop_types69.default.oneOfType([import_prop_types69.default.func, import_prop_types69.default.object]),
-      input: import_prop_types69.default.oneOfType([import_prop_types69.default.func, import_prop_types69.default.object]),
-      inputLabel: import_prop_types69.default.oneOfType([import_prop_types69.default.func, import_prop_types69.default.object]),
-      select: import_prop_types69.default.oneOfType([import_prop_types69.default.func, import_prop_types69.default.object])
+    slotProps: import_prop_types70.default.shape({
+      formHelperText: import_prop_types70.default.oneOfType([import_prop_types70.default.func, import_prop_types70.default.object]),
+      htmlInput: import_prop_types70.default.oneOfType([import_prop_types70.default.func, import_prop_types70.default.object]),
+      input: import_prop_types70.default.oneOfType([import_prop_types70.default.func, import_prop_types70.default.object]),
+      inputLabel: import_prop_types70.default.oneOfType([import_prop_types70.default.func, import_prop_types70.default.object]),
+      select: import_prop_types70.default.oneOfType([import_prop_types70.default.func, import_prop_types70.default.object])
     }),
     /**
      * The components used for each slot inside.
      * @default {}
      */
-    slots: import_prop_types69.default.shape({
-      formHelperText: import_prop_types69.default.elementType,
-      htmlInput: import_prop_types69.default.elementType,
-      input: import_prop_types69.default.elementType,
-      inputLabel: import_prop_types69.default.elementType,
-      root: import_prop_types69.default.elementType,
-      select: import_prop_types69.default.elementType
+    slots: import_prop_types70.default.shape({
+      formHelperText: import_prop_types70.default.elementType,
+      htmlInput: import_prop_types70.default.elementType,
+      input: import_prop_types70.default.elementType,
+      inputLabel: import_prop_types70.default.elementType,
+      root: import_prop_types70.default.elementType,
+      select: import_prop_types70.default.elementType
     }),
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx: import_prop_types69.default.oneOfType([import_prop_types69.default.arrayOf(import_prop_types69.default.oneOfType([import_prop_types69.default.func, import_prop_types69.default.object, import_prop_types69.default.bool])), import_prop_types69.default.func, import_prop_types69.default.object]),
+    sx: import_prop_types70.default.oneOfType([import_prop_types70.default.arrayOf(import_prop_types70.default.oneOfType([import_prop_types70.default.func, import_prop_types70.default.object, import_prop_types70.default.bool])), import_prop_types70.default.func, import_prop_types70.default.object]),
     /**
      * Type of the `input` element. It should be [a valid HTML5 input type](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input#input_types).
      */
-    type: import_prop_types69.default.string,
+    type: import_prop_types70.default.string,
     /**
      * The value of the `input` element, required for a controlled component.
      */
-    value: import_prop_types69.default.any,
+    value: import_prop_types70.default.any,
     /**
      * The variant to use.
      * @default 'outlined'
      */
-    variant: import_prop_types69.default.oneOf(["filled", "outlined", "standard"])
+    variant: import_prop_types70.default.oneOf(["filled", "outlined", "standard"])
   } : void 0;
   var TextField_default = TextField;
 
   // src/theme.js
   var POPUP_WIDTH_PX = 348;
   var POPUP_HEIGHT_PX = 599;
-  var walletTheme = createTheme2({
+  var rootBoxStyles = {
+    width: POPUP_WIDTH_PX,
+    maxWidth: POPUP_WIDTH_PX,
+    height: POPUP_HEIGHT_PX,
+    maxHeight: POPUP_HEIGHT_PX,
+    margin: 0,
+    overflow: "hidden",
+    boxSizing: "border-box"
+  };
+  var walletThemeDark = createTheme2({
     palette: {
       mode: "dark",
-      primary: { main: "#f8b90f" },
+      primary: { main: "#f8b90f", contrastText: "#0a0a0a" },
       secondary: { main: "#85ff39" },
       error: { main: "#ef5f79" },
       success: { main: "#5ee59d" },
@@ -48958,13 +49370,58 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       MuiCssBaseline: {
         styleOverrides: {
           "html, body, #root": {
-            width: POPUP_WIDTH_PX,
-            maxWidth: POPUP_WIDTH_PX,
-            height: POPUP_HEIGHT_PX,
-            maxHeight: POPUP_HEIGHT_PX,
-            margin: 0,
-            overflow: "hidden",
-            boxSizing: "border-box"
+            ...rootBoxStyles,
+            backgroundColor: "#000000"
+          }
+        }
+      }
+    }
+  });
+  var walletThemeLight = createTheme2({
+    palette: {
+      mode: "light",
+      primary: { main: "#2f6f4e", contrastText: "#f8fff5" },
+      secondary: { main: "#52b788" },
+      error: { main: "#c62828" },
+      success: { main: "#1b7a4a" },
+      warning: { main: "#e6a800" },
+      info: { main: "#2d8a6e" },
+      background: {
+        default: "#eef6f0",
+        paper: "#ffffff"
+      },
+      text: {
+        primary: "#143524",
+        secondary: "#4a6356"
+      },
+      divider: "#c8e0d0",
+      action: {
+        hover: "rgba(47, 111, 78, 0.08)",
+        selected: "rgba(47, 111, 78, 0.12)"
+      }
+    },
+    typography: {
+      fontFamily: '"Outfit", "Roboto", "Helvetica", "Arial", sans-serif'
+    },
+    shape: {
+      borderRadius: 12
+    },
+    components: {
+      MuiCssBaseline: {
+        styleOverrides: {
+          "html, body, #root": {
+            ...rootBoxStyles,
+            backgroundColor: "#eef6f0"
+          }
+        }
+      },
+      MuiButton: {
+        styleOverrides: {
+          containedPrimary: {
+            boxShadow: "none",
+            "&:hover": {
+              boxShadow: "0 2px 8px rgba(47, 111, 78, 0.35)"
+            }
           }
         }
       }
@@ -49042,6 +49499,16 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   async function getWalletPublicAddress() {
     const addr = await getStorageValue(WALLET_PUBLIC_ADDRESS_KEY, "");
     return addr || DEFAULT_ADDRESS;
+  }
+
+  // src/services/themePrefs.js
+  var THEME_MODE_KEY = "wallet_theme_mode_v1";
+  async function getThemeMode() {
+    const v = await getStorageValue(THEME_MODE_KEY, "dark");
+    return v === "light" ? "light" : "dark";
+  }
+  async function setThemeMode(mode) {
+    await setStorageValue(THEME_MODE_KEY, mode === "light" ? "light" : "dark");
   }
 
   // node_modules/zod/v4/classic/external.js
@@ -62892,7 +63359,9 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
     const settingsMenuCloseTimerRef = (0, import_react13.useRef)(null);
     const [addressCopiedFeedback, setAddressCopiedFeedback] = (0, import_react13.useState)(false);
     const addressCopyFeedbackTimerRef = (0, import_react13.useRef)(null);
+    const [themeMode, setThemeModeState] = (0, import_react13.useState)("dark");
     const current = stack[stack.length - 1];
+    const muiTheme = themeMode === "light" ? walletThemeLight : walletThemeDark;
     const canBack = stack.length > 1;
     const canReset = checks.every(Boolean);
     const isSetupMode = authMode === AUTH_MODE.SETUP;
@@ -62953,6 +63422,9 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
           clearTimeout(addressCopyFeedbackTimerRef.current);
         }
       };
+    }, []);
+    (0, import_react13.useEffect)(() => {
+      getThemeMode().then(setThemeModeState);
     }, []);
     async function hashPassword(raw) {
       const data = new TextEncoder().encode(raw);
@@ -63143,6 +63615,12 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
       setToast("\u94B1\u5305\u540D\u79F0\u5DF2\u4FDD\u5B58");
       back();
     }
+    async function onThemeSwitchChange(_event, checked) {
+      const mode = checked ? "light" : "dark";
+      setThemeModeState(mode);
+      await setThemeMode(mode);
+      setToast(mode === "light" ? "\u5DF2\u5207\u6362\u4E3A\u9633\u5149\u660E\u5A9A\u4E3B\u9898" : "\u5DF2\u5207\u6362\u4E3A\u6DF1\u8272\u4E3B\u9898");
+    }
     const shellSx = {
       width: POPUP_WIDTH_PX,
       maxWidth: POPUP_WIDTH_PX,
@@ -63155,7 +63633,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
       flexDirection: "column",
       bgcolor: "background.default"
     };
-    return /* @__PURE__ */ import_react13.default.createElement(ThemeProvider4, { theme: walletTheme }, /* @__PURE__ */ import_react13.default.createElement(CssBaseline_default, null), /* @__PURE__ */ import_react13.default.createElement(Box_default, { sx: shellSx }, loadingAuth ? /* @__PURE__ */ import_react13.default.createElement(
+    return /* @__PURE__ */ import_react13.default.createElement(ThemeProvider4, { theme: muiTheme }, /* @__PURE__ */ import_react13.default.createElement(CssBaseline_default, null), /* @__PURE__ */ import_react13.default.createElement(Box_default, { sx: shellSx }, loadingAuth ? /* @__PURE__ */ import_react13.default.createElement(
       Box_default,
       {
         sx: {
@@ -63269,7 +63747,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
             borderRadius: 999,
             fontSize: 17,
             fontWeight: 600,
-            color: "#0a0a0a"
+            color: "primary.contrastText"
           }
         },
         submittingAuth ? "\u5904\u7406\u4E2D..." : isSetupMode ? "\u521B\u5EFA\u5BC6\u7801\u5E76\u89E3\u9501" : "\u89E3\u9501"
@@ -63399,11 +63877,11 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
                   mt: 0,
                   minWidth: 196,
                   maxWidth: 220,
-                  bgcolor: "#1e2026",
+                  bgcolor: "background.paper",
                   border: "1px solid",
                   borderColor: "divider",
                   borderRadius: 2,
-                  boxShadow: "0 8px 24px rgba(0,0,0,0.45)",
+                  boxShadow: (t) => t.palette.mode === "dark" ? "0 8px 24px rgba(0,0,0,0.45)" : "0 8px 24px rgba(47, 111, 78, 0.18)",
                   py: 0.5,
                   pointerEvents: "auto"
                 },
@@ -63622,8 +64100,9 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
       Button_default,
       {
         variant: "contained",
+        color: "primary",
         fullWidth: true,
-        sx: { mt: 2, borderRadius: 999, py: 1.5, color: "#0a0a0a" },
+        sx: { mt: 2, borderRadius: 999, py: 1.5, color: "primary.contrastText" },
         disabled: !sendTo.trim() || !sendAmount.trim(),
         onClick: onSubmitSend
       },
@@ -63657,7 +64136,21 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
         }
       },
       addressCopiedFeedback ? "\u5DF2\u590D\u5236" : "\u590D\u5236\u5730\u5740"
-    ), /* @__PURE__ */ import_react13.default.createElement(Button_default, { variant: "outlined", onClick: () => setToast("\u5206\u4EAB\u4E8C\u7EF4\u7801\uFF08\u5360\u4F4D\uFF09") }, "\u5206\u4EAB\u4E8C\u7EF4\u7801"))))), current === VIEWS.SETTINGS && /* @__PURE__ */ import_react13.default.createElement(Box_default, { sx: { flex: 1, minHeight: 0, display: "flex", flexDirection: "column", px: 2, pb: 2, overflow: "auto" } }, /* @__PURE__ */ import_react13.default.createElement(PageHeader, { title: "\u8BBE\u7F6E", canBack, onBack: back }), /* @__PURE__ */ import_react13.default.createElement(Typography_default, { variant: "body2", color: "text.secondary", sx: { mt: 2, mb: 1 } }, "\u94B1\u5305\u540D\u79F0"), /* @__PURE__ */ import_react13.default.createElement(
+    ), /* @__PURE__ */ import_react13.default.createElement(Button_default, { variant: "outlined", onClick: () => setToast("\u5206\u4EAB\u4E8C\u7EF4\u7801\uFF08\u5360\u4F4D\uFF09") }, "\u5206\u4EAB\u4E8C\u7EF4\u7801"))))), current === VIEWS.SETTINGS && /* @__PURE__ */ import_react13.default.createElement(Box_default, { sx: { flex: 1, minHeight: 0, display: "flex", flexDirection: "column", px: 2, pb: 2, overflow: "auto" } }, /* @__PURE__ */ import_react13.default.createElement(PageHeader, { title: "\u8BBE\u7F6E", canBack, onBack: back }), /* @__PURE__ */ import_react13.default.createElement(Typography_default, { variant: "body2", color: "text.secondary", sx: { mt: 2, mb: 1 } }, "\u4E3B\u9898"), /* @__PURE__ */ import_react13.default.createElement(
+      FormControlLabel_default,
+      {
+        control: /* @__PURE__ */ import_react13.default.createElement(
+          Switch_default,
+          {
+            checked: themeMode === "light",
+            onChange: onThemeSwitchChange,
+            color: "primary"
+          }
+        ),
+        label: themeMode === "light" ? "\u9633\u5149\u660E\u5A9A\uFF08\u6D45\u8272\uFF09" : "\u6DF1\u8272\u6A21\u5F0F",
+        sx: { ml: 0, alignItems: "center", mb: 2 }
+      }
+    ), /* @__PURE__ */ import_react13.default.createElement(Typography_default, { variant: "body2", color: "text.secondary", sx: { mb: 1 } }, "\u94B1\u5305\u540D\u79F0"), /* @__PURE__ */ import_react13.default.createElement(
       TextField_default,
       {
         fullWidth: true,
@@ -63670,8 +64163,9 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
       Button_default,
       {
         variant: "contained",
+        color: "primary",
         fullWidth: true,
-        sx: { mt: 2, borderRadius: 999, py: 1.25, color: "#0a0a0a" },
+        sx: { mt: 2, borderRadius: 999, py: 1.25, color: "primary.contrastText" },
         onClick: saveSettingsName
       },
       "\u4FDD\u5B58"
