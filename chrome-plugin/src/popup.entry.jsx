@@ -81,12 +81,17 @@ import {
   mergeTrackedPortfolioWithCustom,
 } from "./services/customTokenPortfolio";
 import { getThemeMode, setThemeMode } from "./services/themePrefs";
+import { fetchChainHomePortfolio } from "./services/chainPortfolio";
 import {
-  fetchEthereumMainnetPortfolio,
   formatTotalUsdLabel,
   formatWeightedChangeLabel,
 } from "./services/ethPortfolio";
 import { passwordSchema } from "./lib/validators";
+import {
+  EVM_CHAINS,
+  normalizeStoredChainId,
+  SELECTED_CHAIN_ID_STORAGE_KEY,
+} from "./services/chainRegistry";
 
 const VIEWS = {
   LOGIN: "login",
@@ -192,6 +197,9 @@ function App() {
   const lastAssetListScrollTopRef = useRef(0);
   const [customTokens, setCustomTokens] = useState([]);
   const [customTokensDisplay, setCustomTokensDisplay] = useState([]);
+  /** 首页 Globe 与发送页共用：当前交易/操作所在链 */
+  const [selectedChainId, setSelectedChainId] = useState(EVM_CHAINS[0].id);
+  const [networkMenuAnchor, setNetworkMenuAnchor] = useState(null);
   const [walletStore, setWalletStore] = useState(null);
   const unlockPasswordRef = useRef("");
   const [vaultPwOpen, setVaultPwOpen] = useState(false);
@@ -339,6 +347,18 @@ function App() {
   }, [loadingAuth]);
 
   useEffect(() => {
+    if (loadingAuth) return;
+    let cancelled = false;
+    void (async () => {
+      const raw = await getStorageValue(SELECTED_CHAIN_ID_STORAGE_KEY, null);
+      if (!cancelled) setSelectedChainId(normalizeStoredChainId(raw));
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [loadingAuth]);
+
+  useEffect(() => {
     let cancelled = false;
     void enrichCustomTokensForManage(walletAddress, customTokens).then((rows) => {
       if (!cancelled) setCustomTokensDisplay(rows);
@@ -354,7 +374,7 @@ function App() {
       else setPortfolioLoading(true);
       setPortfolioError("");
       try {
-        const res = await fetchEthereumMainnetPortfolio(walletAddress);
+        const res = await fetchChainHomePortfolio(walletAddress, selectedChainId);
         if (!res.ok) {
           setPortfolioError(res.error || "加载失败");
           setPortfolioItems([]);
@@ -362,7 +382,7 @@ function App() {
           setPortfolioChange24h(null);
           return;
         }
-        const customRows = await fetchCustomTokenHomeRows(walletAddress, customTokens);
+        const customRows = await fetchCustomTokenHomeRows(walletAddress, customTokens, selectedChainId);
         const { mergedItems, totalUsd, change24hWeighted } = mergeTrackedPortfolioWithCustom(res, customRows);
         setPortfolioItems(mergedItems);
         setPortfolioTotalUsd(totalUsd);
@@ -372,8 +392,15 @@ function App() {
         else setPortfolioLoading(false);
       }
     },
-    [walletAddress, customTokens],
+    [walletAddress, customTokens, selectedChainId],
   );
+
+  const handleSelectChain = useCallback(async (id) => {
+    const next = normalizeStoredChainId(id);
+    setSelectedChainId(next);
+    setNetworkMenuAnchor(null);
+    await setStorageValue(SELECTED_CHAIN_ID_STORAGE_KEY, next);
+  }, []);
 
   useEffect(() => {
     if (current !== VIEWS.HOME) return undefined;
@@ -1071,15 +1098,52 @@ function App() {
                     </MenuItem>
                   </Menu>
                 </Box>
-                <IconButton
-                  size="small"
-                  color="default"
-                  title="网络"
-                  onClick={() => setToast("网络切换（占位）")}
-                  sx={{ color: "text.primary" }}
-                >
-                  <Globe size={18} />
-                </IconButton>
+                <>
+                  <IconButton
+                    size="small"
+                    color="default"
+                    title={`网络：${EVM_CHAINS.find((c) => c.id === selectedChainId)?.name ?? ""}`}
+                    onClick={(e) => setNetworkMenuAnchor(e.currentTarget)}
+                    aria-haspopup="true"
+                    aria-expanded={Boolean(networkMenuAnchor)}
+                    sx={{ color: "text.primary" }}
+                  >
+                    <Globe size={18} />
+                  </IconButton>
+                  <Menu
+                    anchorEl={networkMenuAnchor}
+                    open={Boolean(networkMenuAnchor)}
+                    onClose={() => setNetworkMenuAnchor(null)}
+                    anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+                    transformOrigin={{ vertical: "top", horizontal: "right" }}
+                    slotProps={{
+                      paper: {
+                        sx: {
+                          minWidth: 216,
+                          maxWidth: 280,
+                          maxHeight: 320,
+                          overflow: "auto",
+                          mt: 0.5,
+                        },
+                      },
+                    }}
+                  >
+                    {EVM_CHAINS.map((c) => (
+                      <MenuItem
+                        key={c.id}
+                        dense
+                        selected={c.id === selectedChainId}
+                        onClick={() => void handleSelectChain(c.id)}
+                        sx={{ py: 1, gap: 0.5 }}
+                      >
+                        <ListItemIcon sx={{ minWidth: 28, color: "text.primary" }}>
+                          {c.id === selectedChainId ? <Check size={18} strokeWidth={2.5} aria-hidden /> : null}
+                        </ListItemIcon>
+                        <ListItemText primary={c.name} secondary={c.badge} />
+                      </MenuItem>
+                    ))}
+                  </Menu>
+                </>
               </Box>
             </Box>
 
@@ -1365,6 +1429,7 @@ function App() {
 
         {current === VIEWS.SEND && (
           <SendFlowView
+            chainId={selectedChainId}
             walletAddress={walletAddress}
             customTokens={customTokens}
             onBack={back}
@@ -1550,6 +1615,7 @@ function App() {
           <Box sx={{ flex: 1, minHeight: 0, display: "flex", flexDirection: "column", overflow: "hidden" }}>
             <PageHeader title="自定义币种" canBack={canBack} onBack={back} />
             <CustomTokenAddView
+              defaultChainId={selectedChainId}
               onBack={back}
               onAdded={async (token) => {
                 const next = await addCustomToken(token);

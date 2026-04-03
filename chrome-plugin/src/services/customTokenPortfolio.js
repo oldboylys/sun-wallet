@@ -1,7 +1,9 @@
 import { createPublicClient, formatUnits, getAddress, http } from "viem";
 import { mainnet } from "viem/chains";
+import { EVM_CHAINS } from "./chainRegistry";
 import { fetchCoinGeckoTokenByContract } from "./coingeckoContract";
 import { formatTokenUnitPrice, formatUsd } from "./ethPortfolio";
+import { getViemChain } from "./sendEstimate";
 
 const ERC20_BALANCE_ABI = [
   {
@@ -40,12 +42,12 @@ export function parseChangePercentString(change) {
 }
 
 /**
- * 仅以太坊主网：余额 + 行情，用于首页资产列表
+ * 当前选中链上的自定义代币：余额 + 行情（CoinGecko 无收录时单价为 0），用于首页资产列表
  * @returns {Promise<Array<{ rowKey: string, symbol: string, amount: string, valueUsd: number, value: string, priceLabel: string, iconUrl: string | null, change: string, change24hPct: number | null }>>}
  */
-export async function fetchCustomTokenHomeRows(walletAddress, customTokens) {
-  const eth = (customTokens || []).filter((t) => t.chainId === 1);
-  if (eth.length === 0) return [];
+export async function fetchCustomTokenHomeRows(walletAddress, customTokens, chainId) {
+  const list = (customTokens || []).filter((t) => t.chainId === chainId);
+  if (list.length === 0) return [];
 
   let checksum;
   try {
@@ -54,14 +56,18 @@ export async function fetchCustomTokenHomeRows(walletAddress, customTokens) {
     return [];
   }
 
+  const chain = getViemChain(chainId);
+  const rpc = EVM_CHAINS.find((c) => c.id === chainId)?.rpcUrl ?? null;
+  if (!chain || !rpc) return [];
+
   const client = createPublicClient({
-    chain: mainnet,
-    transport: http(PUBLIC_RPC),
+    chain,
+    transport: http(rpc),
   });
 
   const rows = await Promise.all(
-    eth.map(async (t) => {
-      const market = await fetchCoinGeckoTokenByContract(1, t.address);
+    list.map(async (t) => {
+      const market = await fetchCoinGeckoTokenByContract(chainId, t.address);
       let raw = 0n;
       try {
         raw = await client.readContract({
@@ -87,7 +93,7 @@ export async function fetchCustomTokenHomeRows(walletAddress, customTokens) {
         valueUsd,
         value: formatUsd(valueUsd),
         priceLabel: formatTokenUnitPrice(priceUsd),
-        iconUrl: market?.iconUrl ?? null,
+        iconUrl: market?.iconUrl ?? t.iconUrl ?? null,
         change: formatChangePct(change24hPct),
         change24hPct,
       };

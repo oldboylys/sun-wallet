@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { ChevronRight, CirclePlus, Minus, Search } from "lucide-react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -250,10 +250,14 @@ export function TokenManageView({ tokens, onOpenCustom, onRemove, setToast }) {
   );
 }
 
-export function CustomTokenAddView({ onBack, onAdded, setToast }) {
-  const [chainId, setChainId] = useState(EVM_CHAINS[0].id);
+export function CustomTokenAddView({ onBack, onAdded, setToast, defaultChainId }) {
+  const [chainId, setChainId] = useState(() => defaultChainId ?? EVM_CHAINS[0].id);
   const [contract, setContract] = useState("");
   const [submitting, setSubmitting] = useState(false);
+
+  useEffect(() => {
+    if (defaultChainId != null) setChainId(defaultChainId);
+  }, [defaultChainId]);
 
   const chain = EVM_CHAINS.find((c) => c.id === chainId) ?? EVM_CHAINS[0];
 

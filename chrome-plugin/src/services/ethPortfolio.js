@@ -1,5 +1,6 @@
 import { createPublicClient, formatUnits, getAddress, http } from "viem";
 import { mainnet } from "viem/chains";
+import { getChainNativeListSymbol } from "./chainRegistry";
 
 const ERC20_BALANCE_ABI = [
   {
@@ -64,6 +65,9 @@ export const TRACKED_ASSETS = [
   },
 ];
 
+/** 首页展示：不含 WBTC、包装 SOL（按链切换时由主网列表单独控制） */
+export const MAINNET_HOME_ASSETS = TRACKED_ASSETS.filter((a) => a.id !== "BTC" && a.id !== "SOL");
+
 const PUBLIC_RPC = "https://ethereum.publicnode.com";
 
 const COINGECKO_SIMPLE = "https://api.coingecko.com/api/v3/simple/price";
@@ -94,7 +98,7 @@ export async function fetchEthereumMainnetPortfolio(walletAddress) {
     transport: http(PUBLIC_RPC),
   });
 
-  const coingeckoIds = [...new Set(TRACKED_ASSETS.map((a) => a.coingeckoId))].join(",");
+  const coingeckoIds = [...new Set(MAINNET_HOME_ASSETS.map((a) => a.coingeckoId))].join(",");
 
   let priceRes;
   try {
@@ -111,7 +115,7 @@ export async function fetchEthereumMainnetPortfolio(walletAddress) {
   const priceData = await priceRes.json();
 
   const balances = await Promise.all(
-    TRACKED_ASSETS.map(async (asset) => {
+    MAINNET_HOME_ASSETS.map(async (asset) => {
       try {
         if (asset.kind === "native") {
           const wei = await client.getBalance({ address: checksum });
@@ -149,7 +153,8 @@ export async function fetchEthereumMainnetPortfolio(walletAddress) {
     }
 
     items.push({
-      symbol: asset.symbol,
+      rowKey: asset.kind === "native" ? "native-1" : `tracked-${asset.id}`,
+      symbol: asset.kind === "native" ? getChainNativeListSymbol(1) : asset.symbol,
       amount: amountStr,
       valueUsd,
       value: formatUsd(valueUsd),

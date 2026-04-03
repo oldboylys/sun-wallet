@@ -3,9 +3,6 @@ import { ArrowLeft } from "lucide-react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
-import Card from "@mui/material/Card";
-import CardActionArea from "@mui/material/CardActionArea";
-import CardContent from "@mui/material/CardContent";
 import CircularProgress from "@mui/material/CircularProgress";
 import Divider from "@mui/material/Divider";
 import Radio from "@mui/material/Radio";
@@ -64,11 +61,10 @@ function buildSendTokenOptions(chainId, customTokens) {
 }
 
 /**
- * @param {{ walletAddress: string, customTokens: Array, onBack: () => void, setToast: (s: string) => void }} props
+ * @param {{ chainId: number, walletAddress: string, customTokens: Array, onBack: () => void, setToast: (s: string) => void }} props
  */
-export function SendFlowView({ walletAddress, customTokens, onBack, setToast }) {
-  const [step, setStep] = useState("chain");
-  const [chainId, setChainId] = useState(EVM_CHAINS[0].id);
+export function SendFlowView({ chainId, walletAddress, customTokens, onBack, setToast }) {
+  const [step, setStep] = useState("token");
   const [tokenId, setTokenId] = useState("");
   const [sendTo, setSendTo] = useState("");
   const [sendAmount, setSendAmount] = useState("");
@@ -82,6 +78,14 @@ export function SendFlowView({ walletAddress, customTokens, onBack, setToast }) 
     () => tokenOptions.find((t) => t.id === tokenId) ?? null,
     [tokenOptions, tokenId],
   );
+
+  useEffect(() => {
+    setTokenId((prev) => {
+      const opts = buildSendTokenOptions(chainId, customTokens);
+      if (opts.some((t) => t.id === prev)) return prev;
+      return opts[0]?.id ?? "";
+    });
+  }, [chainId, customTokens]);
 
   const runEstimate = useCallback(async () => {
     if (!selectedToken || !sendTo.trim() || !sendAmount.trim()) return;
@@ -122,12 +126,8 @@ export function SendFlowView({ walletAddress, customTokens, onBack, setToast }) 
   }, [step, runEstimate]);
 
   function handleHeaderBack() {
-    if (step === "chain") {
-      onBack();
-      return;
-    }
     if (step === "token") {
-      setStep("chain");
+      onBack();
       return;
     }
     if (step === "form") {
@@ -146,15 +146,13 @@ export function SendFlowView({ walletAddress, customTokens, onBack, setToast }) 
   }
 
   const title =
-    step === "chain"
-      ? "选择网络"
-      : step === "token"
-        ? "选择币种"
-        : step === "form"
-          ? "发送"
-          : step === "confirm"
-            ? "确认交易"
-            : "交易结果";
+    step === "token"
+      ? "选择币种"
+      : step === "form"
+        ? "发送"
+        : step === "confirm"
+          ? "确认交易"
+          : "交易结果";
 
   async function handleConfirmBroadcast() {
     setSubmitting(true);
@@ -192,43 +190,6 @@ export function SendFlowView({ walletAddress, customTokens, onBack, setToast }) 
       </Box>
 
       <Box sx={{ flex: 1, minHeight: 0, overflow: "auto", px: 2, pb: 2, pt: 1.5 }}>
-        {step === "chain" ? (
-          <>
-            <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5 }}>
-              请选择要发送资产所在的网络。
-            </Typography>
-            {EVM_CHAINS.map((c) => (
-              <Card key={c.id} variant="outlined" sx={{ mb: 1 }}>
-                <CardActionArea onClick={() => setChainId(c.id)}>
-                  <CardContent sx={{ py: 1.25, "&:last-child": { pb: 1.25 } }}>
-                    <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                      <Radio checked={chainId === c.id} size="small" />
-                      <Box>
-                        <Typography fontWeight={600}>{c.name}</Typography>
-                        <Typography variant="caption" color="text.secondary">
-                          {c.badge}
-                        </Typography>
-                      </Box>
-                    </Box>
-                  </CardContent>
-                </CardActionArea>
-              </Card>
-            ))}
-            <Button
-              variant="contained"
-              fullWidth
-              sx={{ mt: 1, py: 1.25, color: "primary.contrastText" }}
-              onClick={() => {
-                const opts = buildSendTokenOptions(chainId, customTokens);
-                setTokenId(opts[0]?.id ?? "native");
-                setStep("token");
-              }}
-            >
-              下一步
-            </Button>
-          </>
-        ) : null}
-
         {step === "token" ? (
           <>
             <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>

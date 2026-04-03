@@ -9,7 +9,7 @@ import {
   isAddress,
   parseUnits,
 } from "viem";
-import { arbitrum, base, bsc, mainnet, optimism, polygon } from "viem/chains";
+import { arbitrum, base, bsc, mainnet, optimism, polygon, sepolia } from "viem/chains";
 import { EVM_CHAINS } from "./chainRegistry";
 
 const xLayer = defineChain({
@@ -24,6 +24,7 @@ const xLayer = defineChain({
 
 const VIEM_CHAIN_BY_ID = {
   1: mainnet,
+  11155111: sepolia,
   42161: arbitrum,
   8453: base,
   10: optimism,
