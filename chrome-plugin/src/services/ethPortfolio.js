@@ -185,7 +185,7 @@ function formatTokenAmount(raw, decimals) {
   return n.toLocaleString(undefined, { maximumFractionDigits: 8 });
 }
 
-function formatUsd(n) {
+export function formatUsd(n) {
   if (!Number.isFinite(n) || n === 0) return "$0.00";
   if (n < 0.01) return `<$0.01`;
   return `$${n.toFixed(2)}`;

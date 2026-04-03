@@ -15,6 +15,9 @@ import {
   ArrowLeftRight,
   AppWindow,
   RefreshCw,
+  Plus,
+  Coins,
+  ArrowLeft,
 } from "lucide-react";
 import QRCode from "qrcode";
 import { ThemeProvider, CssBaseline } from "@mui/material";
@@ -42,6 +45,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
+import Fade from "@mui/material/Fade";
 import { walletThemeDark, walletThemeLight, POPUP_HEIGHT_PX, POPUP_WIDTH_PX } from "./theme";
 import { getStorageValue, removeStorageValue, setStorageValue } from "./services/storage";
 import {
@@ -68,6 +72,13 @@ import {
   ImportWalletFlowView,
   WalletHubView,
 } from "./WalletManagementViews";
+import { CustomTokenAddView, TokenManageView } from "./TokenManageViews";
+import { addCustomToken, loadCustomTokens, removeCustomToken } from "./services/customTokens";
+import {
+  enrichCustomTokensForManage,
+  fetchCustomTokenHomeRows,
+  mergeTrackedPortfolioWithCustom,
+} from "./services/customTokenPortfolio";
 import { getThemeMode, setThemeMode } from "./services/themePrefs";
 import {
   fetchEthereumMainnetPortfolio,
@@ -87,6 +98,8 @@ const VIEWS = {
   WALLET_ADD_CHOICE: "wallet_add_choice",
   WALLET_CREATE: "wallet_create",
   WALLET_IMPORT: "wallet_import",
+  TOKEN_MANAGE: "token_manage",
+  TOKEN_CUSTOM_ADD: "token_custom_add",
 };
 
 const FORGOT_ITEMS = [
@@ -129,8 +142,8 @@ function PageHeader({ title, canBack, onBack }) {
       }}
     >
       {canBack ? (
-        <IconButton size="small" onClick={onBack} sx={{ color: "text.primary" }}>
-          ←
+        <IconButton size="small" onClick={onBack} sx={{ color: "text.primary" }} aria-label="返回">
+          <ArrowLeft size={22} strokeWidth={2.25} />
         </IconButton>
       ) : (
         <Box sx={{ width: 40 }} />
@@ -173,6 +186,11 @@ function App() {
   const [portfolioTotalUsd, setPortfolioTotalUsd] = useState(0);
   const [portfolioChange24h, setPortfolioChange24h] = useState(null);
   const [portfolioRefreshing, setPortfolioRefreshing] = useState(false);
+  /** 首页币种列表：向下滚显、向上滚隐 */
+  const [showAddTokenFab, setShowAddTokenFab] = useState(false);
+  const lastAssetListScrollTopRef = useRef(0);
+  const [customTokens, setCustomTokens] = useState([]);
+  const [customTokensDisplay, setCustomTokensDisplay] = useState([]);
   const [walletStore, setWalletStore] = useState(null);
   const unlockPasswordRef = useRef("");
   const [vaultPwOpen, setVaultPwOpen] = useState(false);
@@ -196,6 +214,28 @@ function App() {
     await setWalletPublicAddress(acc.address);
     await setWalletDisplayName(label);
   }, []);
+
+  const onAssetListWheel = useCallback(
+    (e) => {
+      if (activeTab !== "币种") return;
+      if (e.deltaY > 4) setShowAddTokenFab(true);
+      if (e.deltaY < -4) setShowAddTokenFab(false);
+    },
+    [activeTab],
+  );
+
+  const onAssetListScroll = useCallback(
+    (e) => {
+      if (activeTab !== "币种") return;
+      const el = e.currentTarget;
+      const st = el.scrollTop;
+      const prev = lastAssetListScrollTopRef.current;
+      if (st > prev + 2) setShowAddTokenFab(true);
+      else if (st < prev - 2) setShowAddTokenFab(false);
+      lastAssetListScrollTopRef.current = st;
+    },
+    [activeTab],
+  );
 
   useEffect(() => {
     if (loadingAuth) return;
@@ -292,6 +332,21 @@ function App() {
     getThemeMode().then(setThemeModeState);
   }, []);
 
+  useEffect(() => {
+    if (loadingAuth) return;
+    void loadCustomTokens().then(setCustomTokens);
+  }, [loadingAuth]);
+
+  useEffect(() => {
+    let cancelled = false;
+    void enrichCustomTokensForManage(walletAddress, customTokens).then((rows) => {
+      if (!cancelled) setCustomTokensDisplay(rows);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [walletAddress, customTokens]);
+
   const loadPortfolio = useCallback(
     async (silent = false) => {
       if (silent) setPortfolioRefreshing(true);
@@ -306,15 +361,17 @@ function App() {
           setPortfolioChange24h(null);
           return;
         }
-        setPortfolioItems(res.items);
-        setPortfolioTotalUsd(res.totalUsd);
-        setPortfolioChange24h(res.change24hWeighted);
+        const customRows = await fetchCustomTokenHomeRows(walletAddress, customTokens);
+        const { mergedItems, totalUsd, change24hWeighted } = mergeTrackedPortfolioWithCustom(res, customRows);
+        setPortfolioItems(mergedItems);
+        setPortfolioTotalUsd(totalUsd);
+        setPortfolioChange24h(change24hWeighted);
       } finally {
         if (silent) setPortfolioRefreshing(false);
         else setPortfolioLoading(false);
       }
     },
-    [walletAddress],
+    [walletAddress, customTokens],
   );
 
   useEffect(() => {
@@ -329,6 +386,14 @@ function App() {
       clearInterval(timer);
     };
   }, [current, walletAddress, loadPortfolio]);
+
+  useEffect(() => {
+    if (current !== VIEWS.HOME) setShowAddTokenFab(false);
+  }, [current]);
+
+  useEffect(() => {
+    if (activeTab !== "币种") setShowAddTokenFab(false);
+  }, [activeTab]);
 
   async function hashPassword(raw) {
     const data = new TextEncoder().encode(raw);
@@ -517,6 +582,12 @@ function App() {
     closeSettingsMenu();
     setSettingsNameDraft(walletDisplayName);
     goto(VIEWS.SETTINGS);
+  }
+
+  function goToTokenManagePage() {
+    clearSettingsMenuCloseTimer();
+    closeSettingsMenu();
+    goto(VIEWS.TOKEN_MANAGE);
   }
 
   function onDappConnectionsPlaceholder() {
@@ -936,6 +1007,16 @@ function App() {
                   >
                     <MenuItem
                       dense
+                      onClick={goToTokenManagePage}
+                      sx={{ py: 1.1, gap: 1, fontSize: 14, color: "text.primary" }}
+                    >
+                      <ListItemIcon sx={{ minWidth: 32, color: "text.primary" }}>
+                        <Coins size={18} />
+                      </ListItemIcon>
+                      <ListItemText primary="币种管理" />
+                    </MenuItem>
+                    <MenuItem
+                      dense
                       onClick={goToSettingsPage}
                       sx={{ py: 1.1, gap: 1, fontSize: 14, color: "text.primary" }}
                     >
@@ -1102,101 +1183,152 @@ function App() {
               sx={{
                 flex: 1,
                 minHeight: 0,
-                overflowY: "auto",
-                overflowX: "hidden",
+                position: "relative",
                 display: "flex",
                 flexDirection: "column",
-                gap: 1,
-                py: 1,
-                WebkitOverflowScrolling: "touch",
               }}
             >
-              {portfolioLoading && portfolioItems.length === 0 ? (
-                <Box sx={{ py: 2, display: "flex", justifyContent: "center" }}>
-                  <CircularProgress size={28} />
-                </Box>
-              ) : (
-                portfolioItems.map((asset) => (
-                  <Card
-                    key={asset.symbol}
-                    variant="outlined"
-                    component="button"
-                    onClick={() => setToast(`${asset.symbol} 详情页占位`)}
-                    sx={{
-                      textAlign: "left",
-                      cursor: "pointer",
-                      flexShrink: 0,
-                      "&:hover": { bgcolor: "action.hover" },
-                    }}
-                  >
-                    <CardContent sx={{ py: 1.35, "&:last-child": { pb: 1.35 } }}>
-                      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                        <Box sx={{ display: "flex", alignItems: "center", gap: 1, minWidth: 0 }}>
-                          {asset.iconUrl ? (
-                            <Box
-                              component="img"
-                              src={asset.iconUrl}
-                              alt=""
-                              sx={{
-                                width: 32,
-                                height: 32,
-                                borderRadius: "50%",
-                                objectFit: "cover",
-                                flexShrink: 0,
-                                bgcolor: "action.hover",
-                              }}
-                            />
-                          ) : (
-                            <Box
-                              sx={{
-                                width: 32,
-                                height: 32,
-                                borderRadius: "50%",
-                                bgcolor: "action.selected",
-                                display: "grid",
-                                placeItems: "center",
-                                fontSize: 12,
-                                fontWeight: 700,
-                                flexShrink: 0,
-                              }}
-                            >
-                              {asset.symbol[0]}
+              <Box
+                onWheel={onAssetListWheel}
+                onScroll={onAssetListScroll}
+                sx={{
+                  flex: 1,
+                  minHeight: 0,
+                  overflowY: "auto",
+                  overflowX: "hidden",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 1,
+                  pt: 1,
+                  pb: activeTab === "币种" && showAddTokenFab ? 5 : 1,
+                  WebkitOverflowScrolling: "touch",
+                }}
+              >
+                {portfolioLoading && portfolioItems.length === 0 ? (
+                  <Box sx={{ py: 2, display: "flex", justifyContent: "center" }}>
+                    <CircularProgress size={28} />
+                  </Box>
+                ) : (
+                  portfolioItems.map((asset) => (
+                    <Card
+                      key={asset.rowKey ?? asset.symbol}
+                      variant="outlined"
+                      component="button"
+                      onClick={() => setToast(`${asset.symbol} 详情页占位`)}
+                      sx={{
+                        textAlign: "left",
+                        cursor: "pointer",
+                        flexShrink: 0,
+                        "&:hover": { bgcolor: "action.hover" },
+                      }}
+                    >
+                      <CardContent sx={{ py: 1.35, "&:last-child": { pb: 1.35 } }}>
+                        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                          <Box sx={{ display: "flex", alignItems: "center", gap: 1, minWidth: 0 }}>
+                            {asset.iconUrl ? (
+                              <Box
+                                component="img"
+                                src={asset.iconUrl}
+                                alt=""
+                                sx={{
+                                  width: 32,
+                                  height: 32,
+                                  borderRadius: "50%",
+                                  objectFit: "cover",
+                                  flexShrink: 0,
+                                  bgcolor: "action.hover",
+                                }}
+                              />
+                            ) : (
+                              <Box
+                                sx={{
+                                  width: 32,
+                                  height: 32,
+                                  borderRadius: "50%",
+                                  bgcolor: "action.selected",
+                                  display: "grid",
+                                  placeItems: "center",
+                                  fontSize: 12,
+                                  fontWeight: 700,
+                                  flexShrink: 0,
+                                }}
+                              >
+                                {asset.symbol[0]}
+                              </Box>
+                            )}
+                            <Box sx={{ minWidth: 0 }}>
+                              <Typography variant="body2" fontWeight={600}>
+                                {asset.symbol}
+                              </Typography>
+                              <Typography variant="caption" color="text.secondary" component="div">
+                                {asset.amount}
+                              </Typography>
+                              <Typography variant="caption" color="text.secondary" sx={{ fontSize: 11, opacity: 0.9 }}>
+                                单价 {asset.priceLabel ?? "—"}
+                              </Typography>
                             </Box>
-                          )}
-                          <Box sx={{ minWidth: 0 }}>
+                          </Box>
+                          <Box sx={{ textAlign: "right" }}>
                             <Typography variant="body2" fontWeight={600}>
-                              {asset.symbol}
+                              {asset.value}
                             </Typography>
-                            <Typography variant="caption" color="text.secondary" component="div">
-                              {asset.amount}
-                            </Typography>
-                            <Typography variant="caption" color="text.secondary" sx={{ fontSize: 11, opacity: 0.9 }}>
-                              单价 {asset.priceLabel ?? "—"}
+                            <Typography
+                              variant="caption"
+                              color={
+                                asset.change === "—"
+                                  ? "text.secondary"
+                                  : asset.change.startsWith("-")
+                                    ? "error.main"
+                                    : "success.main"
+                              }
+                            >
+                              {asset.change}
                             </Typography>
                           </Box>
                         </Box>
-                        <Box sx={{ textAlign: "right" }}>
-                          <Typography variant="body2" fontWeight={600}>
-                            {asset.value}
-                          </Typography>
-                          <Typography
-                            variant="caption"
-                            color={
-                              asset.change === "—"
-                                ? "text.secondary"
-                                : asset.change.startsWith("-")
-                                  ? "error.main"
-                                  : "success.main"
-                            }
-                          >
-                            {asset.change}
-                          </Typography>
-                        </Box>
-                      </Box>
-                    </CardContent>
-                  </Card>
-                ))
-              )}
+                      </CardContent>
+                    </Card>
+                  ))
+                )}
+              </Box>
+
+              {activeTab === "币种" ? (
+                <Fade in={showAddTokenFab} timeout={180} unmountOnExit>
+                  <Box
+                    sx={{
+                      position: "absolute",
+                      left: 0,
+                      right: 0,
+                      bottom: 10,
+                      display: "flex",
+                      justifyContent: "center",
+                      pointerEvents: "none",
+                      zIndex: 2,
+                    }}
+                  >
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      size="small"
+                      startIcon={<Plus size={16} strokeWidth={2.5} />}
+                      onClick={() => goto(VIEWS.TOKEN_MANAGE)}
+                      sx={{
+                        pointerEvents: "auto",
+                        borderRadius: 999,
+                        px: 2.5,
+                        py: 0.75,
+                        boxShadow: (t) =>
+                          t.palette.mode === "dark"
+                            ? "0 4px 14px rgba(0,0,0,0.45)"
+                            : "0 4px 14px rgba(47, 111, 78, 0.25)",
+                        color: "primary.contrastText",
+                      }}
+                    >
+                      币种管理
+                    </Button>
+                  </Box>
+                </Fade>
+              ) : null}
             </Box>
 
             <Box
@@ -1421,6 +1553,40 @@ function App() {
                 setToast={setToast}
               />
             )}
+          </Box>
+        )}
+
+        {current === VIEWS.TOKEN_MANAGE && (
+          <Box sx={{ flex: 1, minHeight: 0, display: "flex", flexDirection: "column", overflow: "hidden" }}>
+            <PageHeader title="币种管理" canBack={canBack} onBack={back} />
+            <TokenManageView
+              tokens={customTokensDisplay}
+              onOpenCustom={() => goto(VIEWS.TOKEN_CUSTOM_ADD)}
+              onRemove={async (id) => {
+                try {
+                  const next = await removeCustomToken(id);
+                  setCustomTokens(next);
+                  setToast("已移除代币");
+                } catch (e) {
+                  setToast(e?.message || "移除失败");
+                }
+              }}
+              setToast={setToast}
+            />
+          </Box>
+        )}
+
+        {current === VIEWS.TOKEN_CUSTOM_ADD && (
+          <Box sx={{ flex: 1, minHeight: 0, display: "flex", flexDirection: "column", overflow: "hidden" }}>
+            <PageHeader title="自定义币种" canBack={canBack} onBack={back} />
+            <CustomTokenAddView
+              onBack={back}
+              onAdded={async (token) => {
+                const next = await addCustomToken(token);
+                setCustomTokens(next);
+              }}
+              setToast={setToast}
+            />
           </Box>
         )}
 

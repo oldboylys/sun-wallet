@@ -24,6 +24,13 @@
   "permissions": ["storage", "idle", "sidePanel", "windows"],
   "host_permissions": [
     "https://ethereum.publicnode.com/*",
+    "https://eth.llamarpc.com/*",
+    "https://arb1.arbitrum.io/*",
+    "https://mainnet.base.org/*",
+    "https://mainnet.optimism.io/*",
+    "https://polygon-bor-rpc.publicnode.com/*",
+    "https://bsc-dataseed.binance.org/*",
+    "https://rpc.xlayer.tech/*",
     "https://api.coingecko.com/*",
     "https://assets.coingecko.com/*"
   ]
