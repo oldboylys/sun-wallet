@@ -32,6 +32,9 @@
     "https://bsc-dataseed.binance.org/*",
     "https://rpc.xlayer.tech/*",
     "https://api.coingecko.com/*",
-    "https://assets.coingecko.com/*"
+    "https://assets.coingecko.com/*",
+    "https://*.blockscout.com/*",
+    "https://api.bscscan.com/*",
+    "https://bscscan.com/*"
   ]
 }

@@ -72,6 +72,7 @@ import {
   ImportWalletFlowView,
   WalletHubView,
 } from "./WalletManagementViews";
+import { HistoryView } from "./HistoryViews";
 import { SendFlowView } from "./SendFlowViews";
 import { CustomTokenAddView, TokenManageView } from "./TokenManageViews";
 import { addCustomToken, loadCustomTokens, removeCustomToken } from "./services/customTokens";
@@ -92,6 +93,7 @@ import {
   normalizeStoredChainId,
   SELECTED_CHAIN_ID_STORAGE_KEY,
 } from "./services/chainRegistry";
+import { BSCSCAN_API_KEY_STORAGE_KEY } from "./services/txHistory";
 
 const VIEWS = {
   LOGIN: "login",
@@ -106,6 +108,7 @@ const VIEWS = {
   WALLET_IMPORT: "wallet_import",
   TOKEN_MANAGE: "token_manage",
   TOKEN_CUSTOM_ADD: "token_custom_add",
+  HISTORY: "history",
 };
 
 const FORGOT_ITEMS = [
@@ -179,6 +182,7 @@ function App() {
     "0x2fF7D743A1A8Bc13f6C01A3fF8EA7e6Ba6a0F2D5",
   );
   const [settingsNameDraft, setSettingsNameDraft] = useState("SUN Wallet");
+  const [bscscanApiKeyDraft, setBscscanApiKeyDraft] = useState("");
   const [settingsMenuAnchor, setSettingsMenuAnchor] = useState(null);
   const settingsMenuCloseTimerRef = useRef(null);
   const [addressCopiedFeedback, setAddressCopiedFeedback] = useState(false);
@@ -545,6 +549,10 @@ function App() {
       goto(VIEWS.RECEIVE);
       return;
     }
+    if (key === "history") {
+      goto(VIEWS.HISTORY);
+      return;
+    }
     setToast(`${label} 功能占位`);
   }
 
@@ -699,6 +707,16 @@ function App() {
     await setThemeMode(mode);
     setToast(mode === "light" ? "已切换为阳光明媚主题" : "已切换为深色主题");
   }
+
+  async function saveBscscanApiKey() {
+    await setStorageValue(BSCSCAN_API_KEY_STORAGE_KEY, bscscanApiKeyDraft.trim());
+    setToast("BscScan API Key 已保存");
+  }
+
+  useEffect(() => {
+    if (current !== VIEWS.SETTINGS) return;
+    void getStorageValue(BSCSCAN_API_KEY_STORAGE_KEY, "").then((v) => setBscscanApiKeyDraft(v ?? ""));
+  }, [current]);
 
   const shellSx = IS_SIDE_PANEL_SURFACE
     ? {
@@ -1437,6 +1455,15 @@ function App() {
           />
         )}
 
+        {current === VIEWS.HISTORY && (
+          <HistoryView
+            walletAddress={walletAddress}
+            chainId={selectedChainId}
+            onBack={back}
+            setToast={setToast}
+          />
+        )}
+
         {current === VIEWS.RECEIVE && (
           <Box sx={{ flex: 1, minHeight: 0, display: "flex", flexDirection: "column", px: 2, pb: 2, overflow: "auto" }}>
             <PageHeader title="接收" canBack={canBack} onBack={back} />
@@ -1661,6 +1688,24 @@ function App() {
               onClick={saveSettingsName}
             >
               保存
+            </Button>
+            <Typography variant="body2" color="text.secondary" sx={{ mt: 3, mb: 1 }}>
+              BscScan API Key（可选）
+            </Typography>
+            <Typography variant="caption" color="text.secondary" sx={{ display: "block", mb: 1 }}>
+              查询 <strong>BNB Chain</strong> 交易历史需要。在 bscscan.com/apis 免费注册后粘贴 Key；其他链使用 Blockscout 无需 Key。
+            </Typography>
+            <TextField
+              fullWidth
+              size="small"
+              type="password"
+              placeholder="仅保存在本机"
+              value={bscscanApiKeyDraft}
+              onChange={(e) => setBscscanApiKeyDraft(e.target.value)}
+              autoComplete="off"
+            />
+            <Button variant="outlined" fullWidth sx={{ mt: 1.5 }} onClick={() => void saveBscscanApiKey()}>
+              保存 API Key
             </Button>
           </Box>
         )}

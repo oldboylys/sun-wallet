@@ -1336,7 +1336,7 @@
           return dispatcher;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React109 = require_react(), Internals = {
+        var React110 = require_react(), Internals = {
           d: {
             f: noop5,
             r: function() {
@@ -1354,7 +1354,7 @@
           },
           p: 0,
           findDOMNode: null
-        }, REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), ReactSharedInternals = React109.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
+        }, REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), ReactSharedInternals = React110.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
         "function" === typeof Map && null != Map.prototype && "function" === typeof Map.prototype.forEach && "function" === typeof Set && null != Set.prototype && "function" === typeof Set.prototype.clear && "function" === typeof Set.prototype.forEach || console.error(
           "React depends on Map and Set built-in types. Make sure that you load a polyfill in older browsers. https://reactjs.org/link/react-polyfills"
         );
@@ -2889,7 +2889,7 @@
           "number" === type && getActiveElement(node2.ownerDocument) === node2 || node2.defaultValue === "" + value || (node2.defaultValue = "" + value);
         }
         function validateOptionProps(element, props) {
-          null == props.value && ("object" === typeof props.children && null !== props.children ? React109.Children.forEach(props.children, function(child) {
+          null == props.value && ("object" === typeof props.children && null !== props.children ? React110.Children.forEach(props.children, function(child) {
             null == child || "string" === typeof child || "number" === typeof child || "bigint" === typeof child || didWarnInvalidChild || (didWarnInvalidChild = true, console.error(
               "Cannot infer the option value of complex children. Pass a `value` prop or use a plain string as children to <option>."
             ));
@@ -18521,14 +18521,14 @@
           ));
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var Scheduler = require_scheduler(), React109 = require_react(), ReactDOM3 = require_react_dom(), assign2 = Object.assign, REACT_LEGACY_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.element"), REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy");
+        var Scheduler = require_scheduler(), React110 = require_react(), ReactDOM3 = require_react_dom(), assign2 = Object.assign, REACT_LEGACY_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.element"), REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy");
         /* @__PURE__ */ Symbol.for("react.scope");
         var REACT_ACTIVITY_TYPE = /* @__PURE__ */ Symbol.for("react.activity");
         /* @__PURE__ */ Symbol.for("react.legacy_hidden");
         /* @__PURE__ */ Symbol.for("react.tracing_marker");
         var REACT_MEMO_CACHE_SENTINEL = /* @__PURE__ */ Symbol.for("react.memo_cache_sentinel");
         /* @__PURE__ */ Symbol.for("react.view_transition");
-        var MAYBE_ITERATOR_SYMBOL = Symbol.iterator, REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), isArrayImpl = Array.isArray, ReactSharedInternals = React109.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, ReactDOMSharedInternals = ReactDOM3.__DOM_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, NotPending = Object.freeze({
+        var MAYBE_ITERATOR_SYMBOL = Symbol.iterator, REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), isArrayImpl = Array.isArray, ReactSharedInternals = React110.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, ReactDOMSharedInternals = ReactDOM3.__DOM_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, NotPending = Object.freeze({
           pending: false,
           data: null,
           method: null,
@@ -21316,7 +21316,7 @@
           }
         };
         (function() {
-          var isomorphicReactPackageVersion = React109.version;
+          var isomorphicReactPackageVersion = React110.version;
           if ("19.2.4" !== isomorphicReactPackageVersion)
             throw Error(
               'Incompatible React versions: The "react" and "react-dom" packages must have the exact same version. Instead got:\n  - react:      ' + (isomorphicReactPackageVersion + "\n  - react-dom:  19.2.4\nLearn more: https://react.dev/warnings/version-mismatch")
@@ -24780,18 +24780,18 @@
         function isValidElement13(object3) {
           return "object" === typeof object3 && null !== object3 && object3.$$typeof === REACT_ELEMENT_TYPE;
         }
-        var React109 = require_react(), REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy"), REACT_ACTIVITY_TYPE = /* @__PURE__ */ Symbol.for("react.activity"), REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), ReactSharedInternals = React109.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, hasOwnProperty = Object.prototype.hasOwnProperty, isArrayImpl = Array.isArray, createTask = console.createTask ? console.createTask : function() {
+        var React110 = require_react(), REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy"), REACT_ACTIVITY_TYPE = /* @__PURE__ */ Symbol.for("react.activity"), REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), ReactSharedInternals = React110.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, hasOwnProperty = Object.prototype.hasOwnProperty, isArrayImpl = Array.isArray, createTask = console.createTask ? console.createTask : function() {
           return null;
         };
-        React109 = {
+        React110 = {
           react_stack_bottom_frame: function(callStackForError) {
             return callStackForError();
           }
         };
         var specialPropKeyWarningShown;
         var didWarnAboutElementRef = {};
-        var unknownOwnerDebugStack = React109.react_stack_bottom_frame.bind(
-          React109,
+        var unknownOwnerDebugStack = React110.react_stack_bottom_frame.bind(
+          React110,
           UnknownOwner
         )();
         var unknownOwnerDebugTask = createTask(getTaskName(UnknownOwner));
@@ -34493,7 +34493,7 @@ ${prettyStateOverride(stateOverride)}`;
   });
 
   // src/popup.entry.jsx
-  var import_react16 = __toESM(require_react());
+  var import_react17 = __toESM(require_react());
   var import_client = __toESM(require_client());
 
   // node_modules/lucide-react/dist/esm/createLucideIcon.js
@@ -34673,8 +34673,16 @@ ${prettyStateOverride(stateOverride)}`;
   ];
   var Copy = createLucideIcon("copy", __iconNode10);
 
-  // node_modules/lucide-react/dist/esm/icons/eye-off.js
+  // node_modules/lucide-react/dist/esm/icons/external-link.js
   var __iconNode11 = [
+    ["path", { d: "M15 3h6v6", key: "1q9fwt" }],
+    ["path", { d: "M10 14 21 3", key: "gplh6r" }],
+    ["path", { d: "M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6", key: "a6xqqp" }]
+  ];
+  var ExternalLink = createLucideIcon("external-link", __iconNode11);
+
+  // node_modules/lucide-react/dist/esm/icons/eye-off.js
+  var __iconNode12 = [
     [
       "path",
       {
@@ -34692,10 +34700,10 @@ ${prettyStateOverride(stateOverride)}`;
     ],
     ["path", { d: "m2 2 20 20", key: "1ooewy" }]
   ];
-  var EyeOff = createLucideIcon("eye-off", __iconNode11);
+  var EyeOff = createLucideIcon("eye-off", __iconNode12);
 
   // node_modules/lucide-react/dist/esm/icons/eye.js
-  var __iconNode12 = [
+  var __iconNode13 = [
     [
       "path",
       {
@@ -34705,26 +34713,26 @@ ${prettyStateOverride(stateOverride)}`;
     ],
     ["circle", { cx: "12", cy: "12", r: "3", key: "1v7zrd" }]
   ];
-  var Eye = createLucideIcon("eye", __iconNode12);
+  var Eye = createLucideIcon("eye", __iconNode13);
 
   // node_modules/lucide-react/dist/esm/icons/globe.js
-  var __iconNode13 = [
+  var __iconNode14 = [
     ["circle", { cx: "12", cy: "12", r: "10", key: "1mglay" }],
     ["path", { d: "M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20", key: "13o1zl" }],
     ["path", { d: "M2 12h20", key: "9i4pu4" }]
   ];
-  var Globe = createLucideIcon("globe", __iconNode13);
+  var Globe = createLucideIcon("globe", __iconNode14);
 
   // node_modules/lucide-react/dist/esm/icons/history.js
-  var __iconNode14 = [
+  var __iconNode15 = [
     ["path", { d: "M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8", key: "1357e3" }],
     ["path", { d: "M3 3v5h5", key: "1xhq8a" }],
     ["path", { d: "M12 7v5l4 2", key: "1fdv2h" }]
   ];
-  var History = createLucideIcon("history", __iconNode14);
+  var History = createLucideIcon("history", __iconNode15);
 
   // node_modules/lucide-react/dist/esm/icons/key-round.js
-  var __iconNode15 = [
+  var __iconNode16 = [
     [
       "path",
       {
@@ -34734,53 +34742,53 @@ ${prettyStateOverride(stateOverride)}`;
     ],
     ["circle", { cx: "16.5", cy: "7.5", r: ".5", fill: "currentColor", key: "w0ekpg" }]
   ];
-  var KeyRound = createLucideIcon("key-round", __iconNode15);
+  var KeyRound = createLucideIcon("key-round", __iconNode16);
 
   // node_modules/lucide-react/dist/esm/icons/lock.js
-  var __iconNode16 = [
+  var __iconNode17 = [
     ["rect", { width: "18", height: "11", x: "3", y: "11", rx: "2", ry: "2", key: "1w4ew1" }],
     ["path", { d: "M7 11V7a5 5 0 0 1 10 0v4", key: "fwvmzm" }]
   ];
-  var Lock = createLucideIcon("lock", __iconNode16);
+  var Lock = createLucideIcon("lock", __iconNode17);
 
   // node_modules/lucide-react/dist/esm/icons/minus.js
-  var __iconNode17 = [["path", { d: "M5 12h14", key: "1ays0h" }]];
-  var Minus = createLucideIcon("minus", __iconNode17);
+  var __iconNode18 = [["path", { d: "M5 12h14", key: "1ays0h" }]];
+  var Minus = createLucideIcon("minus", __iconNode18);
 
   // node_modules/lucide-react/dist/esm/icons/plus.js
-  var __iconNode18 = [
+  var __iconNode19 = [
     ["path", { d: "M5 12h14", key: "1ays0h" }],
     ["path", { d: "M12 5v14", key: "s699le" }]
   ];
-  var Plus = createLucideIcon("plus", __iconNode18);
+  var Plus = createLucideIcon("plus", __iconNode19);
 
   // node_modules/lucide-react/dist/esm/icons/refresh-cw.js
-  var __iconNode19 = [
+  var __iconNode20 = [
     ["path", { d: "M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8", key: "v9h5vc" }],
     ["path", { d: "M21 3v5h-5", key: "1q7to0" }],
     ["path", { d: "M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16", key: "3uifl3" }],
     ["path", { d: "M8 16H3v5", key: "1cv678" }]
   ];
-  var RefreshCw = createLucideIcon("refresh-cw", __iconNode19);
+  var RefreshCw = createLucideIcon("refresh-cw", __iconNode20);
 
   // node_modules/lucide-react/dist/esm/icons/repeat-2.js
-  var __iconNode20 = [
+  var __iconNode21 = [
     ["path", { d: "m2 9 3-3 3 3", key: "1ltn5i" }],
     ["path", { d: "M13 18H7a2 2 0 0 1-2-2V6", key: "1r6tfw" }],
     ["path", { d: "m22 15-3 3-3-3", key: "4rnwn2" }],
     ["path", { d: "M11 6h6a2 2 0 0 1 2 2v10", key: "2f72bc" }]
   ];
-  var Repeat2 = createLucideIcon("repeat-2", __iconNode20);
+  var Repeat2 = createLucideIcon("repeat-2", __iconNode21);
 
   // node_modules/lucide-react/dist/esm/icons/search.js
-  var __iconNode21 = [
+  var __iconNode22 = [
     ["path", { d: "m21 21-4.34-4.34", key: "14j7rj" }],
     ["circle", { cx: "11", cy: "11", r: "8", key: "4ej97u" }]
   ];
-  var Search = createLucideIcon("search", __iconNode21);
+  var Search = createLucideIcon("search", __iconNode22);
 
   // node_modules/lucide-react/dist/esm/icons/settings.js
-  var __iconNode22 = [
+  var __iconNode23 = [
     [
       "path",
       {
@@ -34790,10 +34798,10 @@ ${prettyStateOverride(stateOverride)}`;
     ],
     ["circle", { cx: "12", cy: "12", r: "3", key: "1v7zrd" }]
   ];
-  var Settings = createLucideIcon("settings", __iconNode22);
+  var Settings = createLucideIcon("settings", __iconNode23);
 
   // node_modules/lucide-react/dist/esm/icons/sparkles.js
-  var __iconNode23 = [
+  var __iconNode24 = [
     [
       "path",
       {
@@ -34805,17 +34813,17 @@ ${prettyStateOverride(stateOverride)}`;
     ["path", { d: "M22 4h-4", key: "gwowj6" }],
     ["circle", { cx: "4", cy: "20", r: "2", key: "6kqj1y" }]
   ];
-  var Sparkles = createLucideIcon("sparkles", __iconNode23);
+  var Sparkles = createLucideIcon("sparkles", __iconNode24);
 
   // node_modules/lucide-react/dist/esm/icons/trash-2.js
-  var __iconNode24 = [
+  var __iconNode25 = [
     ["path", { d: "M10 11v6", key: "nco0om" }],
     ["path", { d: "M14 11v6", key: "outv1u" }],
     ["path", { d: "M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6", key: "miytrc" }],
     ["path", { d: "M3 6h18", key: "d0wm0j" }],
     ["path", { d: "M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2", key: "e791ji" }]
   ];
-  var Trash2 = createLucideIcon("trash-2", __iconNode24);
+  var Trash2 = createLucideIcon("trash-2", __iconNode25);
 
   // src/popup.entry.jsx
   var import_qrcode = __toESM(require_browser());
@@ -95504,181 +95512,8 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
     );
   }
 
-  // src/SendFlowViews.jsx
+  // src/HistoryViews.jsx
   var import_react14 = __toESM(require_react());
-
-  // src/services/chainRegistry.js
-  var EVM_CHAINS = [
-    { id: 1, name: "Ethereum", badge: "Ethereum", rpcUrl: "https://ethereum.publicnode.com" },
-    { id: 11155111, name: "Sepolia", badge: "Sepolia", rpcUrl: "https://ethereum-sepolia.publicnode.com" },
-    { id: 42161, name: "Arbitrum One", badge: "Arbitrum One", rpcUrl: "https://arb1.arbitrum.io/rpc" },
-    { id: 8453, name: "Base", badge: "Base", rpcUrl: "https://mainnet.base.org" },
-    { id: 10, name: "Optimism", badge: "Optimism", rpcUrl: "https://mainnet.optimism.io" },
-    { id: 137, name: "Polygon", badge: "Polygon", rpcUrl: "https://polygon-bor-rpc.publicnode.com" },
-    { id: 56, name: "BNB Chain", badge: "BSC", rpcUrl: "https://bsc-dataseed.binance.org" },
-    { id: 196, name: "X Layer", badge: "X Layer", rpcUrl: "https://rpc.xlayer.tech" }
-  ];
-  function getChainNativeListSymbol(chainId) {
-    const m = {
-      1: "eth",
-      11155111: "sepolia_eth",
-      42161: "arb_eth",
-      8453: "base_eth",
-      10: "op_eth",
-      137: "polygon_pol",
-      56: "bsc_bnb",
-      196: "xlayer_okb"
-    };
-    return m[chainId] ?? "native";
-  }
-  var STABLE_ICON = {
-    USDT: "https://assets.coingecko.com/coins/images/325/small/Tether.png",
-    USDC: "https://assets.coingecko.com/coins/images/6319/small/usdc.png"
-  };
-  var CHAIN_DEFAULT_STABLECOINS = {
-    11155111: [
-      {
-        id: "USDT",
-        symbol: "USDT",
-        address: "0xaA8E23Fb1079EA71e0a56F48a2aA51851D8433D4",
-        decimals: 6,
-        coingeckoId: "tether",
-        iconUrl: STABLE_ICON.USDT
-      },
-      {
-        id: "USDC",
-        symbol: "USDC",
-        address: "0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238",
-        decimals: 6,
-        coingeckoId: "usd-coin",
-        iconUrl: STABLE_ICON.USDC
-      }
-    ],
-    42161: [
-      {
-        id: "USDT",
-        symbol: "USDT",
-        address: "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
-        decimals: 6,
-        coingeckoId: "tether",
-        iconUrl: STABLE_ICON.USDT
-      },
-      {
-        id: "USDC",
-        symbol: "USDC",
-        address: "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
-        decimals: 6,
-        coingeckoId: "usd-coin",
-        iconUrl: STABLE_ICON.USDC
-      }
-    ],
-    8453: [
-      {
-        id: "USDT",
-        symbol: "USDT",
-        address: "0xfde4C96c8593536E31F229EA8f37b2ADa2699f2d",
-        decimals: 6,
-        coingeckoId: "tether",
-        iconUrl: STABLE_ICON.USDT
-      },
-      {
-        id: "USDC",
-        symbol: "USDC",
-        address: "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
-        decimals: 6,
-        coingeckoId: "usd-coin",
-        iconUrl: STABLE_ICON.USDC
-      }
-    ],
-    10: [
-      {
-        id: "USDT",
-        symbol: "USDT",
-        address: "0x94b008aA00579c1307B0EF2c499aD98a8ce58e58",
-        decimals: 6,
-        coingeckoId: "tether",
-        iconUrl: STABLE_ICON.USDT
-      },
-      {
-        id: "USDC",
-        symbol: "USDC",
-        address: "0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85",
-        decimals: 6,
-        coingeckoId: "usd-coin",
-        iconUrl: STABLE_ICON.USDC
-      }
-    ],
-    137: [
-      {
-        id: "USDT",
-        symbol: "USDT",
-        address: "0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
-        decimals: 6,
-        coingeckoId: "tether",
-        iconUrl: STABLE_ICON.USDT
-      },
-      {
-        id: "USDC",
-        symbol: "USDC",
-        address: "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359",
-        decimals: 6,
-        coingeckoId: "usd-coin",
-        iconUrl: STABLE_ICON.USDC
-      }
-    ],
-    56: [
-      {
-        id: "USDT",
-        symbol: "USDT",
-        address: "0x55d398326f99059fF775485246999027B3197955",
-        decimals: 18,
-        coingeckoId: "tether",
-        iconUrl: STABLE_ICON.USDT
-      },
-      {
-        id: "USDC",
-        symbol: "USDC",
-        address: "0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d",
-        decimals: 18,
-        coingeckoId: "usd-coin",
-        iconUrl: STABLE_ICON.USDC
-      }
-    ],
-    196: [
-      {
-        id: "USDT",
-        symbol: "USDT",
-        address: "0x1e4a5963AbFd975D8d9021C481b42188849D41D",
-        decimals: 6,
-        coingeckoId: "tether",
-        iconUrl: STABLE_ICON.USDT
-      },
-      {
-        id: "USDC",
-        symbol: "USDC",
-        address: "0x74b7f16337b8972027f6196a17a631ac6de26d22",
-        decimals: 6,
-        coingeckoId: "usd-coin",
-        iconUrl: STABLE_ICON.USDC
-      }
-    ]
-  };
-  var SELECTED_CHAIN_ID_STORAGE_KEY = "wallet_selected_chain_id_v1";
-  function normalizeStoredChainId(id2) {
-    const n2 = typeof id2 === "number" ? id2 : Number(id2);
-    if (Number.isFinite(n2) && EVM_CHAINS.some((c) => c.id === n2)) return n2;
-    return EVM_CHAINS[0].id;
-  }
-  var COINGECKO_PLATFORM_BY_CHAIN_ID = {
-    1: "ethereum",
-    11155111: "ethereum-sepolia",
-    42161: "arbitrum-one",
-    8453: "base",
-    10: "optimistic-ethereum",
-    137: "polygon-pos",
-    56: "binance-smart-chain",
-    196: "x-layer"
-  };
 
   // node_modules/viem/_esm/utils/getAction.js
   function getAction(client, actionFn, name) {
@@ -105515,6 +105350,374 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
   init_formatGwei();
   init_formatUnits();
 
+  // src/services/chainRegistry.js
+  var EVM_CHAINS = [
+    { id: 1, name: "Ethereum", badge: "Ethereum", rpcUrl: "https://ethereum.publicnode.com" },
+    { id: 11155111, name: "Sepolia", badge: "Sepolia", rpcUrl: "https://ethereum-sepolia.publicnode.com" },
+    { id: 42161, name: "Arbitrum One", badge: "Arbitrum One", rpcUrl: "https://arb1.arbitrum.io/rpc" },
+    { id: 8453, name: "Base", badge: "Base", rpcUrl: "https://mainnet.base.org" },
+    { id: 10, name: "Optimism", badge: "Optimism", rpcUrl: "https://mainnet.optimism.io" },
+    { id: 137, name: "Polygon", badge: "Polygon", rpcUrl: "https://polygon-bor-rpc.publicnode.com" },
+    { id: 56, name: "BNB Chain", badge: "BSC", rpcUrl: "https://bsc-dataseed.binance.org" },
+    { id: 196, name: "X Layer", badge: "X Layer", rpcUrl: "https://rpc.xlayer.tech" }
+  ];
+  function getChainNativeListSymbol(chainId) {
+    const m = {
+      1: "eth",
+      11155111: "sepolia_eth",
+      42161: "arb_eth",
+      8453: "base_eth",
+      10: "op_eth",
+      137: "polygon_matic",
+      56: "bsc_bnb",
+      196: "xlayer_okb"
+    };
+    return m[chainId] ?? "native";
+  }
+  var STABLE_ICON = {
+    USDT: "https://assets.coingecko.com/coins/images/325/small/Tether.png",
+    USDC: "https://assets.coingecko.com/coins/images/6319/small/usdc.png"
+  };
+  var CHAIN_DEFAULT_STABLECOINS = {
+    11155111: [
+      {
+        id: "USDT",
+        symbol: "USDT",
+        address: "0xaA8E23Fb1079EA71e0a56F48a2aA51851D8433D4",
+        decimals: 6,
+        coingeckoId: "tether",
+        iconUrl: STABLE_ICON.USDT
+      },
+      {
+        id: "USDC",
+        symbol: "USDC",
+        address: "0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238",
+        decimals: 6,
+        coingeckoId: "usd-coin",
+        iconUrl: STABLE_ICON.USDC
+      }
+    ],
+    42161: [
+      {
+        id: "USDT",
+        symbol: "USDT",
+        address: "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+        decimals: 6,
+        coingeckoId: "tether",
+        iconUrl: STABLE_ICON.USDT
+      },
+      {
+        id: "USDC",
+        symbol: "USDC",
+        address: "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
+        decimals: 6,
+        coingeckoId: "usd-coin",
+        iconUrl: STABLE_ICON.USDC
+      }
+    ],
+    8453: [
+      {
+        id: "USDT",
+        symbol: "USDT",
+        address: "0xfde4C96c8593536E31F229EA8f37b2ADa2699f2d",
+        decimals: 6,
+        coingeckoId: "tether",
+        iconUrl: STABLE_ICON.USDT
+      },
+      {
+        id: "USDC",
+        symbol: "USDC",
+        address: "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+        decimals: 6,
+        coingeckoId: "usd-coin",
+        iconUrl: STABLE_ICON.USDC
+      }
+    ],
+    10: [
+      {
+        id: "USDT",
+        symbol: "USDT",
+        address: "0x94b008aA00579c1307B0EF2c499aD98a8ce58e58",
+        decimals: 6,
+        coingeckoId: "tether",
+        iconUrl: STABLE_ICON.USDT
+      },
+      {
+        id: "USDC",
+        symbol: "USDC",
+        address: "0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85",
+        decimals: 6,
+        coingeckoId: "usd-coin",
+        iconUrl: STABLE_ICON.USDC
+      }
+    ],
+    137: [
+      {
+        id: "USDT",
+        symbol: "USDT",
+        address: "0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
+        decimals: 6,
+        coingeckoId: "tether",
+        iconUrl: STABLE_ICON.USDT
+      },
+      {
+        id: "USDC",
+        symbol: "USDC",
+        address: "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359",
+        decimals: 6,
+        coingeckoId: "usd-coin",
+        iconUrl: STABLE_ICON.USDC
+      }
+    ],
+    56: [
+      {
+        id: "USDT",
+        symbol: "USDT",
+        address: "0x55d398326f99059fF775485246999027B3197955",
+        decimals: 18,
+        coingeckoId: "tether",
+        iconUrl: STABLE_ICON.USDT
+      },
+      {
+        id: "USDC",
+        symbol: "USDC",
+        address: "0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d",
+        decimals: 18,
+        coingeckoId: "usd-coin",
+        iconUrl: STABLE_ICON.USDC
+      }
+    ],
+    196: [
+      {
+        id: "USDT",
+        symbol: "USDT",
+        address: "0x1e4a5963AbFd975D8d9021C481b42188849D41D",
+        decimals: 6,
+        coingeckoId: "tether",
+        iconUrl: STABLE_ICON.USDT
+      },
+      {
+        id: "USDC",
+        symbol: "USDC",
+        address: "0x74b7f16337b8972027f6196a17a631ac6de26d22",
+        decimals: 6,
+        coingeckoId: "usd-coin",
+        iconUrl: STABLE_ICON.USDC
+      }
+    ]
+  };
+  var SELECTED_CHAIN_ID_STORAGE_KEY = "wallet_selected_chain_id_v1";
+  function normalizeStoredChainId(id2) {
+    const n2 = typeof id2 === "number" ? id2 : Number(id2);
+    if (Number.isFinite(n2) && EVM_CHAINS.some((c) => c.id === n2)) return n2;
+    return EVM_CHAINS[0].id;
+  }
+  var COINGECKO_PLATFORM_BY_CHAIN_ID = {
+    1: "ethereum",
+    11155111: "ethereum-sepolia",
+    42161: "arbitrum-one",
+    8453: "base",
+    10: "optimistic-ethereum",
+    137: "polygon-pos",
+    56: "binance-smart-chain",
+    196: "x-layer"
+  };
+
+  // src/services/txHistory.js
+  var BSCSCAN_API_KEY_STORAGE_KEY = "wallet_bscscan_api_key_v1";
+  var BLOCKSCOUT_TXLIST_BASE = {
+    1: "https://eth.blockscout.com/api",
+    11155111: "https://eth-sepolia.blockscout.com/api",
+    42161: "https://arbitrum.blockscout.com/api",
+    8453: "https://base.blockscout.com/api",
+    10: "https://optimism.blockscout.com/api",
+    137: "https://polygon.blockscout.com/api"
+  };
+  var TX_EXPLORER_TX_PREFIX = {
+    1: "https://eth.blockscout.com/tx/",
+    11155111: "https://eth-sepolia.blockscout.com/tx/",
+    42161: "https://arbitrum.blockscout.com/tx/",
+    8453: "https://base.blockscout.com/tx/",
+    10: "https://optimism.blockscout.com/tx/",
+    137: "https://polygon.blockscout.com/tx/",
+    56: "https://bscscan.com/tx/",
+    196: "https://www.oklink.com/xlayer/tx/"
+  };
+  async function fetchAddressTransactions(walletAddress, chainId, opts = {}) {
+    const page = opts.page ?? 1;
+    const offset = Math.min(opts.offset ?? 25, 100);
+    const empty2 = { ok: false, error: "", items: [] };
+    let checksumWallet;
+    try {
+      checksumWallet = getAddress2(String(walletAddress ?? "").trim());
+    } catch {
+      return { ...empty2, error: "\u94B1\u5305\u5730\u5740\u65E0\u6548" };
+    }
+    if (chainId === 196) {
+      return {
+        ...empty2,
+        error: "X Layer \u6682\u4E0D\u652F\u6301\u5728\u6B64\u67E5\u8BE2\u4EA4\u6613\u5386\u53F2\uFF0C\u8BF7\u5230\u533A\u5757\u6D4F\u89C8\u5668\u67E5\u770B\u3002"
+      };
+    }
+    if (chainId === 56) {
+      return fetchBscScanTxList(checksumWallet, page, offset);
+    }
+    const base2 = BLOCKSCOUT_TXLIST_BASE[chainId];
+    if (!base2) {
+      return { ...empty2, error: "\u5F53\u524D\u7F51\u7EDC\u672A\u914D\u7F6E\u4EA4\u6613\u5386\u53F2\u6570\u636E\u6E90" };
+    }
+    const params = new URLSearchParams({
+      module: "account",
+      action: "txlist",
+      address: checksumWallet,
+      page: String(page),
+      offset: String(offset),
+      sort: "desc"
+    });
+    let res;
+    try {
+      res = await fetch(`${base2}?${params.toString()}`);
+    } catch {
+      return { ...empty2, error: "\u7F51\u7EDC\u8BF7\u6C42\u5931\u8D25\uFF0C\u8BF7\u7A0D\u540E\u91CD\u8BD5" };
+    }
+    let json2;
+    try {
+      json2 = await res.json();
+    } catch {
+      return { ...empty2, error: "\u65E0\u6CD5\u89E3\u6790\u670D\u52A1\u5668\u54CD\u5E94" };
+    }
+    return normalizeExplorerTxResponse(json2, checksumWallet, chainId);
+  }
+  async function fetchBscScanTxList(checksumWallet, page, offset) {
+    const empty2 = { ok: false, error: "", items: [] };
+    const apiKey = await getStorageValue(BSCSCAN_API_KEY_STORAGE_KEY, "") || "";
+    if (!String(apiKey).trim()) {
+      return {
+        ok: true,
+        items: [],
+        notice: "BNB Chain \u4EA4\u6613\u5217\u8868\u9700 BscScan API Key\uFF1A\u6253\u5F00 bscscan.com/apis \u6CE8\u518C\u514D\u8D39 Key\uFF0C\u5728\u300C\u8BBE\u7F6E\u300D\u4E2D\u7C98\u8D34\u4FDD\u5B58\u540E\u5373\u53EF\u67E5\u8BE2\u3002"
+      };
+    }
+    const params = new URLSearchParams({
+      module: "account",
+      action: "txlist",
+      address: checksumWallet,
+      startblock: "0",
+      endblock: "99999999",
+      page: String(page),
+      offset: String(offset),
+      sort: "desc",
+      apikey: String(apiKey).trim()
+    });
+    let res;
+    try {
+      res = await fetch(`https://api.bscscan.com/api?${params.toString()}`);
+    } catch {
+      return { ...empty2, error: "\u7F51\u7EDC\u8BF7\u6C42\u5931\u8D25\uFF0C\u8BF7\u7A0D\u540E\u91CD\u8BD5" };
+    }
+    let json2;
+    try {
+      json2 = await res.json();
+    } catch {
+      return { ...empty2, error: "\u65E0\u6CD5\u89E3\u6790 BscScan \u54CD\u5E94" };
+    }
+    return normalizeExplorerTxResponse(json2, checksumWallet, 56);
+  }
+  function normalizeExplorerTxResponse(json2, checksumWallet, chainId) {
+    const empty2 = { ok: false, error: "", items: [] };
+    const status = json2?.status;
+    const message = json2?.message;
+    const result = json2?.result;
+    if (status === "0" && typeof result === "string") {
+      const r2 = result;
+      const msg = String(message ?? "").toLowerCase();
+      if (msg.includes("no transactions") || r2 === "No transactions found") {
+        return { ok: true, items: [] };
+      }
+      return {
+        ...empty2,
+        error: r2 === "Invalid API Key" ? "BscScan API Key \u65E0\u6548\uFF0C\u8BF7\u5728\u8BBE\u7F6E\u4E2D\u66F4\u65B0\u3002" : r2 || String(message || "\u67E5\u8BE2\u5931\u8D25")
+      };
+    }
+    if (status === "0" && typeof message === "string") {
+      const m = message.toLowerCase();
+      if (m.includes("no transactions") || m.includes("no record")) {
+        return { ok: true, items: [] };
+      }
+      return {
+        ...empty2,
+        error: message || "\u67E5\u8BE2\u5931\u8D25"
+      };
+    }
+    if (!Array.isArray(result)) {
+      return { ok: true, items: [] };
+    }
+    const prefix2 = TX_EXPLORER_TX_PREFIX[chainId] ?? "";
+    const items = [];
+    for (const raw of result) {
+      const hash6 = raw?.hash;
+      if (!hash6 || typeof hash6 !== "string") continue;
+      let from15 = String(raw.from ?? "");
+      let to = String(raw.to ?? "");
+      try {
+        from15 = getAddress2(from15);
+      } catch {
+        continue;
+      }
+      try {
+        to = to ? getAddress2(to) : "";
+      } catch {
+        to = "";
+      }
+      const valueStr = String(raw.value ?? "0");
+      let valueDisplay = "0";
+      try {
+        valueDisplay = formatEther(BigInt(valueStr));
+      } catch {
+        valueDisplay = "0";
+      }
+      const ts = Number.parseInt(String(raw.timeStamp ?? "0"), 10);
+      const timestamp = Number.isFinite(ts) ? ts : 0;
+      const timeLabel = timestamp > 0 ? new Date(timestamp * 1e3).toLocaleString(void 0, {
+        month: "short",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit"
+      }) : "\u2014";
+      const receipt = raw.txreceipt_status ?? raw.isError;
+      const statusOk = receipt === "1" || receipt === 1 || raw.isError === "0" || raw.isError === 0;
+      let direction = "self";
+      if (from15.toLowerCase() === checksumWallet.toLowerCase() && to.toLowerCase() === checksumWallet.toLowerCase()) {
+        direction = "self";
+      } else if (from15.toLowerCase() === checksumWallet.toLowerCase()) {
+        direction = "out";
+      } else if (to.toLowerCase() === checksumWallet.toLowerCase()) {
+        direction = "in";
+      }
+      items.push({
+        hash: hash6,
+        from: from15,
+        to,
+        valueWei: valueStr,
+        valueDisplay,
+        timestamp,
+        timeLabel,
+        statusOk,
+        direction,
+        explorerUrl: prefix2 ? `${prefix2}${hash6}` : ""
+      });
+    }
+    return { ok: true, items };
+  }
+  function getTxExplorerTxUrl(chainId, hash6) {
+    const p = TX_EXPLORER_TX_PREFIX[chainId];
+    if (!p || !hash6) return "";
+    return `${p}${hash6}`;
+  }
+  function getChainDisplayName(chainId) {
+    return EVM_CHAINS.find((c) => c.id === chainId)?.name ?? `\u94FE ${chainId}`;
+  }
+
   // node_modules/viem/_esm/op-stack/contracts.js
   var contracts = {
     gasPriceOracle: { address: "0x420000000000000000000000000000000000000F" },
@@ -105879,6 +106082,242 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
     testnet: true
   });
 
+  // src/services/sendEstimate.js
+  var xLayer = defineChain({
+    id: 196,
+    name: "X Layer",
+    network: "xlayer",
+    nativeCurrency: { decimals: 18, name: "OKB", symbol: "OKB" },
+    rpcUrls: {
+      default: { http: ["https://rpc.xlayer.tech"] }
+    }
+  });
+  var VIEM_CHAIN_BY_ID = {
+    1: mainnet,
+    11155111: sepolia,
+    42161: arbitrum,
+    8453: base,
+    10: optimism,
+    137: polygon,
+    56: bsc,
+    196: xLayer
+  };
+  function getViemChain(chainId) {
+    return VIEM_CHAIN_BY_ID[chainId] ?? null;
+  }
+  var ERC20_TRANSFER_ABI = [
+    {
+      type: "function",
+      name: "transfer",
+      stateMutability: "nonpayable",
+      inputs: [
+        { name: "to", type: "address" },
+        { name: "amount", type: "uint256" }
+      ],
+      outputs: [{ type: "bool" }]
+    }
+  ];
+  function rpcFor(chainId) {
+    return EVM_CHAINS.find((c) => c.id === chainId)?.rpcUrl ?? null;
+  }
+  async function estimateSendTransaction(p) {
+    const { chainId, from: from15, to, token: token2, amountDecimal } = p;
+    const chain = VIEM_CHAIN_BY_ID[chainId];
+    const rpc = rpcFor(chainId);
+    if (!chain || !rpc) {
+      return { ok: false, error: "\u6682\u4E0D\u652F\u6301\u8BE5\u7F51\u7EDC" };
+    }
+    let fromAddr;
+    let toAddr;
+    try {
+      fromAddr = getAddress2(from15.trim());
+      toAddr = getAddress2(to.trim());
+    } catch {
+      return { ok: false, error: "\u5730\u5740\u683C\u5F0F\u65E0\u6548" };
+    }
+    if (!isAddress2(fromAddr) || !isAddress2(toAddr)) {
+      return { ok: false, error: "\u5730\u5740\u683C\u5F0F\u65E0\u6548" };
+    }
+    const amt = String(amountDecimal).trim().replace(",", ".");
+    if (!amt || Number.parseFloat(amt) <= 0) {
+      return { ok: false, error: "\u8BF7\u8F93\u5165\u6709\u6548\u91D1\u989D" };
+    }
+    const client = createPublicClient({
+      chain,
+      transport: http(rpc)
+    });
+    let gasLimit;
+    try {
+      if (token2.kind === "native") {
+        const value = parseUnits2(amt, token2.decimals ?? 18);
+        gasLimit = await client.estimateGas({
+          account: fromAddr,
+          to: toAddr,
+          value
+        });
+      } else {
+        const tokenAddr = getAddress2(String(token2.address));
+        const amountWei = parseUnits2(amt, token2.decimals);
+        const data = encodeFunctionData({
+          abi: ERC20_TRANSFER_ABI,
+          functionName: "transfer",
+          args: [toAddr, amountWei]
+        });
+        gasLimit = await client.estimateGas({
+          account: fromAddr,
+          to: tokenAddr,
+          data
+        });
+      }
+    } catch (e) {
+      return {
+        ok: false,
+        error: e?.shortMessage || e?.message || "\u65E0\u6CD5\u4F30\u7B97 Gas\uFF08\u4F59\u989D\u4E0D\u8DB3\u6216\u53C2\u6570\u65E0\u6548\uFF09"
+      };
+    }
+    let nonce;
+    try {
+      nonce = await client.getTransactionCount({ address: fromAddr, blockTag: "pending" });
+    } catch (e) {
+      return { ok: false, error: e?.shortMessage || e?.message || "\u65E0\u6CD5\u8BFB\u53D6 nonce" };
+    }
+    let maxFeePerGas;
+    let maxPriorityFeePerGas;
+    let gasPrice;
+    try {
+      const fees = await client.estimateFeesPerGas();
+      maxFeePerGas = fees.maxFeePerGas ?? null;
+      maxPriorityFeePerGas = fees.maxPriorityFeePerGas ?? null;
+    } catch {
+      maxFeePerGas = null;
+      maxPriorityFeePerGas = null;
+    }
+    if (maxFeePerGas == null) {
+      try {
+        gasPrice = await client.getGasPrice();
+      } catch (e) {
+        return { ok: false, error: e?.shortMessage || e?.message || "\u65E0\u6CD5\u8BFB\u53D6 Gas \u4EF7\u683C" };
+      }
+    }
+    const feeWei = maxFeePerGas != null ? gasLimit * maxFeePerGas : gasLimit * (gasPrice ?? 0n);
+    return {
+      ok: true,
+      gasLimit,
+      gasLimitDecimal: gasLimit.toString(),
+      nonce,
+      maxFeePerGas,
+      maxPriorityFeePerGas,
+      gasPrice,
+      feeWei,
+      feeEth: formatEther(feeWei),
+      maxFeeGwei: maxFeePerGas != null ? formatGwei(maxFeePerGas) : null,
+      gasPriceGwei: gasPrice != null ? formatGwei(gasPrice) : null,
+      priorityGwei: maxPriorityFeePerGas != null ? formatGwei(maxPriorityFeePerGas) : null
+    };
+  }
+
+  // src/HistoryViews.jsx
+  function shortAddr(addr) {
+    if (!addr || addr.length < 12) return addr || "\u2014";
+    return `${addr.slice(0, 6)}\u2026${addr.slice(-4)}`;
+  }
+  function HistoryView({ walletAddress, chainId, onBack, setToast }) {
+    const [loading, setLoading] = (0, import_react14.useState)(true);
+    const [error48, setError] = (0, import_react14.useState)("");
+    const [notice, setNotice] = (0, import_react14.useState)("");
+    const [items, setItems] = (0, import_react14.useState)([]);
+    const load = (0, import_react14.useCallback)(async () => {
+      setLoading(true);
+      setError("");
+      setNotice("");
+      setItems([]);
+      try {
+        const res = await fetchAddressTransactions(walletAddress, chainId, { offset: 30 });
+        if (!res.ok) {
+          setError(res.error || "\u52A0\u8F7D\u5931\u8D25");
+          return;
+        }
+        if (res.notice) setNotice(res.notice);
+        setItems(res.items ?? []);
+      } catch (e) {
+        setError(e?.message || "\u52A0\u8F7D\u5931\u8D25");
+      } finally {
+        setLoading(false);
+      }
+    }, [walletAddress, chainId]);
+    (0, import_react14.useEffect)(() => {
+      void load();
+    }, [load]);
+    const nc = getViemChain(chainId)?.nativeCurrency;
+    const nativeSymbol = nc?.symbol ?? "ETH";
+    const chainName = getChainDisplayName(chainId);
+    function openExplorer(hash6) {
+      const url2 = getTxExplorerTxUrl(chainId, hash6);
+      if (!url2) {
+        setToast("\u5F53\u524D\u7F51\u7EDC\u65E0\u533A\u5757\u6D4F\u89C8\u5668\u94FE\u63A5");
+        return;
+      }
+      try {
+        window.open(url2, "_blank", "noopener,noreferrer");
+      } catch {
+        setToast("\u65E0\u6CD5\u6253\u5F00\u6D4F\u89C8\u5668");
+      }
+    }
+    return /* @__PURE__ */ import_react14.default.createElement(Box_default, { sx: { flex: 1, minHeight: 0, display: "flex", flexDirection: "column", overflow: "hidden" } }, /* @__PURE__ */ import_react14.default.createElement(
+      Box_default,
+      {
+        sx: {
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          borderBottom: 1,
+          borderColor: "divider",
+          px: 1.5,
+          py: 1,
+          minHeight: 48,
+          flexShrink: 0
+        }
+      },
+      /* @__PURE__ */ import_react14.default.createElement(IconButton_default, { size: "small", onClick: onBack, sx: { color: "text.primary" }, "aria-label": "\u8FD4\u56DE" }, /* @__PURE__ */ import_react14.default.createElement(ArrowLeft, { size: 22, strokeWidth: 2.25 })),
+      /* @__PURE__ */ import_react14.default.createElement(Typography_default, { variant: "h6", sx: { fontWeight: 600 } }, "\u5386\u53F2"),
+      /* @__PURE__ */ import_react14.default.createElement(Box_default, { sx: { width: 40 } })
+    ), /* @__PURE__ */ import_react14.default.createElement(Box_default, { sx: { px: 2, pt: 1, pb: 0.5, flexShrink: 0 } }, /* @__PURE__ */ import_react14.default.createElement(Typography_default, { variant: "caption", color: "text.secondary", sx: { display: "block" } }, "\u7F51\u7EDC\uFF1A", chainName), /* @__PURE__ */ import_react14.default.createElement(Typography_default, { variant: "caption", color: "text.secondary", sx: { display: "block", mt: 0.25 } }, "\u91D1\u989D\u5747\u4E3A\u8BE5\u94FE\u539F\u751F\u5E01\uFF08", nativeSymbol, "\uFF09\uFF1B\u4EE3\u5E01\u8F6C\u8D26\u53EF\u80FD\u663E\u793A\u4E3A 0\u3002")), /* @__PURE__ */ import_react14.default.createElement(Box_default, { sx: { flex: 1, minHeight: 0, overflow: "auto", px: 2, pb: 2 } }, loading ? /* @__PURE__ */ import_react14.default.createElement(Box_default, { sx: { py: 4, display: "flex", justifyContent: "center" } }, /* @__PURE__ */ import_react14.default.createElement(CircularProgress_default, { size: 28 })) : error48 ? /* @__PURE__ */ import_react14.default.createElement(Typography_default, { color: "error", variant: "body2", sx: { mt: 2 } }, error48) : /* @__PURE__ */ import_react14.default.createElement(import_react14.default.Fragment, null, notice ? /* @__PURE__ */ import_react14.default.createElement(Typography_default, { variant: "body2", color: "warning.main", sx: { mb: 1.5, lineHeight: 1.5 } }, notice) : null, items.length === 0 ? /* @__PURE__ */ import_react14.default.createElement(Typography_default, { variant: "body2", color: "text.secondary", sx: { mt: 1 } }, "\u6682\u65E0\u4EA4\u6613\u8BB0\u5F55") : items.map((tx) => /* @__PURE__ */ import_react14.default.createElement(Card_default, { key: tx.hash, variant: "outlined", sx: { mb: 1 } }, /* @__PURE__ */ import_react14.default.createElement(CardContent_default, { sx: { py: 1.25, "&:last-child": { pb: 1.25 } } }, /* @__PURE__ */ import_react14.default.createElement(Box_default, { sx: { display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 1 } }, /* @__PURE__ */ import_react14.default.createElement(Box_default, { sx: { minWidth: 0, flex: 1 } }, /* @__PURE__ */ import_react14.default.createElement(Box_default, { sx: { display: "flex", alignItems: "center", gap: 0.75, flexWrap: "wrap", mb: 0.5 } }, /* @__PURE__ */ import_react14.default.createElement(
+      Chip_default,
+      {
+        size: "small",
+        label: tx.direction === "in" ? "\u8F6C\u5165" : tx.direction === "out" ? "\u8F6C\u51FA" : "\u81EA\u8F6C",
+        color: tx.direction === "in" ? "success" : tx.direction === "out" ? "primary" : "default",
+        sx: { height: 22, fontSize: 11 }
+      }
+    ), !tx.statusOk ? /* @__PURE__ */ import_react14.default.createElement(Chip_default, { size: "small", label: "\u5931\u8D25", color: "error", sx: { height: 22, fontSize: 11 } }) : null, /* @__PURE__ */ import_react14.default.createElement(Typography_default, { variant: "caption", color: "text.secondary" }, tx.timeLabel)), /* @__PURE__ */ import_react14.default.createElement(
+      Typography_default,
+      {
+        variant: "body2",
+        sx: {
+          fontFamily: "monospace",
+          fontSize: 12,
+          wordBreak: "break-all",
+          color: "text.secondary"
+        }
+      },
+      tx.hash.slice(0, 10),
+      "\u2026",
+      tx.hash.slice(-8)
+    ), /* @__PURE__ */ import_react14.default.createElement(Typography_default, { variant: "caption", color: "text.secondary", sx: { display: "block", mt: 0.5 } }, "\u5BF9\u624B\u65B9\uFF1A", tx.direction === "in" ? shortAddr(tx.from) : tx.to ? shortAddr(tx.to) : "\u5408\u7EA6\u521B\u5EFA"), /* @__PURE__ */ import_react14.default.createElement(Typography_default, { variant: "body2", fontWeight: 600, sx: { mt: 0.75 } }, tx.valueDisplay, " ", nativeSymbol)), /* @__PURE__ */ import_react14.default.createElement(
+      IconButton_default,
+      {
+        size: "small",
+        "aria-label": "\u5728\u6D4F\u89C8\u5668\u4E2D\u6253\u5F00",
+        onClick: () => openExplorer(tx.hash),
+        disabled: !getTxExplorerTxUrl(chainId, tx.hash)
+      },
+      /* @__PURE__ */ import_react14.default.createElement(ExternalLink, { size: 18 })
+    ))))), /* @__PURE__ */ import_react14.default.createElement(Button_default, { fullWidth: true, sx: { mt: 1 }, onClick: () => void load(), disabled: loading }, "\u5237\u65B0"))));
+  }
+
+  // src/SendFlowViews.jsx
+  var import_react15 = __toESM(require_react());
+
   // src/services/ethPortfolio.js
   var ERC20_BALANCE_ABI = [
     {
@@ -106060,140 +106499,6 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
     };
   }
 
-  // src/services/sendEstimate.js
-  var xLayer = defineChain({
-    id: 196,
-    name: "X Layer",
-    network: "xlayer",
-    nativeCurrency: { decimals: 18, name: "OKB", symbol: "OKB" },
-    rpcUrls: {
-      default: { http: ["https://rpc.xlayer.tech"] }
-    }
-  });
-  var VIEM_CHAIN_BY_ID = {
-    1: mainnet,
-    11155111: sepolia,
-    42161: arbitrum,
-    8453: base,
-    10: optimism,
-    137: polygon,
-    56: bsc,
-    196: xLayer
-  };
-  function getViemChain(chainId) {
-    return VIEM_CHAIN_BY_ID[chainId] ?? null;
-  }
-  var ERC20_TRANSFER_ABI = [
-    {
-      type: "function",
-      name: "transfer",
-      stateMutability: "nonpayable",
-      inputs: [
-        { name: "to", type: "address" },
-        { name: "amount", type: "uint256" }
-      ],
-      outputs: [{ type: "bool" }]
-    }
-  ];
-  function rpcFor(chainId) {
-    return EVM_CHAINS.find((c) => c.id === chainId)?.rpcUrl ?? null;
-  }
-  async function estimateSendTransaction(p) {
-    const { chainId, from: from15, to, token: token2, amountDecimal } = p;
-    const chain = VIEM_CHAIN_BY_ID[chainId];
-    const rpc = rpcFor(chainId);
-    if (!chain || !rpc) {
-      return { ok: false, error: "\u6682\u4E0D\u652F\u6301\u8BE5\u7F51\u7EDC" };
-    }
-    let fromAddr;
-    let toAddr;
-    try {
-      fromAddr = getAddress2(from15.trim());
-      toAddr = getAddress2(to.trim());
-    } catch {
-      return { ok: false, error: "\u5730\u5740\u683C\u5F0F\u65E0\u6548" };
-    }
-    if (!isAddress2(fromAddr) || !isAddress2(toAddr)) {
-      return { ok: false, error: "\u5730\u5740\u683C\u5F0F\u65E0\u6548" };
-    }
-    const amt = String(amountDecimal).trim().replace(",", ".");
-    if (!amt || Number.parseFloat(amt) <= 0) {
-      return { ok: false, error: "\u8BF7\u8F93\u5165\u6709\u6548\u91D1\u989D" };
-    }
-    const client = createPublicClient({
-      chain,
-      transport: http(rpc)
-    });
-    let gasLimit;
-    try {
-      if (token2.kind === "native") {
-        const value = parseUnits2(amt, token2.decimals ?? 18);
-        gasLimit = await client.estimateGas({
-          account: fromAddr,
-          to: toAddr,
-          value
-        });
-      } else {
-        const tokenAddr = getAddress2(String(token2.address));
-        const amountWei = parseUnits2(amt, token2.decimals);
-        const data = encodeFunctionData({
-          abi: ERC20_TRANSFER_ABI,
-          functionName: "transfer",
-          args: [toAddr, amountWei]
-        });
-        gasLimit = await client.estimateGas({
-          account: fromAddr,
-          to: tokenAddr,
-          data
-        });
-      }
-    } catch (e) {
-      return {
-        ok: false,
-        error: e?.shortMessage || e?.message || "\u65E0\u6CD5\u4F30\u7B97 Gas\uFF08\u4F59\u989D\u4E0D\u8DB3\u6216\u53C2\u6570\u65E0\u6548\uFF09"
-      };
-    }
-    let nonce;
-    try {
-      nonce = await client.getTransactionCount({ address: fromAddr, blockTag: "pending" });
-    } catch (e) {
-      return { ok: false, error: e?.shortMessage || e?.message || "\u65E0\u6CD5\u8BFB\u53D6 nonce" };
-    }
-    let maxFeePerGas;
-    let maxPriorityFeePerGas;
-    let gasPrice;
-    try {
-      const fees = await client.estimateFeesPerGas();
-      maxFeePerGas = fees.maxFeePerGas ?? null;
-      maxPriorityFeePerGas = fees.maxPriorityFeePerGas ?? null;
-    } catch {
-      maxFeePerGas = null;
-      maxPriorityFeePerGas = null;
-    }
-    if (maxFeePerGas == null) {
-      try {
-        gasPrice = await client.getGasPrice();
-      } catch (e) {
-        return { ok: false, error: e?.shortMessage || e?.message || "\u65E0\u6CD5\u8BFB\u53D6 Gas \u4EF7\u683C" };
-      }
-    }
-    const feeWei = maxFeePerGas != null ? gasLimit * maxFeePerGas : gasLimit * (gasPrice ?? 0n);
-    return {
-      ok: true,
-      gasLimit,
-      gasLimitDecimal: gasLimit.toString(),
-      nonce,
-      maxFeePerGas,
-      maxPriorityFeePerGas,
-      gasPrice,
-      feeWei,
-      feeEth: formatEther(feeWei),
-      maxFeeGwei: maxFeePerGas != null ? formatGwei(maxFeePerGas) : null,
-      gasPriceGwei: gasPrice != null ? formatGwei(gasPrice) : null,
-      priorityGwei: maxPriorityFeePerGas != null ? formatGwei(maxPriorityFeePerGas) : null
-    };
-  }
-
   // src/SendFlowViews.jsx
   function buildSendTokenOptions(chainId, customTokens) {
     const vc = getViemChain(chainId);
@@ -106237,27 +106542,27 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
     return out;
   }
   function SendFlowView({ chainId, walletAddress, customTokens, onBack, setToast }) {
-    const [step, setStep] = (0, import_react14.useState)("token");
-    const [tokenId, setTokenId] = (0, import_react14.useState)("");
-    const [sendTo, setSendTo] = (0, import_react14.useState)("");
-    const [sendAmount, setSendAmount] = (0, import_react14.useState)("");
-    const [est, setEst] = (0, import_react14.useState)(null);
-    const [estLoading, setEstLoading] = (0, import_react14.useState)(false);
-    const [estError, setEstError] = (0, import_react14.useState)("");
-    const [submitting, setSubmitting] = (0, import_react14.useState)(false);
-    const tokenOptions = (0, import_react14.useMemo)(() => buildSendTokenOptions(chainId, customTokens), [chainId, customTokens]);
-    const selectedToken = (0, import_react14.useMemo)(
+    const [step, setStep] = (0, import_react15.useState)("token");
+    const [tokenId, setTokenId] = (0, import_react15.useState)("");
+    const [sendTo, setSendTo] = (0, import_react15.useState)("");
+    const [sendAmount, setSendAmount] = (0, import_react15.useState)("");
+    const [est, setEst] = (0, import_react15.useState)(null);
+    const [estLoading, setEstLoading] = (0, import_react15.useState)(false);
+    const [estError, setEstError] = (0, import_react15.useState)("");
+    const [submitting, setSubmitting] = (0, import_react15.useState)(false);
+    const tokenOptions = (0, import_react15.useMemo)(() => buildSendTokenOptions(chainId, customTokens), [chainId, customTokens]);
+    const selectedToken = (0, import_react15.useMemo)(
       () => tokenOptions.find((t) => t.id === tokenId) ?? null,
       [tokenOptions, tokenId]
     );
-    (0, import_react14.useEffect)(() => {
+    (0, import_react15.useEffect)(() => {
       setTokenId((prev2) => {
         const opts = buildSendTokenOptions(chainId, customTokens);
         if (opts.some((t) => t.id === prev2)) return prev2;
         return opts[0]?.id ?? "";
       });
     }, [chainId, customTokens]);
-    const runEstimate = (0, import_react14.useCallback)(async () => {
+    const runEstimate = (0, import_react15.useCallback)(async () => {
       if (!selectedToken || !sendTo.trim() || !sendAmount.trim()) return;
       setEstLoading(true);
       setEstError("");
@@ -106286,7 +106591,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
         setEstLoading(false);
       }
     }, [chainId, walletAddress, sendTo, sendAmount, selectedToken]);
-    (0, import_react14.useEffect)(() => {
+    (0, import_react15.useEffect)(() => {
       if (step !== "confirm") return;
       void runEstimate();
     }, [step, runEstimate]);
@@ -106320,7 +106625,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
         setSubmitting(false);
       }
     }
-    return /* @__PURE__ */ import_react14.default.createElement(Box_default, { sx: { flex: 1, minHeight: 0, display: "flex", flexDirection: "column", overflow: "hidden" } }, /* @__PURE__ */ import_react14.default.createElement(
+    return /* @__PURE__ */ import_react15.default.createElement(Box_default, { sx: { flex: 1, minHeight: 0, display: "flex", flexDirection: "column", overflow: "hidden" } }, /* @__PURE__ */ import_react15.default.createElement(
       Box_default,
       {
         sx: {
@@ -106335,18 +106640,18 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
           flexShrink: 0
         }
       },
-      /* @__PURE__ */ import_react14.default.createElement(IconButton_default, { size: "small", onClick: handleHeaderBack, sx: { color: "text.primary" }, "aria-label": "\u8FD4\u56DE" }, /* @__PURE__ */ import_react14.default.createElement(ArrowLeft, { size: 22, strokeWidth: 2.25 })),
-      /* @__PURE__ */ import_react14.default.createElement(Typography_default, { variant: "h6", sx: { fontWeight: 600 } }, title),
-      /* @__PURE__ */ import_react14.default.createElement(Box_default, { sx: { width: 40 } })
-    ), /* @__PURE__ */ import_react14.default.createElement(Box_default, { sx: { flex: 1, minHeight: 0, overflow: "auto", px: 2, pb: 2, pt: 1.5 } }, step === "token" ? /* @__PURE__ */ import_react14.default.createElement(import_react14.default.Fragment, null, /* @__PURE__ */ import_react14.default.createElement(Typography_default, { variant: "body2", color: "text.secondary", sx: { mb: 1 } }, "\u5F53\u524D\u7F51\u7EDC\uFF1A", EVM_CHAINS.find((c) => c.id === chainId)?.name ?? ""), /* @__PURE__ */ import_react14.default.createElement(RadioGroup_default, { value: tokenId, onChange: (e) => setTokenId(e.target.value) }, tokenOptions.map((t) => /* @__PURE__ */ import_react14.default.createElement(
+      /* @__PURE__ */ import_react15.default.createElement(IconButton_default, { size: "small", onClick: handleHeaderBack, sx: { color: "text.primary" }, "aria-label": "\u8FD4\u56DE" }, /* @__PURE__ */ import_react15.default.createElement(ArrowLeft, { size: 22, strokeWidth: 2.25 })),
+      /* @__PURE__ */ import_react15.default.createElement(Typography_default, { variant: "h6", sx: { fontWeight: 600 } }, title),
+      /* @__PURE__ */ import_react15.default.createElement(Box_default, { sx: { width: 40 } })
+    ), /* @__PURE__ */ import_react15.default.createElement(Box_default, { sx: { flex: 1, minHeight: 0, overflow: "auto", px: 2, pb: 2, pt: 1.5 } }, step === "token" ? /* @__PURE__ */ import_react15.default.createElement(import_react15.default.Fragment, null, /* @__PURE__ */ import_react15.default.createElement(Typography_default, { variant: "body2", color: "text.secondary", sx: { mb: 1 } }, "\u5F53\u524D\u7F51\u7EDC\uFF1A", EVM_CHAINS.find((c) => c.id === chainId)?.name ?? ""), /* @__PURE__ */ import_react15.default.createElement(RadioGroup_default, { value: tokenId, onChange: (e) => setTokenId(e.target.value) }, tokenOptions.map((t) => /* @__PURE__ */ import_react15.default.createElement(
       FormControlLabel_default,
       {
         key: t.id,
         value: t.id,
-        control: /* @__PURE__ */ import_react14.default.createElement(Radio_default, { size: "small" }),
-        label: /* @__PURE__ */ import_react14.default.createElement(Box_default, { sx: { display: "flex", alignItems: "center", gap: 1 } }, t.iconUrl ? /* @__PURE__ */ import_react14.default.createElement(Box_default, { component: "img", src: t.iconUrl, alt: "", sx: { width: 24, height: 24, borderRadius: "50%" } }) : null, /* @__PURE__ */ import_react14.default.createElement(Typography_default, { variant: "body2" }, t.label))
+        control: /* @__PURE__ */ import_react15.default.createElement(Radio_default, { size: "small" }),
+        label: /* @__PURE__ */ import_react15.default.createElement(Box_default, { sx: { display: "flex", alignItems: "center", gap: 1 } }, t.iconUrl ? /* @__PURE__ */ import_react15.default.createElement(Box_default, { component: "img", src: t.iconUrl, alt: "", sx: { width: 24, height: 24, borderRadius: "50%" } }) : null, /* @__PURE__ */ import_react15.default.createElement(Typography_default, { variant: "body2" }, t.label))
       }
-    ))), /* @__PURE__ */ import_react14.default.createElement(
+    ))), /* @__PURE__ */ import_react15.default.createElement(
       Button_default,
       {
         variant: "contained",
@@ -106356,7 +106661,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
         onClick: () => setStep("form")
       },
       "\u4E0B\u4E00\u6B65"
-    )) : null, step === "form" ? /* @__PURE__ */ import_react14.default.createElement(import_react14.default.Fragment, null, /* @__PURE__ */ import_react14.default.createElement(Typography_default, { variant: "caption", color: "text.secondary", sx: { display: "block", mb: 1 } }, EVM_CHAINS.find((c) => c.id === chainId)?.name, " \xB7 ", selectedToken?.label ?? ""), /* @__PURE__ */ import_react14.default.createElement(
+    )) : null, step === "form" ? /* @__PURE__ */ import_react15.default.createElement(import_react15.default.Fragment, null, /* @__PURE__ */ import_react15.default.createElement(Typography_default, { variant: "caption", color: "text.secondary", sx: { display: "block", mb: 1 } }, EVM_CHAINS.find((c) => c.id === chainId)?.name, " \xB7 ", selectedToken?.label ?? ""), /* @__PURE__ */ import_react15.default.createElement(
       TextField_default,
       {
         fullWidth: true,
@@ -106367,7 +106672,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
         onChange: (e) => setSendTo(e.target.value),
         sx: { mb: 2 }
       }
-    ), /* @__PURE__ */ import_react14.default.createElement(
+    ), /* @__PURE__ */ import_react15.default.createElement(
       TextField_default,
       {
         fullWidth: true,
@@ -106378,7 +106683,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
         onChange: (e) => setSendAmount(e.target.value),
         sx: { mb: 2 }
       }
-    ), /* @__PURE__ */ import_react14.default.createElement(
+    ), /* @__PURE__ */ import_react15.default.createElement(
       Button_default,
       {
         variant: "contained",
@@ -106388,7 +106693,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
         onClick: () => setStep("confirm")
       },
       "\u9884\u89C8\u8D39\u7528\u5E76\u786E\u8BA4"
-    )) : null, step === "confirm" ? /* @__PURE__ */ import_react14.default.createElement(import_react14.default.Fragment, null, /* @__PURE__ */ import_react14.default.createElement(Typography_default, { variant: "body2", sx: { mb: 1 } }, "\u5411 ", /* @__PURE__ */ import_react14.default.createElement("strong", null, sendTo.slice(0, 8), "\u2026", sendTo.slice(-6)), " \u53D1\u9001", " ", /* @__PURE__ */ import_react14.default.createElement("strong", null, sendAmount, " ", selectedToken?.symbol)), /* @__PURE__ */ import_react14.default.createElement(Divider_default, { sx: { my: 1.5 } }), estLoading ? /* @__PURE__ */ import_react14.default.createElement(Box_default, { sx: { py: 3, display: "flex", justifyContent: "center" } }, /* @__PURE__ */ import_react14.default.createElement(CircularProgress_default, { size: 28 })) : estError ? /* @__PURE__ */ import_react14.default.createElement(Typography_default, { color: "error", variant: "body2", sx: { mb: 1 } }, estError) : est ? /* @__PURE__ */ import_react14.default.createElement(Box_default, { sx: { display: "flex", flexDirection: "column", gap: 0.75 } }, /* @__PURE__ */ import_react14.default.createElement(Typography_default, { variant: "caption", color: "text.secondary" }, "Gas \u4E0A\u9650\uFF08\u4F30\u7B97\uFF09"), /* @__PURE__ */ import_react14.default.createElement(Typography_default, { variant: "body2" }, est.gasLimitDecimal), /* @__PURE__ */ import_react14.default.createElement(Typography_default, { variant: "caption", color: "text.secondary", sx: { mt: 1 } }, "Nonce\uFF08pending\uFF09"), /* @__PURE__ */ import_react14.default.createElement(Typography_default, { variant: "body2" }, String(est.nonce)), est.maxFeeGwei != null ? /* @__PURE__ */ import_react14.default.createElement(import_react14.default.Fragment, null, /* @__PURE__ */ import_react14.default.createElement(Typography_default, { variant: "caption", color: "text.secondary", sx: { mt: 1 } }, "Max Fee\uFF08EIP-1559\uFF09"), /* @__PURE__ */ import_react14.default.createElement(Typography_default, { variant: "body2" }, est.maxFeeGwei, " Gwei"), est.priorityGwei != null ? /* @__PURE__ */ import_react14.default.createElement(Typography_default, { variant: "caption", color: "text.secondary" }, "\u4F18\u5148\u8D39\uFF1A", est.priorityGwei, " Gwei") : null) : /* @__PURE__ */ import_react14.default.createElement(import_react14.default.Fragment, null, /* @__PURE__ */ import_react14.default.createElement(Typography_default, { variant: "caption", color: "text.secondary", sx: { mt: 1 } }, "Gas \u4EF7\u683C"), /* @__PURE__ */ import_react14.default.createElement(Typography_default, { variant: "body2" }, est.gasPriceGwei ?? "\u2014", " Gwei")), /* @__PURE__ */ import_react14.default.createElement(Typography_default, { variant: "caption", color: "text.secondary", sx: { mt: 1 } }, "\u9884\u4F30\u7F51\u7EDC\u8D39\u7528\uFF08\u4E0A\u9650\uFF09"), /* @__PURE__ */ import_react14.default.createElement(Typography_default, { variant: "h6", sx: { fontWeight: 700 } }, est.feeEth, " ", getViemChain(chainId)?.nativeCurrency.symbol ?? "ETH")) : null, /* @__PURE__ */ import_react14.default.createElement(
+    )) : null, step === "confirm" ? /* @__PURE__ */ import_react15.default.createElement(import_react15.default.Fragment, null, /* @__PURE__ */ import_react15.default.createElement(Typography_default, { variant: "body2", sx: { mb: 1 } }, "\u5411 ", /* @__PURE__ */ import_react15.default.createElement("strong", null, sendTo.slice(0, 8), "\u2026", sendTo.slice(-6)), " \u53D1\u9001", " ", /* @__PURE__ */ import_react15.default.createElement("strong", null, sendAmount, " ", selectedToken?.symbol)), /* @__PURE__ */ import_react15.default.createElement(Divider_default, { sx: { my: 1.5 } }), estLoading ? /* @__PURE__ */ import_react15.default.createElement(Box_default, { sx: { py: 3, display: "flex", justifyContent: "center" } }, /* @__PURE__ */ import_react15.default.createElement(CircularProgress_default, { size: 28 })) : estError ? /* @__PURE__ */ import_react15.default.createElement(Typography_default, { color: "error", variant: "body2", sx: { mb: 1 } }, estError) : est ? /* @__PURE__ */ import_react15.default.createElement(Box_default, { sx: { display: "flex", flexDirection: "column", gap: 0.75 } }, /* @__PURE__ */ import_react15.default.createElement(Typography_default, { variant: "caption", color: "text.secondary" }, "Gas \u4E0A\u9650\uFF08\u4F30\u7B97\uFF09"), /* @__PURE__ */ import_react15.default.createElement(Typography_default, { variant: "body2" }, est.gasLimitDecimal), /* @__PURE__ */ import_react15.default.createElement(Typography_default, { variant: "caption", color: "text.secondary", sx: { mt: 1 } }, "Nonce\uFF08pending\uFF09"), /* @__PURE__ */ import_react15.default.createElement(Typography_default, { variant: "body2" }, String(est.nonce)), est.maxFeeGwei != null ? /* @__PURE__ */ import_react15.default.createElement(import_react15.default.Fragment, null, /* @__PURE__ */ import_react15.default.createElement(Typography_default, { variant: "caption", color: "text.secondary", sx: { mt: 1 } }, "Max Fee\uFF08EIP-1559\uFF09"), /* @__PURE__ */ import_react15.default.createElement(Typography_default, { variant: "body2" }, est.maxFeeGwei, " Gwei"), est.priorityGwei != null ? /* @__PURE__ */ import_react15.default.createElement(Typography_default, { variant: "caption", color: "text.secondary" }, "\u4F18\u5148\u8D39\uFF1A", est.priorityGwei, " Gwei") : null) : /* @__PURE__ */ import_react15.default.createElement(import_react15.default.Fragment, null, /* @__PURE__ */ import_react15.default.createElement(Typography_default, { variant: "caption", color: "text.secondary", sx: { mt: 1 } }, "Gas \u4EF7\u683C"), /* @__PURE__ */ import_react15.default.createElement(Typography_default, { variant: "body2" }, est.gasPriceGwei ?? "\u2014", " Gwei")), /* @__PURE__ */ import_react15.default.createElement(Typography_default, { variant: "caption", color: "text.secondary", sx: { mt: 1 } }, "\u9884\u4F30\u7F51\u7EDC\u8D39\u7528\uFF08\u4E0A\u9650\uFF09"), /* @__PURE__ */ import_react15.default.createElement(Typography_default, { variant: "h6", sx: { fontWeight: 700 } }, est.feeEth, " ", getViemChain(chainId)?.nativeCurrency.symbol ?? "ETH")) : null, /* @__PURE__ */ import_react15.default.createElement(
       Button_default,
       {
         variant: "contained",
@@ -106398,11 +106703,11 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
         onClick: () => void handleConfirmBroadcast()
       },
       submitting ? "\u5904\u7406\u4E2D\u2026" : "\u786E\u8BA4\u53D1\u9001"
-    ), /* @__PURE__ */ import_react14.default.createElement(Button_default, { fullWidth: true, sx: { mt: 1 }, onClick: () => setStep("form") }, "\u8FD4\u56DE\u4FEE\u6539")) : null, step === "result" ? /* @__PURE__ */ import_react14.default.createElement(Box_default, { sx: { textAlign: "center", py: 2 } }, /* @__PURE__ */ import_react14.default.createElement(Typography_default, { variant: "h6", sx: { mb: 1 } }, "\u6F14\u793A\u5B8C\u6210"), /* @__PURE__ */ import_react14.default.createElement(Typography_default, { variant: "body2", color: "text.secondary", sx: { mb: 2 } }, "\u5F53\u524D\u6269\u5C55\u672A\u5185\u7F6E\u672C\u5730\u7B7E\u540D\u79C1\u94A5\uFF0C\u672A\u5411\u94FE\u4E0A\u5E7F\u64AD\u771F\u5B9E\u4EA4\u6613\u3002\u540E\u7EED\u53EF\u63A5\u5165\u7B7E\u540D\u4E0E\u5E7F\u64AD\u3002"), /* @__PURE__ */ import_react14.default.createElement(Button_default, { variant: "contained", fullWidth: true, sx: { color: "primary.contrastText" }, onClick: onBack }, "\u8FD4\u56DE\u9996\u9875")) : null));
+    ), /* @__PURE__ */ import_react15.default.createElement(Button_default, { fullWidth: true, sx: { mt: 1 }, onClick: () => setStep("form") }, "\u8FD4\u56DE\u4FEE\u6539")) : null, step === "result" ? /* @__PURE__ */ import_react15.default.createElement(Box_default, { sx: { textAlign: "center", py: 2 } }, /* @__PURE__ */ import_react15.default.createElement(Typography_default, { variant: "h6", sx: { mb: 1 } }, "\u6F14\u793A\u5B8C\u6210"), /* @__PURE__ */ import_react15.default.createElement(Typography_default, { variant: "body2", color: "text.secondary", sx: { mb: 2 } }, "\u5F53\u524D\u6269\u5C55\u672A\u5185\u7F6E\u672C\u5730\u7B7E\u540D\u79C1\u94A5\uFF0C\u672A\u5411\u94FE\u4E0A\u5E7F\u64AD\u771F\u5B9E\u4EA4\u6613\u3002\u540E\u7EED\u53EF\u63A5\u5165\u7B7E\u540D\u4E0E\u5E7F\u64AD\u3002"), /* @__PURE__ */ import_react15.default.createElement(Button_default, { variant: "contained", fullWidth: true, sx: { color: "primary.contrastText" }, onClick: onBack }, "\u8FD4\u56DE\u9996\u9875")) : null));
   }
 
   // src/TokenManageViews.jsx
-  var import_react15 = __toESM(require_react());
+  var import_react16 = __toESM(require_react());
 
   // src/services/erc20Meta.js
   var ERC20_STRING = [
@@ -106512,16 +106817,16 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 
   // src/TokenManageViews.jsx
   function TokenManageView({ tokens, onOpenCustom, onRemove, setToast }) {
-    const [query, setQuery] = (0, import_react15.useState)("");
-    const [confirmRemove, setConfirmRemove] = (0, import_react15.useState)({ open: false, id: "", symbol: "" });
-    const filtered = (0, import_react15.useMemo)(() => {
+    const [query, setQuery] = (0, import_react16.useState)("");
+    const [confirmRemove, setConfirmRemove] = (0, import_react16.useState)({ open: false, id: "", symbol: "" });
+    const filtered = (0, import_react16.useMemo)(() => {
       const q = query.trim().toLowerCase();
       if (!q) return tokens;
       return tokens.filter((t) => {
         return t.symbol.toLowerCase().includes(q) || t.name.toLowerCase().includes(q) || t.address.toLowerCase().includes(q);
       });
     }, [tokens, query]);
-    return /* @__PURE__ */ import_react15.default.createElement(Box_default, { sx: { flex: 1, minHeight: 0, display: "flex", flexDirection: "column", overflow: "hidden" } }, /* @__PURE__ */ import_react15.default.createElement(Box_default, { sx: { px: 2, pt: 1.5, pb: 1, flexShrink: 0 } }, /* @__PURE__ */ import_react15.default.createElement(
+    return /* @__PURE__ */ import_react16.default.createElement(Box_default, { sx: { flex: 1, minHeight: 0, display: "flex", flexDirection: "column", overflow: "hidden" } }, /* @__PURE__ */ import_react16.default.createElement(Box_default, { sx: { px: 2, pt: 1.5, pb: 1, flexShrink: 0 } }, /* @__PURE__ */ import_react16.default.createElement(
       TextField_default,
       {
         fullWidth: true,
@@ -106530,7 +106835,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
         value: query,
         onChange: (e) => setQuery(e.target.value),
         InputProps: {
-          startAdornment: /* @__PURE__ */ import_react15.default.createElement(InputAdornment_default, { position: "start" }, /* @__PURE__ */ import_react15.default.createElement(Search, { size: 18, strokeWidth: 2 }))
+          startAdornment: /* @__PURE__ */ import_react16.default.createElement(InputAdornment_default, { position: "start" }, /* @__PURE__ */ import_react16.default.createElement(Search, { size: 18, strokeWidth: 2 }))
         },
         sx: {
           "& .MuiOutlinedInput-root": {
@@ -106539,14 +106844,14 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
           }
         }
       }
-    )), /* @__PURE__ */ import_react15.default.createElement(
+    )), /* @__PURE__ */ import_react16.default.createElement(
       Card_default,
       {
         variant: "outlined",
         sx: { mx: 2, mb: 1.5, cursor: "pointer", flexShrink: 0 },
         onClick: onOpenCustom
       },
-      /* @__PURE__ */ import_react15.default.createElement(CardContent_default, { sx: { py: 1.25, "&:last-child": { pb: 1.25 }, display: "flex", alignItems: "center", gap: 1.5 } }, /* @__PURE__ */ import_react15.default.createElement(
+      /* @__PURE__ */ import_react16.default.createElement(CardContent_default, { sx: { py: 1.25, "&:last-child": { pb: 1.25 }, display: "flex", alignItems: "center", gap: 1.5 } }, /* @__PURE__ */ import_react16.default.createElement(
         Box_default,
         {
           sx: {
@@ -106559,9 +106864,9 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
             flexShrink: 0
           }
         },
-        /* @__PURE__ */ import_react15.default.createElement(CirclePlus, { size: 22, strokeWidth: 2 })
-      ), /* @__PURE__ */ import_react15.default.createElement(Typography_default, { variant: "body2", fontWeight: 600, sx: { flex: 1 } }, "\u81EA\u5B9A\u4E49\u5E01\u79CD"), /* @__PURE__ */ import_react15.default.createElement(ChevronRight, { size: 18, color: "var(--mui-palette-text-secondary)" }))
-    ), /* @__PURE__ */ import_react15.default.createElement(Divider_default, { sx: { mx: 2 } }), /* @__PURE__ */ import_react15.default.createElement(Typography_default, { variant: "caption", color: "text.secondary", sx: { px: 2, pt: 1.5, pb: 0.5 } }, "\u5DF2\u6DFB\u52A0\u4EE3\u5E01"), /* @__PURE__ */ import_react15.default.createElement(Box_default, { sx: { flex: 1, minHeight: 0, overflowY: "auto", px: 2, pb: 2, pt: 0.5 } }, filtered.length === 0 ? /* @__PURE__ */ import_react15.default.createElement(Typography_default, { variant: "body2", color: "text.secondary", sx: { py: 3, textAlign: "center" } }, tokens.length === 0 ? "\u6682\u65E0\u81EA\u5B9A\u4E49\u4EE3\u5E01\uFF0C\u70B9\u51FB\u4E0A\u65B9\u6DFB\u52A0" : "\u65E0\u5339\u914D\u7ED3\u679C") : filtered.map((t) => /* @__PURE__ */ import_react15.default.createElement(Card_default, { key: t.id, variant: "outlined", sx: { mb: 1 } }, /* @__PURE__ */ import_react15.default.createElement(CardContent_default, { sx: { py: 1.25, "&:last-child": { pb: 1.25 } } }, /* @__PURE__ */ import_react15.default.createElement(Box_default, { sx: { display: "flex", alignItems: "flex-start", gap: 1 } }, t.iconUrl ? /* @__PURE__ */ import_react15.default.createElement(
+        /* @__PURE__ */ import_react16.default.createElement(CirclePlus, { size: 22, strokeWidth: 2 })
+      ), /* @__PURE__ */ import_react16.default.createElement(Typography_default, { variant: "body2", fontWeight: 600, sx: { flex: 1 } }, "\u81EA\u5B9A\u4E49\u5E01\u79CD"), /* @__PURE__ */ import_react16.default.createElement(ChevronRight, { size: 18, color: "var(--mui-palette-text-secondary)" }))
+    ), /* @__PURE__ */ import_react16.default.createElement(Divider_default, { sx: { mx: 2 } }), /* @__PURE__ */ import_react16.default.createElement(Typography_default, { variant: "caption", color: "text.secondary", sx: { px: 2, pt: 1.5, pb: 0.5 } }, "\u5DF2\u6DFB\u52A0\u4EE3\u5E01"), /* @__PURE__ */ import_react16.default.createElement(Box_default, { sx: { flex: 1, minHeight: 0, overflowY: "auto", px: 2, pb: 2, pt: 0.5 } }, filtered.length === 0 ? /* @__PURE__ */ import_react16.default.createElement(Typography_default, { variant: "body2", color: "text.secondary", sx: { py: 3, textAlign: "center" } }, tokens.length === 0 ? "\u6682\u65E0\u81EA\u5B9A\u4E49\u4EE3\u5E01\uFF0C\u70B9\u51FB\u4E0A\u65B9\u6DFB\u52A0" : "\u65E0\u5339\u914D\u7ED3\u679C") : filtered.map((t) => /* @__PURE__ */ import_react16.default.createElement(Card_default, { key: t.id, variant: "outlined", sx: { mb: 1 } }, /* @__PURE__ */ import_react16.default.createElement(CardContent_default, { sx: { py: 1.25, "&:last-child": { pb: 1.25 } } }, /* @__PURE__ */ import_react16.default.createElement(Box_default, { sx: { display: "flex", alignItems: "flex-start", gap: 1 } }, t.iconUrl ? /* @__PURE__ */ import_react16.default.createElement(
       Box_default,
       {
         component: "img",
@@ -106577,7 +106882,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
           bgcolor: "action.hover"
         }
       }
-    ) : /* @__PURE__ */ import_react15.default.createElement(
+    ) : /* @__PURE__ */ import_react16.default.createElement(
       Box_default,
       {
         sx: {
@@ -106594,7 +106899,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
         }
       },
       t.symbol[0] ?? "?"
-    ), /* @__PURE__ */ import_react15.default.createElement(Box_default, { sx: { minWidth: 0, flex: 1 } }, /* @__PURE__ */ import_react15.default.createElement(Box_default, { sx: { display: "flex", alignItems: "center", gap: 0.5, flexWrap: "wrap" } }, /* @__PURE__ */ import_react15.default.createElement(Typography_default, { variant: "body2", fontWeight: 700 }, t.symbol), /* @__PURE__ */ import_react15.default.createElement(Chip_default, { label: t.networkBadge, size: "small", sx: { height: 20, fontSize: 10 }, variant: "outlined" })), /* @__PURE__ */ import_react15.default.createElement(Typography_default, { variant: "caption", color: "text.secondary", sx: { display: "block" } }, t.name), /* @__PURE__ */ import_react15.default.createElement(Typography_default, { variant: "caption", color: "text.secondary", sx: { fontSize: 10, wordBreak: "break-all" } }, t.address)), /* @__PURE__ */ import_react15.default.createElement(
+    ), /* @__PURE__ */ import_react16.default.createElement(Box_default, { sx: { minWidth: 0, flex: 1 } }, /* @__PURE__ */ import_react16.default.createElement(Box_default, { sx: { display: "flex", alignItems: "center", gap: 0.5, flexWrap: "wrap" } }, /* @__PURE__ */ import_react16.default.createElement(Typography_default, { variant: "body2", fontWeight: 700 }, t.symbol), /* @__PURE__ */ import_react16.default.createElement(Chip_default, { label: t.networkBadge, size: "small", sx: { height: 20, fontSize: 10 }, variant: "outlined" })), /* @__PURE__ */ import_react16.default.createElement(Typography_default, { variant: "caption", color: "text.secondary", sx: { display: "block" } }, t.name), /* @__PURE__ */ import_react16.default.createElement(Typography_default, { variant: "caption", color: "text.secondary", sx: { fontSize: 10, wordBreak: "break-all" } }, t.address)), /* @__PURE__ */ import_react16.default.createElement(
       Box_default,
       {
         sx: {
@@ -106606,10 +106911,10 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
           minWidth: 72
         }
       },
-      /* @__PURE__ */ import_react15.default.createElement(Typography_default, { variant: "body2", fontWeight: 600 }, t.amountDisplay ?? "\u2014"),
-      /* @__PURE__ */ import_react15.default.createElement(Typography_default, { variant: "caption", color: "text.secondary" }, t.valueDisplay ?? "\u2014"),
-      /* @__PURE__ */ import_react15.default.createElement(Typography_default, { variant: "caption", color: "text.secondary", sx: { fontSize: 11 } }, t.priceLabel ?? "\u2014"),
-      /* @__PURE__ */ import_react15.default.createElement(
+      /* @__PURE__ */ import_react16.default.createElement(Typography_default, { variant: "body2", fontWeight: 600 }, t.amountDisplay ?? "\u2014"),
+      /* @__PURE__ */ import_react16.default.createElement(Typography_default, { variant: "caption", color: "text.secondary" }, t.valueDisplay ?? "\u2014"),
+      /* @__PURE__ */ import_react16.default.createElement(Typography_default, { variant: "caption", color: "text.secondary", sx: { fontSize: 11 } }, t.priceLabel ?? "\u2014"),
+      /* @__PURE__ */ import_react16.default.createElement(
         Typography_default,
         {
           variant: "caption",
@@ -106620,7 +106925,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
         },
         t.change === "\u2014" ? "24h \u2014" : `24h ${t.change}`
       ),
-      /* @__PURE__ */ import_react15.default.createElement(
+      /* @__PURE__ */ import_react16.default.createElement(
         Box_default,
         {
           component: "button",
@@ -106640,7 +106945,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
             "&:hover": { opacity: 0.85 }
           }
         },
-        /* @__PURE__ */ import_react15.default.createElement(
+        /* @__PURE__ */ import_react16.default.createElement(
           Box_default,
           {
             sx: {
@@ -106653,10 +106958,10 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
               placeItems: "center"
             }
           },
-          /* @__PURE__ */ import_react15.default.createElement(Minus, { size: 14, strokeWidth: 2.5, color: "var(--mui-palette-error-main)" })
+          /* @__PURE__ */ import_react16.default.createElement(Minus, { size: 14, strokeWidth: 2.5, color: "var(--mui-palette-error-main)" })
         )
       )
-    )))))), /* @__PURE__ */ import_react15.default.createElement(Dialog_default, { open: confirmRemove.open, onClose: () => setConfirmRemove({ open: false, id: "", symbol: "" }) }, /* @__PURE__ */ import_react15.default.createElement(DialogTitle_default, null, "\u79FB\u9664\u81EA\u5B9A\u4E49\u4EE3\u5E01"), /* @__PURE__ */ import_react15.default.createElement(DialogContent_default, null, /* @__PURE__ */ import_react15.default.createElement(Typography_default, { variant: "body2", color: "text.secondary" }, "\u786E\u5B9A\u4ECE\u5217\u8868\u4E2D\u79FB\u9664\u300C", confirmRemove.symbol || "\u8BE5\u4EE3\u5E01", "\u300D\u5417\uFF1F\u79FB\u9664\u540E\u4ECD\u53EF\u5728\u300C\u81EA\u5B9A\u4E49\u5E01\u79CD\u300D\u4E2D\u91CD\u65B0\u6DFB\u52A0\u3002")), /* @__PURE__ */ import_react15.default.createElement(DialogActions_default, null, /* @__PURE__ */ import_react15.default.createElement(Button_default, { onClick: () => setConfirmRemove({ open: false, id: "", symbol: "" }) }, "\u53D6\u6D88"), /* @__PURE__ */ import_react15.default.createElement(
+    )))))), /* @__PURE__ */ import_react16.default.createElement(Dialog_default, { open: confirmRemove.open, onClose: () => setConfirmRemove({ open: false, id: "", symbol: "" }) }, /* @__PURE__ */ import_react16.default.createElement(DialogTitle_default, null, "\u79FB\u9664\u81EA\u5B9A\u4E49\u4EE3\u5E01"), /* @__PURE__ */ import_react16.default.createElement(DialogContent_default, null, /* @__PURE__ */ import_react16.default.createElement(Typography_default, { variant: "body2", color: "text.secondary" }, "\u786E\u5B9A\u4ECE\u5217\u8868\u4E2D\u79FB\u9664\u300C", confirmRemove.symbol || "\u8BE5\u4EE3\u5E01", "\u300D\u5417\uFF1F\u79FB\u9664\u540E\u4ECD\u53EF\u5728\u300C\u81EA\u5B9A\u4E49\u5E01\u79CD\u300D\u4E2D\u91CD\u65B0\u6DFB\u52A0\u3002")), /* @__PURE__ */ import_react16.default.createElement(DialogActions_default, null, /* @__PURE__ */ import_react16.default.createElement(Button_default, { onClick: () => setConfirmRemove({ open: false, id: "", symbol: "" }) }, "\u53D6\u6D88"), /* @__PURE__ */ import_react16.default.createElement(
       Button_default,
       {
         color: "error",
@@ -106671,10 +106976,10 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
     ))));
   }
   function CustomTokenAddView({ onBack, onAdded, setToast, defaultChainId }) {
-    const [chainId, setChainId] = (0, import_react15.useState)(() => defaultChainId ?? EVM_CHAINS[0].id);
-    const [contract, setContract] = (0, import_react15.useState)("");
-    const [submitting, setSubmitting] = (0, import_react15.useState)(false);
-    (0, import_react15.useEffect)(() => {
+    const [chainId, setChainId] = (0, import_react16.useState)(() => defaultChainId ?? EVM_CHAINS[0].id);
+    const [contract, setContract] = (0, import_react16.useState)("");
+    const [submitting, setSubmitting] = (0, import_react16.useState)(false);
+    (0, import_react16.useEffect)(() => {
       if (defaultChainId != null) setChainId(defaultChainId);
     }, [defaultChainId]);
     const chain = EVM_CHAINS.find((c) => c.id === chainId) ?? EVM_CHAINS[0];
@@ -106700,7 +107005,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
         setSubmitting(false);
       }
     }
-    return /* @__PURE__ */ import_react15.default.createElement(Box_default, { sx: { flex: 1, minHeight: 0, display: "flex", flexDirection: "column", px: 2, pt: 2, pb: 2, overflow: "auto" } }, /* @__PURE__ */ import_react15.default.createElement(Typography_default, { variant: "body2", color: "text.secondary", sx: { mb: 2 } }, "\u9009\u62E9\u7F51\u7EDC\u5E76\u8F93\u5165\u4EE3\u5E01\u5408\u7EA6\u5730\u5740\uFF0C\u5C06\u81EA\u52A8\u8BFB\u53D6\u540D\u79F0\u4E0E\u7B26\u53F7\u3002"), /* @__PURE__ */ import_react15.default.createElement(FormControl_default, { fullWidth: true, size: "small", sx: { mb: 2 } }, /* @__PURE__ */ import_react15.default.createElement(InputLabel_default, { id: "token-chain-label" }, "\u7F51\u7EDC"), /* @__PURE__ */ import_react15.default.createElement(
+    return /* @__PURE__ */ import_react16.default.createElement(Box_default, { sx: { flex: 1, minHeight: 0, display: "flex", flexDirection: "column", px: 2, pt: 2, pb: 2, overflow: "auto" } }, /* @__PURE__ */ import_react16.default.createElement(Typography_default, { variant: "body2", color: "text.secondary", sx: { mb: 2 } }, "\u9009\u62E9\u7F51\u7EDC\u5E76\u8F93\u5165\u4EE3\u5E01\u5408\u7EA6\u5730\u5740\uFF0C\u5C06\u81EA\u52A8\u8BFB\u53D6\u540D\u79F0\u4E0E\u7B26\u53F7\u3002"), /* @__PURE__ */ import_react16.default.createElement(FormControl_default, { fullWidth: true, size: "small", sx: { mb: 2 } }, /* @__PURE__ */ import_react16.default.createElement(InputLabel_default, { id: "token-chain-label" }, "\u7F51\u7EDC"), /* @__PURE__ */ import_react16.default.createElement(
       Select_default,
       {
         labelId: "token-chain-label",
@@ -106708,8 +107013,8 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
         value: chainId,
         onChange: (e) => setChainId(Number(e.target.value))
       },
-      EVM_CHAINS.map((c) => /* @__PURE__ */ import_react15.default.createElement(MenuItem_default, { key: c.id, value: c.id }, c.name))
-    )), /* @__PURE__ */ import_react15.default.createElement(
+      EVM_CHAINS.map((c) => /* @__PURE__ */ import_react16.default.createElement(MenuItem_default, { key: c.id, value: c.id }, c.name))
+    )), /* @__PURE__ */ import_react16.default.createElement(
       TextField_default,
       {
         fullWidth: true,
@@ -106721,7 +107026,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
         sx: { mb: 2 },
         inputProps: { autoComplete: "off", spellCheck: false }
       }
-    ), /* @__PURE__ */ import_react15.default.createElement(
+    ), /* @__PURE__ */ import_react16.default.createElement(
       Button_default,
       {
         variant: "contained",
@@ -106730,8 +107035,8 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
         onClick: () => void handleSubmit(),
         sx: { py: 1.25, color: "primary.contrastText", mb: 1 }
       },
-      submitting ? /* @__PURE__ */ import_react15.default.createElement(CircularProgress_default, { size: 22, color: "inherit" }) : "\u786E\u5B9A\u6DFB\u52A0"
-    ), /* @__PURE__ */ import_react15.default.createElement(Button_default, { variant: "text", onClick: onBack, disabled: submitting }, "\u53D6\u6D88"));
+      submitting ? /* @__PURE__ */ import_react16.default.createElement(CircularProgress_default, { size: 22, color: "inherit" }) : "\u786E\u5B9A\u6DFB\u52A0"
+    ), /* @__PURE__ */ import_react16.default.createElement(Button_default, { variant: "text", onClick: onBack, disabled: submitting }, "\u53D6\u6D88"));
   }
 
   // src/services/customTokens.js
@@ -106955,8 +107260,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
     42161: "ethereum",
     8453: "ethereum",
     10: "ethereum",
-    /** Polygon PoS 原生 gas 为 POL（CoinGecko：polygon-ecosystem-token） */
-    137: "polygon-ecosystem-token",
+    137: "matic-network",
     56: "binancecoin",
     196: "okb"
   };
@@ -107021,9 +107325,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
       return { ...empty2, error: "\u672A\u914D\u7F6E\u8BE5\u94FE\u884C\u60C5" };
     }
     const stables = CHAIN_DEFAULT_STABLECOINS[chainId] ?? [];
-    const priceIdSet = /* @__PURE__ */ new Set([nativeCoingeckoId, "tether", "usd-coin"]);
-    if (chainId === 137) priceIdSet.add("matic-network");
-    const priceIds = [...priceIdSet].join(",");
+    const priceIds = [.../* @__PURE__ */ new Set([nativeCoingeckoId, "tether", "usd-coin"])].join(",");
     let priceRes;
     try {
       const url2 = `${COINGECKO_SIMPLE2}?ids=${priceIds}&vs_currencies=usd&include_24hr_change=true`;
@@ -107045,10 +107347,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
     } catch {
       return { ...empty2, error: "\u65E0\u6CD5\u8BFB\u53D6\u94FE\u4E0A\u4F59\u989D" };
     }
-    let nativePx = priceData[nativeCoingeckoId];
-    if (chainId === 137 && (!nativePx || typeof nativePx.usd !== "number")) {
-      nativePx = priceData["matic-network"];
-    }
+    const nativePx = priceData[nativeCoingeckoId];
     const nativePriceUsd = typeof nativePx?.usd === "number" ? nativePx.usd : 0;
     const nativeChange24h = typeof nativePx?.usd_24h_change === "number" ? nativePx.usd_24h_change : null;
     const amountStr = formatNativeAmount(wei);
@@ -107137,7 +107436,8 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
     WALLET_CREATE: "wallet_create",
     WALLET_IMPORT: "wallet_import",
     TOKEN_MANAGE: "token_manage",
-    TOKEN_CUSTOM_ADD: "token_custom_add"
+    TOKEN_CUSTOM_ADD: "token_custom_add",
+    HISTORY: "history"
   };
   var FORGOT_ITEMS = [
     "OKX Wallet \u4E0D\u50A8\u5B58\u4F60\u7684\u5BC6\u7801\uFF0C\u65E0\u6CD5\u5E2E\u4F60\u627E\u56DE\u3002",
@@ -107158,7 +107458,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
   };
   var IS_SIDE_PANEL_SURFACE = typeof window !== "undefined" && window.location.pathname.endsWith("sidepanel.html");
   function PageHeader({ title, canBack, onBack }) {
-    return /* @__PURE__ */ import_react16.default.createElement(
+    return /* @__PURE__ */ import_react17.default.createElement(
       Box_default,
       {
         sx: {
@@ -107172,58 +107472,59 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
           minHeight: 48
         }
       },
-      canBack ? /* @__PURE__ */ import_react16.default.createElement(IconButton_default, { size: "small", onClick: onBack, sx: { color: "text.primary" }, "aria-label": "\u8FD4\u56DE" }, /* @__PURE__ */ import_react16.default.createElement(ArrowLeft, { size: 22, strokeWidth: 2.25 })) : /* @__PURE__ */ import_react16.default.createElement(Box_default, { sx: { width: 40 } }),
-      /* @__PURE__ */ import_react16.default.createElement(Typography_default, { variant: "h6", sx: { fontWeight: 600 } }, title),
-      /* @__PURE__ */ import_react16.default.createElement(Box_default, { sx: { width: 40 } })
+      canBack ? /* @__PURE__ */ import_react17.default.createElement(IconButton_default, { size: "small", onClick: onBack, sx: { color: "text.primary" }, "aria-label": "\u8FD4\u56DE" }, /* @__PURE__ */ import_react17.default.createElement(ArrowLeft, { size: 22, strokeWidth: 2.25 })) : /* @__PURE__ */ import_react17.default.createElement(Box_default, { sx: { width: 40 } }),
+      /* @__PURE__ */ import_react17.default.createElement(Typography_default, { variant: "h6", sx: { fontWeight: 600 } }, title),
+      /* @__PURE__ */ import_react17.default.createElement(Box_default, { sx: { width: 40 } })
     );
   }
   function App() {
-    const [stack, setStack] = (0, import_react16.useState)([VIEWS.LOGIN]);
-    const [password, setPassword] = (0, import_react16.useState)("");
-    const [confirmPassword, setConfirmPassword] = (0, import_react16.useState)("");
-    const [showPassword, setShowPassword] = (0, import_react16.useState)(false);
-    const [checks, setChecks] = (0, import_react16.useState)([false, false, false]);
-    const [toast, setToast] = (0, import_react16.useState)("");
-    const [activeTab, setActiveTab] = (0, import_react16.useState)(HOME_TABS[0]);
-    const [qrDataUrl, setQrDataUrl] = (0, import_react16.useState)("");
-    const [authMode, setAuthMode] = (0, import_react16.useState)(AUTH_MODE.UNLOCK);
-    const [loadingAuth, setLoadingAuth] = (0, import_react16.useState)(true);
-    const [submittingAuth, setSubmittingAuth] = (0, import_react16.useState)(false);
-    const [walletDisplayName, setWalletDisplayNameState] = (0, import_react16.useState)("SUN Wallet");
-    const [walletAddress, setWalletAddress] = (0, import_react16.useState)(
+    const [stack, setStack] = (0, import_react17.useState)([VIEWS.LOGIN]);
+    const [password, setPassword] = (0, import_react17.useState)("");
+    const [confirmPassword, setConfirmPassword] = (0, import_react17.useState)("");
+    const [showPassword, setShowPassword] = (0, import_react17.useState)(false);
+    const [checks, setChecks] = (0, import_react17.useState)([false, false, false]);
+    const [toast, setToast] = (0, import_react17.useState)("");
+    const [activeTab, setActiveTab] = (0, import_react17.useState)(HOME_TABS[0]);
+    const [qrDataUrl, setQrDataUrl] = (0, import_react17.useState)("");
+    const [authMode, setAuthMode] = (0, import_react17.useState)(AUTH_MODE.UNLOCK);
+    const [loadingAuth, setLoadingAuth] = (0, import_react17.useState)(true);
+    const [submittingAuth, setSubmittingAuth] = (0, import_react17.useState)(false);
+    const [walletDisplayName, setWalletDisplayNameState] = (0, import_react17.useState)("SUN Wallet");
+    const [walletAddress, setWalletAddress] = (0, import_react17.useState)(
       "0x2fF7D743A1A8Bc13f6C01A3fF8EA7e6Ba6a0F2D5"
     );
-    const [settingsNameDraft, setSettingsNameDraft] = (0, import_react16.useState)("SUN Wallet");
-    const [settingsMenuAnchor, setSettingsMenuAnchor] = (0, import_react16.useState)(null);
-    const settingsMenuCloseTimerRef = (0, import_react16.useRef)(null);
-    const [addressCopiedFeedback, setAddressCopiedFeedback] = (0, import_react16.useState)(false);
-    const addressCopyFeedbackTimerRef = (0, import_react16.useRef)(null);
-    const [themeMode, setThemeModeState] = (0, import_react16.useState)("dark");
-    const [portfolioLoading, setPortfolioLoading] = (0, import_react16.useState)(false);
-    const [portfolioError, setPortfolioError] = (0, import_react16.useState)("");
-    const [portfolioItems, setPortfolioItems] = (0, import_react16.useState)([]);
-    const [portfolioTotalUsd, setPortfolioTotalUsd] = (0, import_react16.useState)(0);
-    const [portfolioChange24h, setPortfolioChange24h] = (0, import_react16.useState)(null);
-    const [portfolioRefreshing, setPortfolioRefreshing] = (0, import_react16.useState)(false);
-    const [hideTotalUsd, setHideTotalUsd] = (0, import_react16.useState)(false);
-    const [showAddTokenFab, setShowAddTokenFab] = (0, import_react16.useState)(false);
-    const lastAssetListScrollTopRef = (0, import_react16.useRef)(0);
-    const [customTokens, setCustomTokens] = (0, import_react16.useState)([]);
-    const [customTokensDisplay, setCustomTokensDisplay] = (0, import_react16.useState)([]);
-    const [selectedChainId, setSelectedChainId] = (0, import_react16.useState)(EVM_CHAINS[0].id);
-    const [networkMenuAnchor, setNetworkMenuAnchor] = (0, import_react16.useState)(null);
-    const [walletStore, setWalletStore] = (0, import_react16.useState)(null);
-    const unlockPasswordRef = (0, import_react16.useRef)("");
-    const [vaultPwOpen, setVaultPwOpen] = (0, import_react16.useState)(false);
-    const [vaultPwDraft, setVaultPwDraft] = (0, import_react16.useState)("");
-    const [vaultPwShow, setVaultPwShow] = (0, import_react16.useState)(false);
-    const vaultPwResolveRef = (0, import_react16.useRef)(null);
+    const [settingsNameDraft, setSettingsNameDraft] = (0, import_react17.useState)("SUN Wallet");
+    const [bscscanApiKeyDraft, setBscscanApiKeyDraft] = (0, import_react17.useState)("");
+    const [settingsMenuAnchor, setSettingsMenuAnchor] = (0, import_react17.useState)(null);
+    const settingsMenuCloseTimerRef = (0, import_react17.useRef)(null);
+    const [addressCopiedFeedback, setAddressCopiedFeedback] = (0, import_react17.useState)(false);
+    const addressCopyFeedbackTimerRef = (0, import_react17.useRef)(null);
+    const [themeMode, setThemeModeState] = (0, import_react17.useState)("dark");
+    const [portfolioLoading, setPortfolioLoading] = (0, import_react17.useState)(false);
+    const [portfolioError, setPortfolioError] = (0, import_react17.useState)("");
+    const [portfolioItems, setPortfolioItems] = (0, import_react17.useState)([]);
+    const [portfolioTotalUsd, setPortfolioTotalUsd] = (0, import_react17.useState)(0);
+    const [portfolioChange24h, setPortfolioChange24h] = (0, import_react17.useState)(null);
+    const [portfolioRefreshing, setPortfolioRefreshing] = (0, import_react17.useState)(false);
+    const [hideTotalUsd, setHideTotalUsd] = (0, import_react17.useState)(false);
+    const [showAddTokenFab, setShowAddTokenFab] = (0, import_react17.useState)(false);
+    const lastAssetListScrollTopRef = (0, import_react17.useRef)(0);
+    const [customTokens, setCustomTokens] = (0, import_react17.useState)([]);
+    const [customTokensDisplay, setCustomTokensDisplay] = (0, import_react17.useState)([]);
+    const [selectedChainId, setSelectedChainId] = (0, import_react17.useState)(EVM_CHAINS[0].id);
+    const [networkMenuAnchor, setNetworkMenuAnchor] = (0, import_react17.useState)(null);
+    const [walletStore, setWalletStore] = (0, import_react17.useState)(null);
+    const unlockPasswordRef = (0, import_react17.useRef)("");
+    const [vaultPwOpen, setVaultPwOpen] = (0, import_react17.useState)(false);
+    const [vaultPwDraft, setVaultPwDraft] = (0, import_react17.useState)("");
+    const [vaultPwShow, setVaultPwShow] = (0, import_react17.useState)(false);
+    const vaultPwResolveRef = (0, import_react17.useRef)(null);
     const current = stack[stack.length - 1];
     const muiTheme = themeMode === "light" ? walletThemeLight : walletThemeDark;
     const canBack = stack.length > 1;
     const canReset = checks.every(Boolean);
     const isSetupMode = authMode === AUTH_MODE.SETUP;
-    const syncHomeFromWalletStore = (0, import_react16.useCallback)(async (store) => {
+    const syncHomeFromWalletStore = (0, import_react17.useCallback)(async (store) => {
       const acc = findActiveAccount(store);
       if (!acc) return;
       const w = store.wallets.find((x) => x.id === store.activeWalletId);
@@ -107233,7 +107534,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
       await setWalletPublicAddress(acc.address);
       await setWalletDisplayName(label);
     }, []);
-    const onAssetListWheel = (0, import_react16.useCallback)(
+    const onAssetListWheel = (0, import_react17.useCallback)(
       (e) => {
         if (activeTab !== "\u5E01\u79CD") return;
         if (e.deltaY > 4) setShowAddTokenFab(true);
@@ -107241,7 +107542,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
       },
       [activeTab]
     );
-    const onAssetListScroll = (0, import_react16.useCallback)(
+    const onAssetListScroll = (0, import_react17.useCallback)(
       (e) => {
         if (activeTab !== "\u5E01\u79CD") return;
         const el = e.currentTarget;
@@ -107253,7 +107554,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
       },
       [activeTab]
     );
-    (0, import_react16.useEffect)(() => {
+    (0, import_react17.useEffect)(() => {
       if (loadingAuth) return;
       const needStore = current === VIEWS.HOME || current === VIEWS.WALLET_HUB || current === VIEWS.WALLET_ADD_CHOICE || current === VIEWS.WALLET_CREATE || current === VIEWS.WALLET_IMPORT;
       if (!needStore) return;
@@ -107270,7 +107571,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
         cancelled = true;
       };
     }, [loadingAuth, current, syncHomeFromWalletStore]);
-    (0, import_react16.useEffect)(() => {
+    (0, import_react17.useEffect)(() => {
       async function generateQr() {
         if (current !== VIEWS.RECEIVE) return;
         const data = await import_qrcode.default.toDataURL(walletAddress, {
@@ -107281,7 +107582,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
       }
       generateQr();
     }, [current, walletAddress]);
-    (0, import_react16.useEffect)(() => {
+    (0, import_react17.useEffect)(() => {
       let cancelled = false;
       async function initApp() {
         const [hash6, name, addr] = await Promise.all([
@@ -107321,21 +107622,21 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
         cancelled = true;
       };
     }, []);
-    (0, import_react16.useEffect)(() => {
+    (0, import_react17.useEffect)(() => {
       return () => {
         if (addressCopyFeedbackTimerRef.current) {
           clearTimeout(addressCopyFeedbackTimerRef.current);
         }
       };
     }, []);
-    (0, import_react16.useEffect)(() => {
+    (0, import_react17.useEffect)(() => {
       getThemeMode().then(setThemeModeState);
     }, []);
-    (0, import_react16.useEffect)(() => {
+    (0, import_react17.useEffect)(() => {
       if (loadingAuth) return;
       void loadCustomTokens().then(setCustomTokens);
     }, [loadingAuth]);
-    (0, import_react16.useEffect)(() => {
+    (0, import_react17.useEffect)(() => {
       if (loadingAuth) return;
       let cancelled = false;
       void (async () => {
@@ -107346,7 +107647,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
         cancelled = true;
       };
     }, [loadingAuth]);
-    (0, import_react16.useEffect)(() => {
+    (0, import_react17.useEffect)(() => {
       let cancelled = false;
       void enrichCustomTokensForManage(walletAddress, customTokens).then((rows) => {
         if (!cancelled) setCustomTokensDisplay(rows);
@@ -107355,7 +107656,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
         cancelled = true;
       };
     }, [walletAddress, customTokens]);
-    const loadPortfolio = (0, import_react16.useCallback)(
+    const loadPortfolio = (0, import_react17.useCallback)(
       async (silent2 = false) => {
         if (silent2) setPortfolioRefreshing(true);
         else setPortfolioLoading(true);
@@ -107381,13 +107682,13 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
       },
       [walletAddress, customTokens, selectedChainId]
     );
-    const handleSelectChain = (0, import_react16.useCallback)(async (id2) => {
+    const handleSelectChain = (0, import_react17.useCallback)(async (id2) => {
       const next2 = normalizeStoredChainId(id2);
       setSelectedChainId(next2);
       setNetworkMenuAnchor(null);
       await setStorageValue(SELECTED_CHAIN_ID_STORAGE_KEY, next2);
     }, []);
-    (0, import_react16.useEffect)(() => {
+    (0, import_react17.useEffect)(() => {
       if (current !== VIEWS.HOME) return void 0;
       let cancelled = false;
       void loadPortfolio(false);
@@ -107399,10 +107700,10 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
         clearInterval(timer);
       };
     }, [current, walletAddress, loadPortfolio]);
-    (0, import_react16.useEffect)(() => {
+    (0, import_react17.useEffect)(() => {
       if (current !== VIEWS.HOME) setShowAddTokenFab(false);
     }, [current]);
-    (0, import_react16.useEffect)(() => {
+    (0, import_react17.useEffect)(() => {
       if (activeTab !== "\u5E01\u79CD") setShowAddTokenFab(false);
     }, [activeTab]);
     async function hashPassword(raw) {
@@ -107410,7 +107711,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
       const digest = await crypto.subtle.digest("SHA-256", data);
       return Array.from(new Uint8Array(digest)).map((b2) => b2.toString(16).padStart(2, "0")).join("");
     }
-    const getVaultPassword = (0, import_react16.useCallback)(async () => {
+    const getVaultPassword = (0, import_react17.useCallback)(async () => {
       if (unlockPasswordRef.current) return unlockPasswordRef.current;
       return new Promise((resolve) => {
         vaultPwResolveRef.current = resolve;
@@ -107511,6 +107812,10 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
       }
       if (key === "receive") {
         goto(VIEWS.RECEIVE);
+        return;
+      }
+      if (key === "history") {
+        goto(VIEWS.HISTORY);
         return;
       }
       setToast(`${label} \u529F\u80FD\u5360\u4F4D`);
@@ -107650,6 +107955,14 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
       await setThemeMode(mode);
       setToast(mode === "light" ? "\u5DF2\u5207\u6362\u4E3A\u9633\u5149\u660E\u5A9A\u4E3B\u9898" : "\u5DF2\u5207\u6362\u4E3A\u6DF1\u8272\u4E3B\u9898");
     }
+    async function saveBscscanApiKey() {
+      await setStorageValue(BSCSCAN_API_KEY_STORAGE_KEY, bscscanApiKeyDraft.trim());
+      setToast("BscScan API Key \u5DF2\u4FDD\u5B58");
+    }
+    (0, import_react17.useEffect)(() => {
+      if (current !== VIEWS.SETTINGS) return;
+      void getStorageValue(BSCSCAN_API_KEY_STORAGE_KEY, "").then((v) => setBscscanApiKeyDraft(v ?? ""));
+    }, [current]);
     const shellSx = IS_SIDE_PANEL_SURFACE ? {
       width: "100%",
       maxWidth: "100%",
@@ -107675,7 +107988,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
       flexDirection: "column",
       bgcolor: "background.default"
     };
-    return /* @__PURE__ */ import_react16.default.createElement(ThemeProvider4, { theme: muiTheme }, /* @__PURE__ */ import_react16.default.createElement(CssBaseline_default, null), /* @__PURE__ */ import_react16.default.createElement(Box_default, { sx: shellSx }, loadingAuth ? /* @__PURE__ */ import_react16.default.createElement(
+    return /* @__PURE__ */ import_react17.default.createElement(ThemeProvider4, { theme: muiTheme }, /* @__PURE__ */ import_react17.default.createElement(CssBaseline_default, null), /* @__PURE__ */ import_react17.default.createElement(Box_default, { sx: shellSx }, loadingAuth ? /* @__PURE__ */ import_react17.default.createElement(
       Box_default,
       {
         sx: {
@@ -107686,8 +107999,8 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
           justifyContent: "center"
         }
       },
-      /* @__PURE__ */ import_react16.default.createElement(CircularProgress_default, null)
-    ) : /* @__PURE__ */ import_react16.default.createElement(import_react16.default.Fragment, null, current === VIEWS.LOGIN && /* @__PURE__ */ import_react16.default.createElement(
+      /* @__PURE__ */ import_react17.default.createElement(CircularProgress_default, null)
+    ) : /* @__PURE__ */ import_react17.default.createElement(import_react17.default.Fragment, null, current === VIEWS.LOGIN && /* @__PURE__ */ import_react17.default.createElement(
       Box_default,
       {
         sx: {
@@ -107701,7 +108014,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
           overflow: "hidden"
         }
       },
-      /* @__PURE__ */ import_react16.default.createElement(
+      /* @__PURE__ */ import_react17.default.createElement(
         Box_default,
         {
           sx: {
@@ -107713,7 +108026,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
             flexDirection: "column"
           }
         },
-        /* @__PURE__ */ import_react16.default.createElement(
+        /* @__PURE__ */ import_react17.default.createElement(
           Box_default,
           {
             component: "img",
@@ -107730,7 +108043,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
             }
           }
         ),
-        /* @__PURE__ */ import_react16.default.createElement(
+        /* @__PURE__ */ import_react17.default.createElement(
           Typography_default,
           {
             variant: "h4",
@@ -107744,7 +108057,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
           },
           isSetupMode ? "\u8BBE\u7F6E\u94B1\u5305\u5BC6\u7801" : "Web3 \u5165\u53E3\uFF0C\u4E00\u4E2A\u5C31\u591F"
         ),
-        /* @__PURE__ */ import_react16.default.createElement(
+        /* @__PURE__ */ import_react17.default.createElement(
           Typography_default,
           {
             align: "center",
@@ -107753,7 +108066,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
           },
           isSetupMode ? "\u9996\u6B21\u4F7F\u7528\u8BF7\u8BBE\u7F6E\u89E3\u9501\u5BC6\u7801\uFF08\u81F3\u5C11 8 \u4F4D\uFF09" : "\u94B1\u5305 \xB7 \u4EA4\u6613 \xB7 NFT \xB7 \u8D5A\u5E01 \xB7 DApp"
         ),
-        /* @__PURE__ */ import_react16.default.createElement(Box_default, { sx: { mt: 2, display: "flex", flexDirection: "column", gap: 1.5, pb: 1 } }, /* @__PURE__ */ import_react16.default.createElement(
+        /* @__PURE__ */ import_react17.default.createElement(Box_default, { sx: { mt: 2, display: "flex", flexDirection: "column", gap: 1.5, pb: 1 } }, /* @__PURE__ */ import_react17.default.createElement(
           TextField_default,
           {
             fullWidth: true,
@@ -107762,10 +108075,10 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
             value: password,
             onChange: (e) => setPassword(e.target.value),
             InputProps: {
-              endAdornment: /* @__PURE__ */ import_react16.default.createElement(InputAdornment_default, { position: "end" }, /* @__PURE__ */ import_react16.default.createElement(IconButton_default, { edge: "end", onClick: () => setShowPassword((v) => !v), size: "small" }, showPassword ? /* @__PURE__ */ import_react16.default.createElement(EyeOff, { size: 20 }) : /* @__PURE__ */ import_react16.default.createElement(Eye, { size: 20 })))
+              endAdornment: /* @__PURE__ */ import_react17.default.createElement(InputAdornment_default, { position: "end" }, /* @__PURE__ */ import_react17.default.createElement(IconButton_default, { edge: "end", onClick: () => setShowPassword((v) => !v), size: "small" }, showPassword ? /* @__PURE__ */ import_react17.default.createElement(EyeOff, { size: 20 }) : /* @__PURE__ */ import_react17.default.createElement(Eye, { size: 20 })))
             }
           }
-        ), isSetupMode ? /* @__PURE__ */ import_react16.default.createElement(
+        ), isSetupMode ? /* @__PURE__ */ import_react17.default.createElement(
           TextField_default,
           {
             fullWidth: true,
@@ -107776,7 +108089,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
           }
         ) : null)
       ),
-      /* @__PURE__ */ import_react16.default.createElement(Box_default, { sx: { flexShrink: 0, pt: 0.5 } }, /* @__PURE__ */ import_react16.default.createElement(
+      /* @__PURE__ */ import_react17.default.createElement(Box_default, { sx: { flexShrink: 0, pt: 0.5 } }, /* @__PURE__ */ import_react17.default.createElement(
         Button_default,
         {
           variant: "contained",
@@ -107793,7 +108106,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
           }
         },
         submittingAuth ? "\u5904\u7406\u4E2D..." : isSetupMode ? "\u521B\u5EFA\u5BC6\u7801\u5E76\u89E3\u9501" : "\u89E3\u9501"
-      ), !isSetupMode ? /* @__PURE__ */ import_react16.default.createElement(
+      ), !isSetupMode ? /* @__PURE__ */ import_react17.default.createElement(
         Button_default,
         {
           fullWidth: true,
@@ -107802,8 +108115,8 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
           onClick: () => goto(VIEWS.FORGOT)
         },
         "\u5FD8\u8BB0\u5BC6\u7801?"
-      ) : /* @__PURE__ */ import_react16.default.createElement(Box_default, { sx: { height: 8 } }))
-    ), current === VIEWS.FORGOT && /* @__PURE__ */ import_react16.default.createElement(Box_default, { sx: { flex: 1, minHeight: 0, display: "flex", flexDirection: "column", overflow: "auto" } }, /* @__PURE__ */ import_react16.default.createElement(PageHeader, { title: "\u5FD8\u8BB0\u5BC6\u7801", canBack, onBack: back }), /* @__PURE__ */ import_react16.default.createElement(
+      ) : /* @__PURE__ */ import_react17.default.createElement(Box_default, { sx: { height: 8 } }))
+    ), current === VIEWS.FORGOT && /* @__PURE__ */ import_react17.default.createElement(Box_default, { sx: { flex: 1, minHeight: 0, display: "flex", flexDirection: "column", overflow: "auto" } }, /* @__PURE__ */ import_react17.default.createElement(PageHeader, { title: "\u5FD8\u8BB0\u5BC6\u7801", canBack, onBack: back }), /* @__PURE__ */ import_react17.default.createElement(
       Box_default,
       {
         sx: {
@@ -107819,10 +108132,10 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
         }
       },
       "\u{1F4B3}"
-    ), /* @__PURE__ */ import_react16.default.createElement(Box_default, { sx: { px: 2, display: "flex", flexDirection: "column", gap: 1 } }, FORGOT_ITEMS.map((text, i) => /* @__PURE__ */ import_react16.default.createElement(Card_default, { key: text, variant: "outlined" }, /* @__PURE__ */ import_react16.default.createElement(CardContent_default, { sx: { py: 1.5, "&:last-child": { pb: 1.5 } } }, /* @__PURE__ */ import_react16.default.createElement(
+    ), /* @__PURE__ */ import_react17.default.createElement(Box_default, { sx: { px: 2, display: "flex", flexDirection: "column", gap: 1 } }, FORGOT_ITEMS.map((text, i) => /* @__PURE__ */ import_react17.default.createElement(Card_default, { key: text, variant: "outlined" }, /* @__PURE__ */ import_react17.default.createElement(CardContent_default, { sx: { py: 1.5, "&:last-child": { pb: 1.5 } } }, /* @__PURE__ */ import_react17.default.createElement(
       FormControlLabel_default,
       {
-        control: /* @__PURE__ */ import_react16.default.createElement(
+        control: /* @__PURE__ */ import_react17.default.createElement(
           Checkbox_default,
           {
             checked: checks[i],
@@ -107834,9 +108147,9 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
             size: "small"
           }
         ),
-        label: /* @__PURE__ */ import_react16.default.createElement(Typography_default, { variant: "body2" }, text)
+        label: /* @__PURE__ */ import_react17.default.createElement(Typography_default, { variant: "body2" }, text)
       }
-    ))))), /* @__PURE__ */ import_react16.default.createElement(Box_default, { sx: { px: 2, mt: "auto", pb: 2 } }, /* @__PURE__ */ import_react16.default.createElement(
+    ))))), /* @__PURE__ */ import_react17.default.createElement(Box_default, { sx: { px: 2, mt: "auto", pb: 2 } }, /* @__PURE__ */ import_react17.default.createElement(
       Button_default,
       {
         fullWidth: true,
@@ -107846,7 +108159,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
         sx: { borderRadius: 999, py: 1.25, fontSize: 16 }
       },
       "\u91CD\u7F6E\u94B1\u5305"
-    ))), current === VIEWS.HOME && /* @__PURE__ */ import_react16.default.createElement(
+    ))), current === VIEWS.HOME && /* @__PURE__ */ import_react17.default.createElement(
       Box_default,
       {
         sx: {
@@ -107861,7 +108174,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
           overflow: "visible"
         }
       },
-      /* @__PURE__ */ import_react16.default.createElement(Box_default, { sx: { display: "flex", alignItems: "center", justifyContent: "space-between", mb: 1.25, flexShrink: 0 } }, /* @__PURE__ */ import_react16.default.createElement(
+      /* @__PURE__ */ import_react17.default.createElement(Box_default, { sx: { display: "flex", alignItems: "center", justifyContent: "space-between", mb: 1.25, flexShrink: 0 } }, /* @__PURE__ */ import_react17.default.createElement(
         Box_default,
         {
           role: "button",
@@ -107883,7 +108196,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
             "&:hover": { bgcolor: "action.hover" }
           }
         },
-        /* @__PURE__ */ import_react16.default.createElement(
+        /* @__PURE__ */ import_react17.default.createElement(
           Box_default,
           {
             component: "img",
@@ -107892,8 +108205,8 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
             sx: { width: 32, height: 32, borderRadius: 1, border: 1, borderColor: "divider" }
           }
         ),
-        /* @__PURE__ */ import_react16.default.createElement(Box_default, null, /* @__PURE__ */ import_react16.default.createElement(Typography_default, { variant: "body2", fontWeight: 600 }, walletDisplayName), /* @__PURE__ */ import_react16.default.createElement(Typography_default, { variant: "caption", color: "text.secondary" }, shortAddress(walletAddress)))
-      ), /* @__PURE__ */ import_react16.default.createElement(Box_default, { sx: { display: "flex", gap: 0.5, alignItems: "center" } }, /* @__PURE__ */ import_react16.default.createElement(
+        /* @__PURE__ */ import_react17.default.createElement(Box_default, null, /* @__PURE__ */ import_react17.default.createElement(Typography_default, { variant: "body2", fontWeight: 600 }, walletDisplayName), /* @__PURE__ */ import_react17.default.createElement(Typography_default, { variant: "caption", color: "text.secondary" }, shortAddress(walletAddress)))
+      ), /* @__PURE__ */ import_react17.default.createElement(Box_default, { sx: { display: "flex", gap: 0.5, alignItems: "center" } }, /* @__PURE__ */ import_react17.default.createElement(
         IconButton_default,
         {
           size: "small",
@@ -107906,8 +108219,8 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
             transform: addressCopiedFeedback ? "scale(1.08)" : "scale(1)"
           }
         },
-        addressCopiedFeedback ? /* @__PURE__ */ import_react16.default.createElement(Check, { size: 18, strokeWidth: 2.5, "aria-hidden": true }) : /* @__PURE__ */ import_react16.default.createElement(Copy, { size: 18, "aria-hidden": true })
-      ), /* @__PURE__ */ import_react16.default.createElement(
+        addressCopiedFeedback ? /* @__PURE__ */ import_react17.default.createElement(Check, { size: 18, strokeWidth: 2.5, "aria-hidden": true }) : /* @__PURE__ */ import_react17.default.createElement(Copy, { size: 18, "aria-hidden": true })
+      ), /* @__PURE__ */ import_react17.default.createElement(
         Box_default,
         {
           sx: {
@@ -107919,8 +108232,8 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
           onMouseEnter: openSettingsMenuFromHover,
           onMouseLeave: scheduleCloseSettingsMenu
         },
-        /* @__PURE__ */ import_react16.default.createElement(IconButton_default, { size: "small", color: "default", title: "\u8BBE\u7F6E", sx: { color: "text.primary" } }, /* @__PURE__ */ import_react16.default.createElement(Settings, { size: 18 })),
-        /* @__PURE__ */ import_react16.default.createElement(
+        /* @__PURE__ */ import_react17.default.createElement(IconButton_default, { size: "small", color: "default", title: "\u8BBE\u7F6E", sx: { color: "text.primary" } }, /* @__PURE__ */ import_react17.default.createElement(Settings, { size: 18 })),
+        /* @__PURE__ */ import_react17.default.createElement(
           Menu_default,
           {
             disablePortal: true,
@@ -107955,63 +108268,63 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
               }
             }
           },
-          /* @__PURE__ */ import_react16.default.createElement(
+          /* @__PURE__ */ import_react17.default.createElement(
             MenuItem_default,
             {
               dense: true,
               onClick: goToTokenManagePage,
               sx: { py: 1.1, gap: 1, fontSize: 14, color: "text.primary" }
             },
-            /* @__PURE__ */ import_react16.default.createElement(ListItemIcon_default, { sx: { minWidth: 32, color: "text.primary" } }, /* @__PURE__ */ import_react16.default.createElement(Coins, { size: 18 })),
-            /* @__PURE__ */ import_react16.default.createElement(ListItemText_default, { primary: "\u5E01\u79CD\u7BA1\u7406" })
+            /* @__PURE__ */ import_react17.default.createElement(ListItemIcon_default, { sx: { minWidth: 32, color: "text.primary" } }, /* @__PURE__ */ import_react17.default.createElement(Coins, { size: 18 })),
+            /* @__PURE__ */ import_react17.default.createElement(ListItemText_default, { primary: "\u5E01\u79CD\u7BA1\u7406" })
           ),
-          /* @__PURE__ */ import_react16.default.createElement(
+          /* @__PURE__ */ import_react17.default.createElement(
             MenuItem_default,
             {
               dense: true,
               onClick: goToSettingsPage,
               sx: { py: 1.1, gap: 1, fontSize: 14, color: "text.primary" }
             },
-            /* @__PURE__ */ import_react16.default.createElement(ListItemIcon_default, { sx: { minWidth: 32, color: "text.primary" } }, /* @__PURE__ */ import_react16.default.createElement(Settings, { size: 18 })),
-            /* @__PURE__ */ import_react16.default.createElement(ListItemText_default, { primary: "\u8BBE\u7F6E" })
+            /* @__PURE__ */ import_react17.default.createElement(ListItemIcon_default, { sx: { minWidth: 32, color: "text.primary" } }, /* @__PURE__ */ import_react17.default.createElement(Settings, { size: 18 })),
+            /* @__PURE__ */ import_react17.default.createElement(ListItemText_default, { primary: "\u8BBE\u7F6E" })
           ),
-          /* @__PURE__ */ import_react16.default.createElement(
+          /* @__PURE__ */ import_react17.default.createElement(
             MenuItem_default,
             {
               dense: true,
               onClick: onDappConnectionsPlaceholder,
               sx: { py: 1.1, gap: 1, fontSize: 14, color: "text.primary" }
             },
-            /* @__PURE__ */ import_react16.default.createElement(ListItemIcon_default, { sx: { minWidth: 32, color: "text.primary" } }, /* @__PURE__ */ import_react16.default.createElement(Globe, { size: 18 })),
-            /* @__PURE__ */ import_react16.default.createElement(ListItemText_default, { primary: "DApp \u8FDE\u63A5\u7BA1\u7406" })
+            /* @__PURE__ */ import_react17.default.createElement(ListItemIcon_default, { sx: { minWidth: 32, color: "text.primary" } }, /* @__PURE__ */ import_react17.default.createElement(Globe, { size: 18 })),
+            /* @__PURE__ */ import_react17.default.createElement(ListItemText_default, { primary: "DApp \u8FDE\u63A5\u7BA1\u7406" })
           ),
-          /* @__PURE__ */ import_react16.default.createElement(
+          /* @__PURE__ */ import_react17.default.createElement(
             MenuItem_default,
             {
               dense: true,
               onClick: IS_SIDE_PANEL_SURFACE ? switchToWindowMode : openSidePanelMode,
               sx: { py: 1.1, gap: 1, fontSize: 14, color: "text.primary" }
             },
-            /* @__PURE__ */ import_react16.default.createElement(ListItemIcon_default, { sx: { minWidth: 32, color: "text.primary" } }, IS_SIDE_PANEL_SURFACE ? /* @__PURE__ */ import_react16.default.createElement(AppWindow, { size: 18 }) : /* @__PURE__ */ import_react16.default.createElement(ArrowLeftRight, { size: 18 })),
-            /* @__PURE__ */ import_react16.default.createElement(
+            /* @__PURE__ */ import_react17.default.createElement(ListItemIcon_default, { sx: { minWidth: 32, color: "text.primary" } }, IS_SIDE_PANEL_SURFACE ? /* @__PURE__ */ import_react17.default.createElement(AppWindow, { size: 18 }) : /* @__PURE__ */ import_react17.default.createElement(ArrowLeftRight, { size: 18 })),
+            /* @__PURE__ */ import_react17.default.createElement(
               ListItemText_default,
               {
                 primary: IS_SIDE_PANEL_SURFACE ? "\u5207\u6362\u4E3A\u7A97\u53E3\u6A21\u5F0F" : "\u4FA7\u8FB9\u680F\u6A21\u5F0F"
               }
             )
           ),
-          /* @__PURE__ */ import_react16.default.createElement(
+          /* @__PURE__ */ import_react17.default.createElement(
             MenuItem_default,
             {
               dense: true,
               onClick: lockWallet,
               sx: { py: 1.1, gap: 1, fontSize: 14, color: "text.primary" }
             },
-            /* @__PURE__ */ import_react16.default.createElement(ListItemIcon_default, { sx: { minWidth: 32, color: "text.primary" } }, /* @__PURE__ */ import_react16.default.createElement(Lock, { size: 18 })),
-            /* @__PURE__ */ import_react16.default.createElement(ListItemText_default, { primary: "\u9501\u5B9A\u94B1\u5305" })
+            /* @__PURE__ */ import_react17.default.createElement(ListItemIcon_default, { sx: { minWidth: 32, color: "text.primary" } }, /* @__PURE__ */ import_react17.default.createElement(Lock, { size: 18 })),
+            /* @__PURE__ */ import_react17.default.createElement(ListItemText_default, { primary: "\u9501\u5B9A\u94B1\u5305" })
           )
         )
-      ), /* @__PURE__ */ import_react16.default.createElement(import_react16.default.Fragment, null, /* @__PURE__ */ import_react16.default.createElement(
+      ), /* @__PURE__ */ import_react17.default.createElement(import_react17.default.Fragment, null, /* @__PURE__ */ import_react17.default.createElement(
         IconButton_default,
         {
           size: "small",
@@ -108022,8 +108335,8 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
           "aria-expanded": Boolean(networkMenuAnchor),
           sx: { color: "text.primary" }
         },
-        /* @__PURE__ */ import_react16.default.createElement(Globe, { size: 18 })
-      ), /* @__PURE__ */ import_react16.default.createElement(
+        /* @__PURE__ */ import_react17.default.createElement(Globe, { size: 18 })
+      ), /* @__PURE__ */ import_react17.default.createElement(
         Menu_default,
         {
           anchorEl: networkMenuAnchor,
@@ -108043,7 +108356,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
             }
           }
         },
-        EVM_CHAINS.map((c) => /* @__PURE__ */ import_react16.default.createElement(
+        EVM_CHAINS.map((c) => /* @__PURE__ */ import_react17.default.createElement(
           MenuItem_default,
           {
             key: c.id,
@@ -108052,11 +108365,11 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
             onClick: () => void handleSelectChain(c.id),
             sx: { py: 1, gap: 0.5 }
           },
-          /* @__PURE__ */ import_react16.default.createElement(ListItemIcon_default, { sx: { minWidth: 28, color: "text.primary" } }, c.id === selectedChainId ? /* @__PURE__ */ import_react16.default.createElement(Check, { size: 18, strokeWidth: 2.5, "aria-hidden": true }) : null),
-          /* @__PURE__ */ import_react16.default.createElement(ListItemText_default, { primary: c.name, secondary: c.badge })
+          /* @__PURE__ */ import_react17.default.createElement(ListItemIcon_default, { sx: { minWidth: 28, color: "text.primary" } }, c.id === selectedChainId ? /* @__PURE__ */ import_react17.default.createElement(Check, { size: 18, strokeWidth: 2.5, "aria-hidden": true }) : null),
+          /* @__PURE__ */ import_react17.default.createElement(ListItemText_default, { primary: c.name, secondary: c.badge })
         ))
       )))),
-      /* @__PURE__ */ import_react16.default.createElement(Card_default, { variant: "outlined", sx: { mb: 1.25, flexShrink: 0 } }, /* @__PURE__ */ import_react16.default.createElement(CardContent_default, { sx: { py: 1.5, "&:last-child": { pb: 1.5 } } }, /* @__PURE__ */ import_react16.default.createElement(Box_default, { sx: { display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: 1 } }, /* @__PURE__ */ import_react16.default.createElement(Box_default, { sx: { flex: 1, minWidth: 0 } }, /* @__PURE__ */ import_react16.default.createElement(
+      /* @__PURE__ */ import_react17.default.createElement(Card_default, { variant: "outlined", sx: { mb: 1.25, flexShrink: 0 } }, /* @__PURE__ */ import_react17.default.createElement(CardContent_default, { sx: { py: 1.5, "&:last-child": { pb: 1.5 } } }, /* @__PURE__ */ import_react17.default.createElement(Box_default, { sx: { display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: 1 } }, /* @__PURE__ */ import_react17.default.createElement(Box_default, { sx: { flex: 1, minWidth: 0 } }, /* @__PURE__ */ import_react17.default.createElement(
         Typography_default,
         {
           variant: "h4",
@@ -108071,7 +108384,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
           title: hideTotalUsd ? "\u70B9\u51FB\u663E\u793A\u91D1\u989D" : "\u70B9\u51FB\u9690\u85CF\u91D1\u989D"
         },
         portfolioLoading ? "\u2026" : hideTotalUsd ? "****" : formatTotalUsdLabel(portfolioTotalUsd)
-      ), portfolioError ? /* @__PURE__ */ import_react16.default.createElement(Typography_default, { variant: "caption", color: "error", sx: { mt: 0.75, display: "block" } }, portfolioError) : null, !portfolioError && portfolioLoading ? /* @__PURE__ */ import_react16.default.createElement(Typography_default, { variant: "body2", color: "text.secondary", sx: { mt: 0.75 } }, "\u52A0\u8F7D\u4E2D\u2026") : null, !portfolioError && !portfolioLoading && portfolioChange24h != null ? /* @__PURE__ */ import_react16.default.createElement(
+      ), portfolioError ? /* @__PURE__ */ import_react17.default.createElement(Typography_default, { variant: "caption", color: "error", sx: { mt: 0.75, display: "block" } }, portfolioError) : null, !portfolioError && portfolioLoading ? /* @__PURE__ */ import_react17.default.createElement(Typography_default, { variant: "body2", color: "text.secondary", sx: { mt: 0.75 } }, "\u52A0\u8F7D\u4E2D\u2026") : null, !portfolioError && !portfolioLoading && portfolioChange24h != null ? /* @__PURE__ */ import_react17.default.createElement(
         Typography_default,
         {
           variant: "body2",
@@ -108081,7 +108394,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
           }
         },
         formatWeightedChangeLabel(portfolioChange24h).text
-      ) : null), /* @__PURE__ */ import_react16.default.createElement(
+      ) : null), /* @__PURE__ */ import_react17.default.createElement(
         IconButton_default,
         {
           size: "small",
@@ -108102,11 +108415,11 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
             }
           }
         },
-        /* @__PURE__ */ import_react16.default.createElement(RefreshCw, { size: 18 })
+        /* @__PURE__ */ import_react17.default.createElement(RefreshCw, { size: 18 })
       )))),
-      /* @__PURE__ */ import_react16.default.createElement(Box_default, { sx: { display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 1, mb: 1.25, flexShrink: 0 } }, HOME_ACTIONS.map((item) => {
+      /* @__PURE__ */ import_react17.default.createElement(Box_default, { sx: { display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 1, mb: 1.25, flexShrink: 0 } }, HOME_ACTIONS.map((item) => {
         const Icon2 = item.icon;
-        return /* @__PURE__ */ import_react16.default.createElement(
+        return /* @__PURE__ */ import_react17.default.createElement(
           Button_default,
           {
             key: item.key,
@@ -108120,7 +108433,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
               minWidth: 0
             }
           },
-          /* @__PURE__ */ import_react16.default.createElement(
+          /* @__PURE__ */ import_react17.default.createElement(
             Box_default,
             {
               sx: {
@@ -108132,12 +108445,12 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
                 placeItems: "center"
               }
             },
-            /* @__PURE__ */ import_react16.default.createElement(Icon2, { size: 16 })
+            /* @__PURE__ */ import_react17.default.createElement(Icon2, { size: 16 })
           ),
           item.label
         );
       })),
-      /* @__PURE__ */ import_react16.default.createElement(
+      /* @__PURE__ */ import_react17.default.createElement(
         Tabs_default,
         {
           value: activeTab,
@@ -108161,9 +108474,9 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
             }
           }
         },
-        HOME_TABS.map((t) => /* @__PURE__ */ import_react16.default.createElement(Tab_default, { key: t, label: t, value: t }))
+        HOME_TABS.map((t) => /* @__PURE__ */ import_react17.default.createElement(Tab_default, { key: t, label: t, value: t }))
       ),
-      /* @__PURE__ */ import_react16.default.createElement(
+      /* @__PURE__ */ import_react17.default.createElement(
         Box_default,
         {
           sx: {
@@ -108174,7 +108487,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
             flexDirection: "column"
           }
         },
-        /* @__PURE__ */ import_react16.default.createElement(
+        /* @__PURE__ */ import_react17.default.createElement(
           Box_default,
           {
             onWheel: onAssetListWheel,
@@ -108192,7 +108505,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
               WebkitOverflowScrolling: "touch"
             }
           },
-          portfolioLoading && portfolioItems.length === 0 ? /* @__PURE__ */ import_react16.default.createElement(Box_default, { sx: { py: 2, display: "flex", justifyContent: "center" } }, /* @__PURE__ */ import_react16.default.createElement(CircularProgress_default, { size: 28 })) : portfolioItems.map((asset) => /* @__PURE__ */ import_react16.default.createElement(
+          portfolioLoading && portfolioItems.length === 0 ? /* @__PURE__ */ import_react17.default.createElement(Box_default, { sx: { py: 2, display: "flex", justifyContent: "center" } }, /* @__PURE__ */ import_react17.default.createElement(CircularProgress_default, { size: 28 })) : portfolioItems.map((asset) => /* @__PURE__ */ import_react17.default.createElement(
             Card_default,
             {
               key: asset.rowKey ?? asset.symbol,
@@ -108206,7 +108519,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
                 "&:hover": { bgcolor: "action.hover" }
               }
             },
-            /* @__PURE__ */ import_react16.default.createElement(CardContent_default, { sx: { py: 1.35, "&:last-child": { pb: 1.35 } } }, /* @__PURE__ */ import_react16.default.createElement(Box_default, { sx: { display: "flex", justifyContent: "space-between", alignItems: "center" } }, /* @__PURE__ */ import_react16.default.createElement(Box_default, { sx: { display: "flex", alignItems: "center", gap: 1, minWidth: 0 } }, asset.iconUrl ? /* @__PURE__ */ import_react16.default.createElement(
+            /* @__PURE__ */ import_react17.default.createElement(CardContent_default, { sx: { py: 1.35, "&:last-child": { pb: 1.35 } } }, /* @__PURE__ */ import_react17.default.createElement(Box_default, { sx: { display: "flex", justifyContent: "space-between", alignItems: "center" } }, /* @__PURE__ */ import_react17.default.createElement(Box_default, { sx: { display: "flex", alignItems: "center", gap: 1, minWidth: 0 } }, asset.iconUrl ? /* @__PURE__ */ import_react17.default.createElement(
               Box_default,
               {
                 component: "img",
@@ -108221,7 +108534,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
                   bgcolor: "action.hover"
                 }
               }
-            ) : /* @__PURE__ */ import_react16.default.createElement(
+            ) : /* @__PURE__ */ import_react17.default.createElement(
               Box_default,
               {
                 sx: {
@@ -108237,7 +108550,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
                 }
               },
               asset.symbol[0]
-            ), /* @__PURE__ */ import_react16.default.createElement(Box_default, { sx: { minWidth: 0 } }, /* @__PURE__ */ import_react16.default.createElement(Typography_default, { variant: "body2", fontWeight: 600 }, asset.symbol), /* @__PURE__ */ import_react16.default.createElement(Typography_default, { variant: "caption", color: "text.secondary", component: "div" }, asset.amount), /* @__PURE__ */ import_react16.default.createElement(Typography_default, { variant: "caption", color: "text.secondary", sx: { fontSize: 11, opacity: 0.9 } }, "\u5355\u4EF7 ", asset.priceLabel ?? "\u2014"))), /* @__PURE__ */ import_react16.default.createElement(Box_default, { sx: { textAlign: "right" } }, /* @__PURE__ */ import_react16.default.createElement(Typography_default, { variant: "body2", fontWeight: 600 }, asset.value), /* @__PURE__ */ import_react16.default.createElement(
+            ), /* @__PURE__ */ import_react17.default.createElement(Box_default, { sx: { minWidth: 0 } }, /* @__PURE__ */ import_react17.default.createElement(Typography_default, { variant: "body2", fontWeight: 600 }, asset.symbol), /* @__PURE__ */ import_react17.default.createElement(Typography_default, { variant: "caption", color: "text.secondary", component: "div" }, asset.amount), /* @__PURE__ */ import_react17.default.createElement(Typography_default, { variant: "caption", color: "text.secondary", sx: { fontSize: 11, opacity: 0.9 } }, "\u5355\u4EF7 ", asset.priceLabel ?? "\u2014"))), /* @__PURE__ */ import_react17.default.createElement(Box_default, { sx: { textAlign: "right" } }, /* @__PURE__ */ import_react17.default.createElement(Typography_default, { variant: "body2", fontWeight: 600 }, asset.value), /* @__PURE__ */ import_react17.default.createElement(
               Typography_default,
               {
                 variant: "caption",
@@ -108247,7 +108560,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
             ))))
           ))
         ),
-        activeTab === "\u5E01\u79CD" ? /* @__PURE__ */ import_react16.default.createElement(Fade_default, { in: showAddTokenFab, timeout: 180, unmountOnExit: true }, /* @__PURE__ */ import_react16.default.createElement(
+        activeTab === "\u5E01\u79CD" ? /* @__PURE__ */ import_react17.default.createElement(Fade_default, { in: showAddTokenFab, timeout: 180, unmountOnExit: true }, /* @__PURE__ */ import_react17.default.createElement(
           Box_default,
           {
             sx: {
@@ -108261,13 +108574,13 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
               zIndex: 2
             }
           },
-          /* @__PURE__ */ import_react16.default.createElement(
+          /* @__PURE__ */ import_react17.default.createElement(
             Button_default,
             {
               variant: "contained",
               color: "primary",
               size: "small",
-              startIcon: /* @__PURE__ */ import_react16.default.createElement(Plus, { size: 16, strokeWidth: 2.5 }),
+              startIcon: /* @__PURE__ */ import_react17.default.createElement(Plus, { size: 16, strokeWidth: 2.5 }),
               onClick: () => goto(VIEWS.TOKEN_MANAGE),
               sx: {
                 pointerEvents: "auto",
@@ -108282,7 +108595,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
           )
         )) : null
       )
-    ), current === VIEWS.SEND && /* @__PURE__ */ import_react16.default.createElement(
+    ), current === VIEWS.SEND && /* @__PURE__ */ import_react17.default.createElement(
       SendFlowView,
       {
         chainId: selectedChainId,
@@ -108291,7 +108604,15 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
         onBack: back,
         setToast
       }
-    ), current === VIEWS.RECEIVE && /* @__PURE__ */ import_react16.default.createElement(Box_default, { sx: { flex: 1, minHeight: 0, display: "flex", flexDirection: "column", px: 2, pb: 2, overflow: "auto" } }, /* @__PURE__ */ import_react16.default.createElement(PageHeader, { title: "\u63A5\u6536", canBack, onBack: back }), /* @__PURE__ */ import_react16.default.createElement(Card_default, { variant: "outlined", sx: { mt: 2 } }, /* @__PURE__ */ import_react16.default.createElement(CardContent_default, null, /* @__PURE__ */ import_react16.default.createElement(Typography_default, { align: "center", variant: "body2", color: "text.secondary" }, "\u5F53\u524D\u6536\u6B3E\u5730\u5740"), /* @__PURE__ */ import_react16.default.createElement(Box_default, { sx: { mt: 2, display: "flex", justifyContent: "center", bgcolor: "#fff", borderRadius: 2, p: 1 } }, qrDataUrl ? /* @__PURE__ */ import_react16.default.createElement(Box_default, { component: "img", src: qrDataUrl, alt: "QR", sx: { width: 180, height: 180 } }) : /* @__PURE__ */ import_react16.default.createElement(Box_default, { sx: { width: 180, height: 180, bgcolor: "grey.300" } })), /* @__PURE__ */ import_react16.default.createElement(
+    ), current === VIEWS.HISTORY && /* @__PURE__ */ import_react17.default.createElement(
+      HistoryView,
+      {
+        walletAddress,
+        chainId: selectedChainId,
+        onBack: back,
+        setToast
+      }
+    ), current === VIEWS.RECEIVE && /* @__PURE__ */ import_react17.default.createElement(Box_default, { sx: { flex: 1, minHeight: 0, display: "flex", flexDirection: "column", px: 2, pb: 2, overflow: "auto" } }, /* @__PURE__ */ import_react17.default.createElement(PageHeader, { title: "\u63A5\u6536", canBack, onBack: back }), /* @__PURE__ */ import_react17.default.createElement(Card_default, { variant: "outlined", sx: { mt: 2 } }, /* @__PURE__ */ import_react17.default.createElement(CardContent_default, null, /* @__PURE__ */ import_react17.default.createElement(Typography_default, { align: "center", variant: "body2", color: "text.secondary" }, "\u5F53\u524D\u6536\u6B3E\u5730\u5740"), /* @__PURE__ */ import_react17.default.createElement(Box_default, { sx: { mt: 2, display: "flex", justifyContent: "center", bgcolor: "#fff", borderRadius: 2, p: 1 } }, qrDataUrl ? /* @__PURE__ */ import_react17.default.createElement(Box_default, { component: "img", src: qrDataUrl, alt: "QR", sx: { width: 180, height: 180 } }) : /* @__PURE__ */ import_react17.default.createElement(Box_default, { sx: { width: 180, height: 180, bgcolor: "grey.300" } })), /* @__PURE__ */ import_react17.default.createElement(
       Typography_default,
       {
         variant: "caption",
@@ -108307,12 +108628,12 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
         }
       },
       walletAddress
-    ), /* @__PURE__ */ import_react16.default.createElement(Box_default, { sx: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 1, mt: 2 } }, /* @__PURE__ */ import_react16.default.createElement(
+    ), /* @__PURE__ */ import_react17.default.createElement(Box_default, { sx: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 1, mt: 2 } }, /* @__PURE__ */ import_react17.default.createElement(
       Button_default,
       {
         variant: "outlined",
         onClick: copyWalletAddress,
-        startIcon: addressCopiedFeedback ? /* @__PURE__ */ import_react16.default.createElement(Check, { size: 16, strokeWidth: 2.5, "aria-hidden": true }) : void 0,
+        startIcon: addressCopiedFeedback ? /* @__PURE__ */ import_react17.default.createElement(Check, { size: 16, strokeWidth: 2.5, "aria-hidden": true }) : void 0,
         sx: {
           color: addressCopiedFeedback ? "success.main" : void 0,
           borderColor: addressCopiedFeedback ? "success.main" : void 0,
@@ -108320,7 +108641,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
         }
       },
       addressCopiedFeedback ? "\u5DF2\u590D\u5236" : "\u590D\u5236\u5730\u5740"
-    ), /* @__PURE__ */ import_react16.default.createElement(Button_default, { variant: "outlined", onClick: () => setToast("\u5206\u4EAB\u4E8C\u7EF4\u7801\uFF08\u5360\u4F4D\uFF09") }, "\u5206\u4EAB\u4E8C\u7EF4\u7801"))))), current === VIEWS.WALLET_HUB && /* @__PURE__ */ import_react16.default.createElement(Box_default, { sx: { flex: 1, minHeight: 0, display: "flex", flexDirection: "column", overflow: "hidden" } }, /* @__PURE__ */ import_react16.default.createElement(PageHeader, { title: "\u94B1\u5305\u7BA1\u7406", canBack, onBack: back }), !walletStore ? /* @__PURE__ */ import_react16.default.createElement(Box_default, { sx: { flex: 1, display: "flex", alignItems: "center", justifyContent: "center" } }, /* @__PURE__ */ import_react16.default.createElement(CircularProgress_default, null)) : /* @__PURE__ */ import_react16.default.createElement(
+    ), /* @__PURE__ */ import_react17.default.createElement(Button_default, { variant: "outlined", onClick: () => setToast("\u5206\u4EAB\u4E8C\u7EF4\u7801\uFF08\u5360\u4F4D\uFF09") }, "\u5206\u4EAB\u4E8C\u7EF4\u7801"))))), current === VIEWS.WALLET_HUB && /* @__PURE__ */ import_react17.default.createElement(Box_default, { sx: { flex: 1, minHeight: 0, display: "flex", flexDirection: "column", overflow: "hidden" } }, /* @__PURE__ */ import_react17.default.createElement(PageHeader, { title: "\u94B1\u5305\u7BA1\u7406", canBack, onBack: back }), !walletStore ? /* @__PURE__ */ import_react17.default.createElement(Box_default, { sx: { flex: 1, display: "flex", alignItems: "center", justifyContent: "center" } }, /* @__PURE__ */ import_react17.default.createElement(CircularProgress_default, null)) : /* @__PURE__ */ import_react17.default.createElement(
       WalletHubView,
       {
         store: walletStore,
@@ -108339,14 +108660,14 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
           back();
         }
       }
-    )), current === VIEWS.WALLET_ADD_CHOICE && /* @__PURE__ */ import_react16.default.createElement(Box_default, { sx: { flex: 1, minHeight: 0, display: "flex", flexDirection: "column", overflow: "hidden" } }, /* @__PURE__ */ import_react16.default.createElement(PageHeader, { title: "\u6DFB\u52A0\u94B1\u5305", canBack, onBack: back }), !walletStore ? /* @__PURE__ */ import_react16.default.createElement(Box_default, { sx: { flex: 1, display: "flex", alignItems: "center", justifyContent: "center" } }, /* @__PURE__ */ import_react16.default.createElement(CircularProgress_default, null)) : /* @__PURE__ */ import_react16.default.createElement(
+    )), current === VIEWS.WALLET_ADD_CHOICE && /* @__PURE__ */ import_react17.default.createElement(Box_default, { sx: { flex: 1, minHeight: 0, display: "flex", flexDirection: "column", overflow: "hidden" } }, /* @__PURE__ */ import_react17.default.createElement(PageHeader, { title: "\u6DFB\u52A0\u94B1\u5305", canBack, onBack: back }), !walletStore ? /* @__PURE__ */ import_react17.default.createElement(Box_default, { sx: { flex: 1, display: "flex", alignItems: "center", justifyContent: "center" } }, /* @__PURE__ */ import_react17.default.createElement(CircularProgress_default, null)) : /* @__PURE__ */ import_react17.default.createElement(
       AddWalletChoiceView,
       {
         onBack: back,
         onCreate: () => goto(VIEWS.WALLET_CREATE),
         onImport: () => goto(VIEWS.WALLET_IMPORT)
       }
-    )), current === VIEWS.WALLET_CREATE && /* @__PURE__ */ import_react16.default.createElement(Box_default, { sx: { flex: 1, minHeight: 0, display: "flex", flexDirection: "column", overflow: "hidden" } }, /* @__PURE__ */ import_react16.default.createElement(PageHeader, { title: "\u521B\u5EFA\u94B1\u5305", canBack, onBack: back }), !walletStore ? /* @__PURE__ */ import_react16.default.createElement(Box_default, { sx: { flex: 1, display: "flex", alignItems: "center", justifyContent: "center" } }, /* @__PURE__ */ import_react16.default.createElement(CircularProgress_default, null)) : /* @__PURE__ */ import_react16.default.createElement(
+    )), current === VIEWS.WALLET_CREATE && /* @__PURE__ */ import_react17.default.createElement(Box_default, { sx: { flex: 1, minHeight: 0, display: "flex", flexDirection: "column", overflow: "hidden" } }, /* @__PURE__ */ import_react17.default.createElement(PageHeader, { title: "\u521B\u5EFA\u94B1\u5305", canBack, onBack: back }), !walletStore ? /* @__PURE__ */ import_react17.default.createElement(Box_default, { sx: { flex: 1, display: "flex", alignItems: "center", justifyContent: "center" } }, /* @__PURE__ */ import_react17.default.createElement(CircularProgress_default, null)) : /* @__PURE__ */ import_react17.default.createElement(
       CreateWalletFlowView,
       {
         store: walletStore,
@@ -108362,7 +108683,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
         getVaultPassword,
         setToast
       }
-    )), current === VIEWS.WALLET_IMPORT && /* @__PURE__ */ import_react16.default.createElement(Box_default, { sx: { flex: 1, minHeight: 0, display: "flex", flexDirection: "column", overflow: "hidden" } }, /* @__PURE__ */ import_react16.default.createElement(PageHeader, { title: "\u5BFC\u5165\u94B1\u5305", canBack, onBack: back }), !walletStore ? /* @__PURE__ */ import_react16.default.createElement(Box_default, { sx: { flex: 1, display: "flex", alignItems: "center", justifyContent: "center" } }, /* @__PURE__ */ import_react16.default.createElement(CircularProgress_default, null)) : /* @__PURE__ */ import_react16.default.createElement(
+    )), current === VIEWS.WALLET_IMPORT && /* @__PURE__ */ import_react17.default.createElement(Box_default, { sx: { flex: 1, minHeight: 0, display: "flex", flexDirection: "column", overflow: "hidden" } }, /* @__PURE__ */ import_react17.default.createElement(PageHeader, { title: "\u5BFC\u5165\u94B1\u5305", canBack, onBack: back }), !walletStore ? /* @__PURE__ */ import_react17.default.createElement(Box_default, { sx: { flex: 1, display: "flex", alignItems: "center", justifyContent: "center" } }, /* @__PURE__ */ import_react17.default.createElement(CircularProgress_default, null)) : /* @__PURE__ */ import_react17.default.createElement(
       ImportWalletFlowView,
       {
         store: walletStore,
@@ -108378,7 +108699,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
         getVaultPassword,
         setToast
       }
-    )), current === VIEWS.TOKEN_MANAGE && /* @__PURE__ */ import_react16.default.createElement(Box_default, { sx: { flex: 1, minHeight: 0, display: "flex", flexDirection: "column", overflow: "hidden" } }, /* @__PURE__ */ import_react16.default.createElement(PageHeader, { title: "\u5E01\u79CD\u7BA1\u7406", canBack, onBack: back }), /* @__PURE__ */ import_react16.default.createElement(
+    )), current === VIEWS.TOKEN_MANAGE && /* @__PURE__ */ import_react17.default.createElement(Box_default, { sx: { flex: 1, minHeight: 0, display: "flex", flexDirection: "column", overflow: "hidden" } }, /* @__PURE__ */ import_react17.default.createElement(PageHeader, { title: "\u5E01\u79CD\u7BA1\u7406", canBack, onBack: back }), /* @__PURE__ */ import_react17.default.createElement(
       TokenManageView,
       {
         tokens: customTokensDisplay,
@@ -108394,7 +108715,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
         },
         setToast
       }
-    )), current === VIEWS.TOKEN_CUSTOM_ADD && /* @__PURE__ */ import_react16.default.createElement(Box_default, { sx: { flex: 1, minHeight: 0, display: "flex", flexDirection: "column", overflow: "hidden" } }, /* @__PURE__ */ import_react16.default.createElement(PageHeader, { title: "\u81EA\u5B9A\u4E49\u5E01\u79CD", canBack, onBack: back }), /* @__PURE__ */ import_react16.default.createElement(
+    )), current === VIEWS.TOKEN_CUSTOM_ADD && /* @__PURE__ */ import_react17.default.createElement(Box_default, { sx: { flex: 1, minHeight: 0, display: "flex", flexDirection: "column", overflow: "hidden" } }, /* @__PURE__ */ import_react17.default.createElement(PageHeader, { title: "\u81EA\u5B9A\u4E49\u5E01\u79CD", canBack, onBack: back }), /* @__PURE__ */ import_react17.default.createElement(
       CustomTokenAddView,
       {
         defaultChainId: selectedChainId,
@@ -108405,10 +108726,10 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
         },
         setToast
       }
-    )), current === VIEWS.SETTINGS && /* @__PURE__ */ import_react16.default.createElement(Box_default, { sx: { flex: 1, minHeight: 0, display: "flex", flexDirection: "column", px: 2, pb: 2, overflow: "auto" } }, /* @__PURE__ */ import_react16.default.createElement(PageHeader, { title: "\u8BBE\u7F6E", canBack, onBack: back }), /* @__PURE__ */ import_react16.default.createElement(Typography_default, { variant: "body2", color: "text.secondary", sx: { mt: 2, mb: 1 } }, "\u4E3B\u9898"), /* @__PURE__ */ import_react16.default.createElement(
+    )), current === VIEWS.SETTINGS && /* @__PURE__ */ import_react17.default.createElement(Box_default, { sx: { flex: 1, minHeight: 0, display: "flex", flexDirection: "column", px: 2, pb: 2, overflow: "auto" } }, /* @__PURE__ */ import_react17.default.createElement(PageHeader, { title: "\u8BBE\u7F6E", canBack, onBack: back }), /* @__PURE__ */ import_react17.default.createElement(Typography_default, { variant: "body2", color: "text.secondary", sx: { mt: 2, mb: 1 } }, "\u4E3B\u9898"), /* @__PURE__ */ import_react17.default.createElement(
       FormControlLabel_default,
       {
-        control: /* @__PURE__ */ import_react16.default.createElement(
+        control: /* @__PURE__ */ import_react17.default.createElement(
           Switch_default,
           {
             checked: themeMode === "light",
@@ -108419,7 +108740,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
         label: themeMode === "light" ? "\u9633\u5149\u660E\u5A9A\uFF08\u6D45\u8272\uFF09" : "\u6DF1\u8272\u6A21\u5F0F",
         sx: { ml: 0, alignItems: "center", mb: 2 }
       }
-    ), /* @__PURE__ */ import_react16.default.createElement(Typography_default, { variant: "body2", color: "text.secondary", sx: { mb: 1 } }, "\u94B1\u5305\u540D\u79F0"), /* @__PURE__ */ import_react16.default.createElement(
+    ), /* @__PURE__ */ import_react17.default.createElement(Typography_default, { variant: "body2", color: "text.secondary", sx: { mb: 1 } }, "\u94B1\u5305\u540D\u79F0"), /* @__PURE__ */ import_react17.default.createElement(
       TextField_default,
       {
         fullWidth: true,
@@ -108428,7 +108749,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
         value: settingsNameDraft,
         onChange: (e) => setSettingsNameDraft(e.target.value)
       }
-    ), /* @__PURE__ */ import_react16.default.createElement(
+    ), /* @__PURE__ */ import_react17.default.createElement(
       Button_default,
       {
         variant: "contained",
@@ -108438,7 +108759,18 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
         onClick: saveSettingsName
       },
       "\u4FDD\u5B58"
-    )))), /* @__PURE__ */ import_react16.default.createElement(Dialog_default, { open: vaultPwOpen, onClose: closeVaultPasswordDialog, fullWidth: true, maxWidth: "xs" }, /* @__PURE__ */ import_react16.default.createElement(DialogTitle_default, null, "\u8F93\u5165\u94B1\u5305\u5BC6\u7801"), /* @__PURE__ */ import_react16.default.createElement(DialogContent_default, null, /* @__PURE__ */ import_react16.default.createElement(Typography_default, { variant: "body2", color: "text.secondary", sx: { mb: 1.5 } }, "\u81EA\u52A8\u6062\u590D\u4F1A\u8BDD\u65F6\u672A\u4FDD\u5B58\u5BC6\u7801\u3002\u8BF7\u8F93\u5165\u94B1\u5305\u5BC6\u7801\u4EE5\u7EE7\u7EED\u52A0\u5BC6\u6216\u89E3\u5BC6\u672C\u5730\u6570\u636E\u3002"), /* @__PURE__ */ import_react16.default.createElement(
+    ), /* @__PURE__ */ import_react17.default.createElement(Typography_default, { variant: "body2", color: "text.secondary", sx: { mt: 3, mb: 1 } }, "BscScan API Key\uFF08\u53EF\u9009\uFF09"), /* @__PURE__ */ import_react17.default.createElement(Typography_default, { variant: "caption", color: "text.secondary", sx: { display: "block", mb: 1 } }, "\u67E5\u8BE2 ", /* @__PURE__ */ import_react17.default.createElement("strong", null, "BNB Chain"), " \u4EA4\u6613\u5386\u53F2\u9700\u8981\u3002\u5728 bscscan.com/apis \u514D\u8D39\u6CE8\u518C\u540E\u7C98\u8D34 Key\uFF1B\u5176\u4ED6\u94FE\u4F7F\u7528 Blockscout \u65E0\u9700 Key\u3002"), /* @__PURE__ */ import_react17.default.createElement(
+      TextField_default,
+      {
+        fullWidth: true,
+        size: "small",
+        type: "password",
+        placeholder: "\u4EC5\u4FDD\u5B58\u5728\u672C\u673A",
+        value: bscscanApiKeyDraft,
+        onChange: (e) => setBscscanApiKeyDraft(e.target.value),
+        autoComplete: "off"
+      }
+    ), /* @__PURE__ */ import_react17.default.createElement(Button_default, { variant: "outlined", fullWidth: true, sx: { mt: 1.5 }, onClick: () => void saveBscscanApiKey() }, "\u4FDD\u5B58 API Key")))), /* @__PURE__ */ import_react17.default.createElement(Dialog_default, { open: vaultPwOpen, onClose: closeVaultPasswordDialog, fullWidth: true, maxWidth: "xs" }, /* @__PURE__ */ import_react17.default.createElement(DialogTitle_default, null, "\u8F93\u5165\u94B1\u5305\u5BC6\u7801"), /* @__PURE__ */ import_react17.default.createElement(DialogContent_default, null, /* @__PURE__ */ import_react17.default.createElement(Typography_default, { variant: "body2", color: "text.secondary", sx: { mb: 1.5 } }, "\u81EA\u52A8\u6062\u590D\u4F1A\u8BDD\u65F6\u672A\u4FDD\u5B58\u5BC6\u7801\u3002\u8BF7\u8F93\u5165\u94B1\u5305\u5BC6\u7801\u4EE5\u7EE7\u7EED\u52A0\u5BC6\u6216\u89E3\u5BC6\u672C\u5730\u6570\u636E\u3002"), /* @__PURE__ */ import_react17.default.createElement(
       TextField_default,
       {
         autoFocus: true,
@@ -108448,13 +108780,13 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
         value: vaultPwDraft,
         onChange: (e) => setVaultPwDraft(e.target.value),
         InputProps: {
-          endAdornment: /* @__PURE__ */ import_react16.default.createElement(InputAdornment_default, { position: "end" }, /* @__PURE__ */ import_react16.default.createElement(IconButton_default, { edge: "end", onClick: () => setVaultPwShow((v) => !v), size: "small", "aria-label": "\u663E\u793A\u5BC6\u7801" }, vaultPwShow ? /* @__PURE__ */ import_react16.default.createElement(EyeOff, { size: 20 }) : /* @__PURE__ */ import_react16.default.createElement(Eye, { size: 20 })))
+          endAdornment: /* @__PURE__ */ import_react17.default.createElement(InputAdornment_default, { position: "end" }, /* @__PURE__ */ import_react17.default.createElement(IconButton_default, { edge: "end", onClick: () => setVaultPwShow((v) => !v), size: "small", "aria-label": "\u663E\u793A\u5BC6\u7801" }, vaultPwShow ? /* @__PURE__ */ import_react17.default.createElement(EyeOff, { size: 20 }) : /* @__PURE__ */ import_react17.default.createElement(Eye, { size: 20 })))
         },
         onKeyDown: (e) => {
           if (e.key === "Enter") void submitVaultPasswordDialog();
         }
       }
-    )), /* @__PURE__ */ import_react16.default.createElement(DialogActions_default, { sx: { px: 3, pb: 2 } }, /* @__PURE__ */ import_react16.default.createElement(Button_default, { onClick: closeVaultPasswordDialog }, "\u53D6\u6D88"), /* @__PURE__ */ import_react16.default.createElement(Button_default, { variant: "contained", onClick: () => void submitVaultPasswordDialog() }, "\u786E\u8BA4"))), /* @__PURE__ */ import_react16.default.createElement(
+    )), /* @__PURE__ */ import_react17.default.createElement(DialogActions_default, { sx: { px: 3, pb: 2 } }, /* @__PURE__ */ import_react17.default.createElement(Button_default, { onClick: closeVaultPasswordDialog }, "\u53D6\u6D88"), /* @__PURE__ */ import_react17.default.createElement(Button_default, { variant: "contained", onClick: () => void submitVaultPasswordDialog() }, "\u786E\u8BA4"))), /* @__PURE__ */ import_react17.default.createElement(
       Snackbar_default,
       {
         open: Boolean(toast),
@@ -108462,10 +108794,10 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
         onClose: () => setToast(""),
         anchorOrigin: { vertical: "bottom", horizontal: "center" }
       },
-      /* @__PURE__ */ import_react16.default.createElement(Alert_default, { onClose: () => setToast(""), severity: "info", variant: "filled", sx: { width: "100%" } }, toast)
+      /* @__PURE__ */ import_react17.default.createElement(Alert_default, { onClose: () => setToast(""), severity: "info", variant: "filled", sx: { width: "100%" } }, toast)
     ));
   }
-  (0, import_client.createRoot)(document.getElementById("root")).render(/* @__PURE__ */ import_react16.default.createElement(App, null));
+  (0, import_client.createRoot)(document.getElementById("root")).render(/* @__PURE__ */ import_react17.default.createElement(App, null));
 })();
 /*! Bundled license information:
 
@@ -108597,6 +108929,7 @@ lucide-react/dist/esm/icons/chevron-right.js:
 lucide-react/dist/esm/icons/circle-plus.js:
 lucide-react/dist/esm/icons/coins.js:
 lucide-react/dist/esm/icons/copy.js:
+lucide-react/dist/esm/icons/external-link.js:
 lucide-react/dist/esm/icons/eye-off.js:
 lucide-react/dist/esm/icons/eye.js:
 lucide-react/dist/esm/icons/globe.js:
