@@ -105525,7 +105525,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 
   // src/services/txHistory.js
   var BSCSCAN_API_KEY_STORAGE_KEY = "wallet_bscscan_api_key_v1";
-  var BLOCKSCOUT_TXLIST_BASE = {
+  var BLOCKSCOUT_API_BASE = {
     1: "https://eth.blockscout.com/api",
     11155111: "https://eth-sepolia.blockscout.com/api",
     42161: "https://arbitrum.blockscout.com/api",
@@ -105545,7 +105545,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
   };
   async function fetchAddressTransactions(walletAddress, chainId, opts = {}) {
     const page = opts.page ?? 1;
-    const offset = Math.min(opts.offset ?? 25, 100);
+    const offset = Math.min(opts.offset ?? 30, 100);
     const empty2 = { ok: false, error: "", items: [] };
     let checksumWallet;
     try {
@@ -105560,13 +105560,13 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
       };
     }
     if (chainId === 56) {
-      return fetchBscScanTxList(checksumWallet, page, offset);
+      return fetchBscScanHistory(checksumWallet, page, offset);
     }
-    const base2 = BLOCKSCOUT_TXLIST_BASE[chainId];
+    const base2 = BLOCKSCOUT_API_BASE[chainId];
     if (!base2) {
       return { ...empty2, error: "\u5F53\u524D\u7F51\u7EDC\u672A\u914D\u7F6E\u4EA4\u6613\u5386\u53F2\u6570\u636E\u6E90" };
     }
-    const params = new URLSearchParams({
+    const txlistParams = new URLSearchParams({
       module: "account",
       action: "txlist",
       address: checksumWallet,
@@ -105574,21 +105574,42 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
       offset: String(offset),
       sort: "desc"
     });
-    let res;
+    const tokenParams = new URLSearchParams({
+      module: "account",
+      action: "tokentx",
+      address: checksumWallet,
+      page: String(page),
+      offset: String(offset),
+      sort: "desc"
+    });
+    let nativeJson;
+    let tokenJson;
     try {
-      res = await fetch(`${base2}?${params.toString()}`);
+      const [r1, r2] = await Promise.all([
+        fetch(`${base2}?${txlistParams.toString()}`),
+        fetch(`${base2}?${tokenParams.toString()}`)
+      ]);
+      nativeJson = await r1.json();
+      tokenJson = await r2.json();
     } catch {
       return { ...empty2, error: "\u7F51\u7EDC\u8BF7\u6C42\u5931\u8D25\uFF0C\u8BF7\u7A0D\u540E\u91CD\u8BD5" };
     }
-    let json2;
-    try {
-      json2 = await res.json();
-    } catch {
-      return { ...empty2, error: "\u65E0\u6CD5\u89E3\u6790\u670D\u52A1\u5668\u54CD\u5E94" };
+    const nativeNorm = normalizeNativeTxResponse(nativeJson, checksumWallet, chainId);
+    if (!nativeNorm.ok) {
+      return nativeNorm;
     }
-    return normalizeExplorerTxResponse(json2, checksumWallet, chainId);
+    let tokenItems = [];
+    const tokenNorm = normalizeTokenTxResponse(tokenJson, checksumWallet, chainId);
+    if (tokenNorm.ok) {
+      tokenItems = tokenNorm.items;
+    }
+    const merged = mergeByTimeDesc(nativeNorm.items, tokenItems, offset);
+    return { ok: true, items: merged };
   }
-  async function fetchBscScanTxList(checksumWallet, page, offset) {
+  function mergeByTimeDesc(a, b2, max) {
+    return [...a, ...b2].sort((x, y) => y.timestamp - x.timestamp).slice(0, max);
+  }
+  async function fetchBscScanHistory(checksumWallet, page, offset) {
     const empty2 = { ok: false, error: "", items: [] };
     const apiKey = await getStorageValue(BSCSCAN_API_KEY_STORAGE_KEY, "") || "";
     if (!String(apiKey).trim()) {
@@ -105598,57 +105619,51 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
         notice: "BNB Chain \u4EA4\u6613\u5217\u8868\u9700 BscScan API Key\uFF1A\u6253\u5F00 bscscan.com/apis \u6CE8\u518C\u514D\u8D39 Key\uFF0C\u5728\u300C\u8BBE\u7F6E\u300D\u4E2D\u7C98\u8D34\u4FDD\u5B58\u540E\u5373\u53EF\u67E5\u8BE2\u3002"
       };
     }
-    const params = new URLSearchParams({
+    const key = String(apiKey).trim();
+    const common2 = {
       module: "account",
-      action: "txlist",
       address: checksumWallet,
       startblock: "0",
       endblock: "99999999",
       page: String(page),
       offset: String(offset),
       sort: "desc",
-      apikey: String(apiKey).trim()
-    });
-    let res;
+      apikey: key
+    };
+    const txParams = new URLSearchParams({ ...common2, action: "txlist" });
+    const tokenParams = new URLSearchParams({ ...common2, action: "tokentx" });
+    let nativeJson;
+    let tokenJson;
     try {
-      res = await fetch(`https://api.bscscan.com/api?${params.toString()}`);
+      const [r1, r2] = await Promise.all([
+        fetch(`https://api.bscscan.com/api?${txParams.toString()}`),
+        fetch(`https://api.bscscan.com/api?${tokenParams.toString()}`)
+      ]);
+      nativeJson = await r1.json();
+      tokenJson = await r2.json();
     } catch {
       return { ...empty2, error: "\u7F51\u7EDC\u8BF7\u6C42\u5931\u8D25\uFF0C\u8BF7\u7A0D\u540E\u91CD\u8BD5" };
     }
-    let json2;
-    try {
-      json2 = await res.json();
-    } catch {
-      return { ...empty2, error: "\u65E0\u6CD5\u89E3\u6790 BscScan \u54CD\u5E94" };
+    const nativeNorm = normalizeNativeTxResponse(nativeJson, checksumWallet, 56);
+    if (!nativeNorm.ok) {
+      return nativeNorm;
     }
-    return normalizeExplorerTxResponse(json2, checksumWallet, 56);
+    let tokenItems = [];
+    const tokenNorm = normalizeTokenTxResponse(tokenJson, checksumWallet, 56);
+    if (tokenNorm.ok) {
+      tokenItems = tokenNorm.items;
+    }
+    const merged = mergeByTimeDesc(nativeNorm.items, tokenItems, offset);
+    return { ok: true, items: merged };
   }
-  function normalizeExplorerTxResponse(json2, checksumWallet, chainId) {
+  function normalizeNativeTxResponse(json2, checksumWallet, chainId) {
     const empty2 = { ok: false, error: "", items: [] };
-    const status = json2?.status;
-    const message = json2?.message;
+    const err = parseExplorerError(json2);
+    if (err) {
+      if (err.empty) return { ok: true, items: [] };
+      return { ...empty2, error: err.message };
+    }
     const result = json2?.result;
-    if (status === "0" && typeof result === "string") {
-      const r2 = result;
-      const msg = String(message ?? "").toLowerCase();
-      if (msg.includes("no transactions") || r2 === "No transactions found") {
-        return { ok: true, items: [] };
-      }
-      return {
-        ...empty2,
-        error: r2 === "Invalid API Key" ? "BscScan API Key \u65E0\u6548\uFF0C\u8BF7\u5728\u8BBE\u7F6E\u4E2D\u66F4\u65B0\u3002" : r2 || String(message || "\u67E5\u8BE2\u5931\u8D25")
-      };
-    }
-    if (status === "0" && typeof message === "string") {
-      const m = message.toLowerCase();
-      if (m.includes("no transactions") || m.includes("no record")) {
-        return { ok: true, items: [] };
-      }
-      return {
-        ...empty2,
-        error: message || "\u67E5\u8BE2\u5931\u8D25"
-      };
-    }
     if (!Array.isArray(result)) {
       return { ok: true, items: [] };
     }
@@ -105678,12 +105693,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
       }
       const ts = Number.parseInt(String(raw.timeStamp ?? "0"), 10);
       const timestamp = Number.isFinite(ts) ? ts : 0;
-      const timeLabel = timestamp > 0 ? new Date(timestamp * 1e3).toLocaleString(void 0, {
-        month: "short",
-        day: "numeric",
-        hour: "2-digit",
-        minute: "2-digit"
-      }) : "\u2014";
+      const timeLabel = formatTimeLabel(timestamp);
       const receipt = raw.txreceipt_status ?? raw.isError;
       const statusOk = receipt === "1" || receipt === 1 || raw.isError === "0" || raw.isError === 0;
       let direction = "self";
@@ -105695,6 +105705,8 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
         direction = "in";
       }
       items.push({
+        kind: "native",
+        rowKey: `n-${hash6}`,
         hash: hash6,
         from: from15,
         to,
@@ -105709,6 +105721,113 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
     }
     return { ok: true, items };
   }
+  function normalizeTokenTxResponse(json2, checksumWallet, chainId) {
+    const err = parseExplorerError(json2);
+    if (err) {
+      if (err.empty) return { ok: true, items: [] };
+      return { ok: true, items: [] };
+    }
+    const result = json2?.result;
+    if (!Array.isArray(result)) {
+      return { ok: true, items: [] };
+    }
+    const prefix2 = TX_EXPLORER_TX_PREFIX[chainId] ?? "";
+    const items = [];
+    for (let i = 0; i < result.length; i += 1) {
+      const raw = result[i];
+      const hash6 = raw?.hash;
+      if (!hash6 || typeof hash6 !== "string") continue;
+      let from15 = String(raw.from ?? "");
+      let to = String(raw.to ?? "");
+      const contractAddress = String(raw.contractAddress ?? "").trim();
+      try {
+        from15 = getAddress2(from15);
+      } catch {
+        continue;
+      }
+      try {
+        to = to ? getAddress2(to) : "";
+      } catch {
+        to = "";
+      }
+      const decimals = Math.min(36, Math.max(0, Number.parseInt(String(raw.tokenDecimal ?? "18"), 10) || 18));
+      const valueStr = String(raw.value ?? "0");
+      let tokenAmountDisplay = "0";
+      try {
+        tokenAmountDisplay = formatUnits(BigInt(valueStr), decimals);
+      } catch {
+        tokenAmountDisplay = "0";
+      }
+      const symbol2 = String(raw.tokenSymbol ?? "?").trim() || "?";
+      const ts = Number.parseInt(String(raw.timeStamp ?? "0"), 10);
+      const timestamp = Number.isFinite(ts) ? ts : 0;
+      const timeLabel = formatTimeLabel(timestamp);
+      let direction = "self";
+      if (from15.toLowerCase() === checksumWallet.toLowerCase() && to.toLowerCase() === checksumWallet.toLowerCase()) {
+        direction = "self";
+      } else if (from15.toLowerCase() === checksumWallet.toLowerCase()) {
+        direction = "out";
+      } else if (to.toLowerCase() === checksumWallet.toLowerCase()) {
+        direction = "in";
+      }
+      let contractCs = "";
+      try {
+        contractCs = contractAddress ? getAddress2(contractAddress) : "";
+      } catch {
+        contractCs = contractAddress;
+      }
+      const logIndex = raw.logIndex ?? raw.transactionIndex ?? i;
+      const rowKey = `t-${hash6}-${contractCs || "unknown"}-${String(logIndex)}`;
+      items.push({
+        kind: "erc20",
+        rowKey,
+        hash: hash6,
+        from: from15,
+        to,
+        contractAddress: contractCs,
+        tokenSymbol: symbol2,
+        tokenAmountDisplay,
+        timestamp,
+        timeLabel,
+        statusOk: true,
+        direction,
+        explorerUrl: prefix2 ? `${prefix2}${hash6}` : ""
+      });
+    }
+    return { ok: true, items };
+  }
+  function formatTimeLabel(timestamp) {
+    if (timestamp <= 0) return "\u2014";
+    return new Date(timestamp * 1e3).toLocaleString(void 0, {
+      month: "short",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit"
+    });
+  }
+  function parseExplorerError(json2) {
+    const status = json2?.status;
+    const message = json2?.message;
+    const result = json2?.result;
+    if (status === "0" && typeof result === "string") {
+      const r2 = result;
+      const msg = String(message ?? "").toLowerCase();
+      if (msg.includes("no transactions") || r2 === "No transactions found") {
+        return { empty: true };
+      }
+      return {
+        message: r2 === "Invalid API Key" ? "BscScan API Key \u65E0\u6548\uFF0C\u8BF7\u5728\u8BBE\u7F6E\u4E2D\u66F4\u65B0\u3002" : r2 || String(message || "\u67E5\u8BE2\u5931\u8D25")
+      };
+    }
+    if (status === "0" && typeof message === "string") {
+      const m = message.toLowerCase();
+      if (m.includes("no transactions") || m.includes("no record")) {
+        return { empty: true };
+      }
+      return { message: message || "\u67E5\u8BE2\u5931\u8D25" };
+    }
+    return null;
+  }
   function getTxExplorerTxUrl(chainId, hash6) {
     const p = TX_EXPLORER_TX_PREFIX[chainId];
     if (!p || !hash6) return "";
@@ -105716,6 +105835,43 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
   }
   function getChainDisplayName(chainId) {
     return EVM_CHAINS.find((c) => c.id === chainId)?.name ?? `\u94FE ${chainId}`;
+  }
+  function filterHistoryItems(items, f2) {
+    let ts = f2.timeStartSec;
+    let te = f2.timeEndSec;
+    if (ts != null && te != null && ts > te) {
+      const x = ts;
+      ts = te;
+      te = x;
+    }
+    const sym = (f2.nativeSymbol || "ETH").trim();
+    const q = (f2.tokenSymbolQuery || "").trim().toLowerCase();
+    return items.filter((tx) => {
+      if (ts != null && tx.timestamp < ts) return false;
+      if (te != null && tx.timestamp > te) return false;
+      if (f2.assetKind === "native" && tx.kind !== "native") return false;
+      if (f2.assetKind === "erc20" && tx.kind !== "erc20") return false;
+      if (q) {
+        if (tx.kind === "native") {
+          if (!sym.toLowerCase().includes(q)) return false;
+        } else {
+          if (!(tx.tokenSymbol || "").toLowerCase().includes(q)) return false;
+        }
+      }
+      return true;
+    });
+  }
+  function dateInputToStartOfDaySec(isoDate) {
+    if (!isoDate || typeof isoDate !== "string") return null;
+    const t = Date.parse(`${isoDate}T00:00:00`);
+    if (Number.isNaN(t)) return null;
+    return Math.floor(t / 1e3);
+  }
+  function dateInputToEndOfDaySec(isoDate) {
+    if (!isoDate || typeof isoDate !== "string") return null;
+    const t = Date.parse(`${isoDate}T23:59:59`);
+    if (Number.isNaN(t)) return null;
+    return Math.floor(t / 1e3);
   }
 
   // node_modules/viem/_esm/op-stack/contracts.js
@@ -106217,42 +106373,85 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
   }
 
   // src/HistoryViews.jsx
+  var HISTORY_CHAIN_IDS = EVM_CHAINS.filter((c) => c.id !== 196);
   function shortAddr(addr) {
     if (!addr || addr.length < 12) return addr || "\u2014";
     return `${addr.slice(0, 6)}\u2026${addr.slice(-4)}`;
   }
+  function isoDateLocal(d) {
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, "0");
+    const day = String(d.getDate()).padStart(2, "0");
+    return `${y}-${m}-${day}`;
+  }
   function HistoryView({ walletAddress, chainId, onBack, setToast }) {
+    const [filterChainId, setFilterChainId] = (0, import_react14.useState)(() => chainId === 196 ? 1 : chainId);
     const [loading, setLoading] = (0, import_react14.useState)(true);
     const [error48, setError] = (0, import_react14.useState)("");
     const [notice, setNotice] = (0, import_react14.useState)("");
-    const [items, setItems] = (0, import_react14.useState)([]);
+    const [rawItems, setRawItems] = (0, import_react14.useState)([]);
+    const [startDate, setStartDate] = (0, import_react14.useState)("");
+    const [endDate, setEndDate] = (0, import_react14.useState)("");
+    const [assetKind, setAssetKind] = (0, import_react14.useState)(
+      /** @type {'all' | 'native' | 'erc20'} */
+      "all"
+    );
+    const [tokenSymbolQuery, setTokenSymbolQuery] = (0, import_react14.useState)("");
+    (0, import_react14.useEffect)(() => {
+      setFilterChainId(chainId === 196 ? 1 : chainId);
+    }, [chainId]);
     const load = (0, import_react14.useCallback)(async () => {
       setLoading(true);
       setError("");
       setNotice("");
-      setItems([]);
+      setRawItems([]);
       try {
-        const res = await fetchAddressTransactions(walletAddress, chainId, { offset: 30 });
+        const res = await fetchAddressTransactions(walletAddress, filterChainId, { offset: 100 });
         if (!res.ok) {
           setError(res.error || "\u52A0\u8F7D\u5931\u8D25");
           return;
         }
         if (res.notice) setNotice(res.notice);
-        setItems(res.items ?? []);
+        setRawItems(res.items ?? []);
       } catch (e) {
         setError(e?.message || "\u52A0\u8F7D\u5931\u8D25");
       } finally {
         setLoading(false);
       }
-    }, [walletAddress, chainId]);
+    }, [walletAddress, filterChainId]);
     (0, import_react14.useEffect)(() => {
       void load();
     }, [load]);
-    const nc = getViemChain(chainId)?.nativeCurrency;
+    const nc = getViemChain(filterChainId)?.nativeCurrency;
     const nativeSymbol = nc?.symbol ?? "ETH";
-    const chainName = getChainDisplayName(chainId);
-    function openExplorer(hash6) {
-      const url2 = getTxExplorerTxUrl(chainId, hash6);
+    const chainName = getChainDisplayName(filterChainId);
+    const timeStartSec = startDate ? dateInputToStartOfDaySec(startDate) : null;
+    const timeEndSec = endDate ? dateInputToEndOfDaySec(endDate) : null;
+    const displayItems = (0, import_react14.useMemo)(
+      () => filterHistoryItems(rawItems, {
+        timeStartSec,
+        timeEndSec,
+        assetKind,
+        tokenSymbolQuery,
+        nativeSymbol
+      }),
+      [rawItems, timeStartSec, timeEndSec, assetKind, tokenSymbolQuery, nativeSymbol]
+    );
+    function setPresetDays(n2) {
+      const end = /* @__PURE__ */ new Date();
+      const start = /* @__PURE__ */ new Date();
+      start.setDate(start.getDate() - n2);
+      setStartDate(isoDateLocal(start));
+      setEndDate(isoDateLocal(end));
+    }
+    function resetFilters() {
+      setStartDate("");
+      setEndDate("");
+      setAssetKind("all");
+      setTokenSymbolQuery("");
+    }
+    function openExplorer(txHash) {
+      const url2 = getTxExplorerTxUrl(filterChainId, txHash);
       if (!url2) {
         setToast("\u5F53\u524D\u7F51\u7EDC\u65E0\u533A\u5757\u6D4F\u89C8\u5668\u94FE\u63A5");
         return;
@@ -106281,38 +106480,129 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
       /* @__PURE__ */ import_react14.default.createElement(IconButton_default, { size: "small", onClick: onBack, sx: { color: "text.primary" }, "aria-label": "\u8FD4\u56DE" }, /* @__PURE__ */ import_react14.default.createElement(ArrowLeft, { size: 22, strokeWidth: 2.25 })),
       /* @__PURE__ */ import_react14.default.createElement(Typography_default, { variant: "h6", sx: { fontWeight: 600 } }, "\u5386\u53F2"),
       /* @__PURE__ */ import_react14.default.createElement(Box_default, { sx: { width: 40 } })
-    ), /* @__PURE__ */ import_react14.default.createElement(Box_default, { sx: { px: 2, pt: 1, pb: 0.5, flexShrink: 0 } }, /* @__PURE__ */ import_react14.default.createElement(Typography_default, { variant: "caption", color: "text.secondary", sx: { display: "block" } }, "\u7F51\u7EDC\uFF1A", chainName), /* @__PURE__ */ import_react14.default.createElement(Typography_default, { variant: "caption", color: "text.secondary", sx: { display: "block", mt: 0.25 } }, "\u91D1\u989D\u5747\u4E3A\u8BE5\u94FE\u539F\u751F\u5E01\uFF08", nativeSymbol, "\uFF09\uFF1B\u4EE3\u5E01\u8F6C\u8D26\u53EF\u80FD\u663E\u793A\u4E3A 0\u3002")), /* @__PURE__ */ import_react14.default.createElement(Box_default, { sx: { flex: 1, minHeight: 0, overflow: "auto", px: 2, pb: 2 } }, loading ? /* @__PURE__ */ import_react14.default.createElement(Box_default, { sx: { py: 4, display: "flex", justifyContent: "center" } }, /* @__PURE__ */ import_react14.default.createElement(CircularProgress_default, { size: 28 })) : error48 ? /* @__PURE__ */ import_react14.default.createElement(Typography_default, { color: "error", variant: "body2", sx: { mt: 2 } }, error48) : /* @__PURE__ */ import_react14.default.createElement(import_react14.default.Fragment, null, notice ? /* @__PURE__ */ import_react14.default.createElement(Typography_default, { variant: "body2", color: "warning.main", sx: { mb: 1.5, lineHeight: 1.5 } }, notice) : null, items.length === 0 ? /* @__PURE__ */ import_react14.default.createElement(Typography_default, { variant: "body2", color: "text.secondary", sx: { mt: 1 } }, "\u6682\u65E0\u4EA4\u6613\u8BB0\u5F55") : items.map((tx) => /* @__PURE__ */ import_react14.default.createElement(Card_default, { key: tx.hash, variant: "outlined", sx: { mb: 1 } }, /* @__PURE__ */ import_react14.default.createElement(CardContent_default, { sx: { py: 1.25, "&:last-child": { pb: 1.25 } } }, /* @__PURE__ */ import_react14.default.createElement(Box_default, { sx: { display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 1 } }, /* @__PURE__ */ import_react14.default.createElement(Box_default, { sx: { minWidth: 0, flex: 1 } }, /* @__PURE__ */ import_react14.default.createElement(Box_default, { sx: { display: "flex", alignItems: "center", gap: 0.75, flexWrap: "wrap", mb: 0.5 } }, /* @__PURE__ */ import_react14.default.createElement(
-      Chip_default,
+    ), /* @__PURE__ */ import_react14.default.createElement(
+      Box_default,
       {
-        size: "small",
-        label: tx.direction === "in" ? "\u8F6C\u5165" : tx.direction === "out" ? "\u8F6C\u51FA" : "\u81EA\u8F6C",
-        color: tx.direction === "in" ? "success" : tx.direction === "out" ? "primary" : "default",
-        sx: { height: 22, fontSize: 11 }
-      }
-    ), !tx.statusOk ? /* @__PURE__ */ import_react14.default.createElement(Chip_default, { size: "small", label: "\u5931\u8D25", color: "error", sx: { height: 22, fontSize: 11 } }) : null, /* @__PURE__ */ import_react14.default.createElement(Typography_default, { variant: "caption", color: "text.secondary" }, tx.timeLabel)), /* @__PURE__ */ import_react14.default.createElement(
-      Typography_default,
-      {
-        variant: "body2",
         sx: {
-          fontFamily: "monospace",
-          fontSize: 12,
-          wordBreak: "break-all",
-          color: "text.secondary"
+          px: 2,
+          pt: 1,
+          pb: 1,
+          flexShrink: 0,
+          borderBottom: 1,
+          borderColor: "divider",
+          display: "flex",
+          flexDirection: "column",
+          gap: 1.25
         }
       },
-      tx.hash.slice(0, 10),
-      "\u2026",
-      tx.hash.slice(-8)
-    ), /* @__PURE__ */ import_react14.default.createElement(Typography_default, { variant: "caption", color: "text.secondary", sx: { display: "block", mt: 0.5 } }, "\u5BF9\u624B\u65B9\uFF1A", tx.direction === "in" ? shortAddr(tx.from) : tx.to ? shortAddr(tx.to) : "\u5408\u7EA6\u521B\u5EFA"), /* @__PURE__ */ import_react14.default.createElement(Typography_default, { variant: "body2", fontWeight: 600, sx: { mt: 0.75 } }, tx.valueDisplay, " ", nativeSymbol)), /* @__PURE__ */ import_react14.default.createElement(
-      IconButton_default,
-      {
-        size: "small",
-        "aria-label": "\u5728\u6D4F\u89C8\u5668\u4E2D\u6253\u5F00",
-        onClick: () => openExplorer(tx.hash),
-        disabled: !getTxExplorerTxUrl(chainId, tx.hash)
-      },
-      /* @__PURE__ */ import_react14.default.createElement(ExternalLink, { size: 18 })
-    ))))), /* @__PURE__ */ import_react14.default.createElement(Button_default, { fullWidth: true, sx: { mt: 1 }, onClick: () => void load(), disabled: loading }, "\u5237\u65B0"))));
+      /* @__PURE__ */ import_react14.default.createElement(FormControl_default, { size: "small", fullWidth: true }, /* @__PURE__ */ import_react14.default.createElement(InputLabel_default, { id: "hist-chain-label" }, "\u94FE"), /* @__PURE__ */ import_react14.default.createElement(
+        Select_default,
+        {
+          labelId: "hist-chain-label",
+          label: "\u94FE",
+          value: filterChainId,
+          onChange: (e) => setFilterChainId(Number(e.target.value))
+        },
+        HISTORY_CHAIN_IDS.map((c) => /* @__PURE__ */ import_react14.default.createElement(MenuItem_default, { key: c.id, value: c.id }, c.name))
+      )),
+      /* @__PURE__ */ import_react14.default.createElement(Box_default, null, /* @__PURE__ */ import_react14.default.createElement(Typography_default, { variant: "caption", color: "text.secondary", sx: { display: "block", mb: 0.5 } }, "\u65F6\u95F4\u533A\u95F4\uFF08\u672C\u5730\u65E5\u671F\uFF09"), /* @__PURE__ */ import_react14.default.createElement(Box_default, { sx: { display: "flex", gap: 1, alignItems: "center", flexWrap: "wrap" } }, /* @__PURE__ */ import_react14.default.createElement(
+        TextField_default,
+        {
+          size: "small",
+          type: "date",
+          label: "\u5F00\u59CB",
+          InputLabelProps: { shrink: true },
+          value: startDate,
+          onChange: (e) => setStartDate(e.target.value),
+          sx: { flex: 1, minWidth: 120 }
+        }
+      ), /* @__PURE__ */ import_react14.default.createElement(
+        TextField_default,
+        {
+          size: "small",
+          type: "date",
+          label: "\u7ED3\u675F",
+          InputLabelProps: { shrink: true },
+          value: endDate,
+          onChange: (e) => setEndDate(e.target.value),
+          sx: { flex: 1, minWidth: 120 }
+        }
+      )), /* @__PURE__ */ import_react14.default.createElement(Box_default, { sx: { display: "flex", gap: 0.75, flexWrap: "wrap", mt: 0.75 } }, /* @__PURE__ */ import_react14.default.createElement(Chip_default, { size: "small", label: "\u8FD17\u65E5", onClick: () => setPresetDays(7), variant: "outlined" }), /* @__PURE__ */ import_react14.default.createElement(Chip_default, { size: "small", label: "\u8FD130\u65E5", onClick: () => setPresetDays(30), variant: "outlined" }), /* @__PURE__ */ import_react14.default.createElement(
+        Chip_default,
+        {
+          size: "small",
+          label: "\u6E05\u7A7A\u65F6\u95F4",
+          onClick: () => {
+            setStartDate("");
+            setEndDate("");
+          },
+          variant: "outlined"
+        }
+      ))),
+      /* @__PURE__ */ import_react14.default.createElement(FormControl_default, { size: "small", fullWidth: true }, /* @__PURE__ */ import_react14.default.createElement(InputLabel_default, { id: "hist-asset-label" }, "\u4EE3\u5E01"), /* @__PURE__ */ import_react14.default.createElement(
+        Select_default,
+        {
+          labelId: "hist-asset-label",
+          label: "\u4EE3\u5E01",
+          value: assetKind,
+          onChange: (e) => setAssetKind(e.target.value)
+        },
+        /* @__PURE__ */ import_react14.default.createElement(MenuItem_default, { value: "all" }, "\u5168\u90E8"),
+        /* @__PURE__ */ import_react14.default.createElement(MenuItem_default, { value: "native" }, "\u4EC5\u539F\u751F\u5E01\uFF08", nativeSymbol, "\uFF09"),
+        /* @__PURE__ */ import_react14.default.createElement(MenuItem_default, { value: "erc20" }, "\u4EC5 ERC-20")
+      )),
+      /* @__PURE__ */ import_react14.default.createElement(
+        TextField_default,
+        {
+          size: "small",
+          fullWidth: true,
+          label: "\u7B26\u53F7\u7B5B\u9009",
+          placeholder: "\u5982 USDT\u3001ETH",
+          value: tokenSymbolQuery,
+          onChange: (e) => setTokenSymbolQuery(e.target.value),
+          helperText: "\u6309\u7B26\u53F7\u5305\u542B\u5339\u914D\uFF1B\u586B ETH \u7B49\u53EF\u7B5B\u539F\u751F\u8BB0\u5F55"
+        }
+      ),
+      /* @__PURE__ */ import_react14.default.createElement(Button_default, { size: "small", variant: "text", onClick: resetFilters, sx: { alignSelf: "flex-start" } }, "\u91CD\u7F6E\u7B5B\u9009\u6761\u4EF6"),
+      /* @__PURE__ */ import_react14.default.createElement(Typography_default, { variant: "caption", color: "text.secondary" }, "\u5F53\u524D\u94FE\uFF1A", chainName, " \xB7 \u5C55\u793A ", displayItems.length, " \u6761 / \u5DF2\u52A0\u8F7D ", rawItems.length, " \u6761"),
+      /* @__PURE__ */ import_react14.default.createElement(Typography_default, { variant: "caption", color: "text.secondary", sx: { display: "block", mt: -0.5 } }, "\u65F6\u95F4\u7B5B\u9009\u4EC5\u4F5C\u7528\u4E8E\u672C\u6B21\u5DF2\u62C9\u53D6\u7684\u8BB0\u5F55\uFF1B\u5207\u6362\u300C\u94FE\u300D\u4F1A\u91CD\u65B0\u8BF7\u6C42\u3002")
+    ), /* @__PURE__ */ import_react14.default.createElement(Box_default, { sx: { flex: 1, minHeight: 0, overflow: "auto", px: 2, pb: 2, pt: 1 } }, loading ? /* @__PURE__ */ import_react14.default.createElement(Box_default, { sx: { py: 4, display: "flex", justifyContent: "center" } }, /* @__PURE__ */ import_react14.default.createElement(CircularProgress_default, { size: 28 })) : error48 ? /* @__PURE__ */ import_react14.default.createElement(Typography_default, { color: "error", variant: "body2", sx: { mt: 2 } }, error48) : /* @__PURE__ */ import_react14.default.createElement(import_react14.default.Fragment, null, notice ? /* @__PURE__ */ import_react14.default.createElement(Typography_default, { variant: "body2", color: "warning.main", sx: { mb: 1.5, lineHeight: 1.5 } }, notice) : null, rawItems.length === 0 ? /* @__PURE__ */ import_react14.default.createElement(Typography_default, { variant: "body2", color: "text.secondary", sx: { mt: 1 } }, "\u6682\u65E0\u4EA4\u6613\u8BB0\u5F55") : displayItems.length === 0 ? /* @__PURE__ */ import_react14.default.createElement(Typography_default, { variant: "body2", color: "text.secondary", sx: { mt: 1 } }, "\u65E0\u7B26\u5408\u5F53\u524D\u7B5B\u9009\u6761\u4EF6\u7684\u8BB0\u5F55") : displayItems.map((tx) => {
+      const isToken = tx.kind === "erc20";
+      const dirLabel = tx.direction === "in" ? "\u8F6C\u5165" : tx.direction === "out" ? "\u8F6C\u51FA" : "\u81EA\u8F6C";
+      const key = tx.rowKey ?? tx.hash;
+      return /* @__PURE__ */ import_react14.default.createElement(Card_default, { key, variant: "outlined", sx: { mb: 1 } }, /* @__PURE__ */ import_react14.default.createElement(CardContent_default, { sx: { py: 1.25, "&:last-child": { pb: 1.25 } } }, /* @__PURE__ */ import_react14.default.createElement(Box_default, { sx: { display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 1 } }, /* @__PURE__ */ import_react14.default.createElement(Box_default, { sx: { minWidth: 0, flex: 1 } }, /* @__PURE__ */ import_react14.default.createElement(Box_default, { sx: { display: "flex", alignItems: "center", gap: 0.75, flexWrap: "wrap", mb: 0.5 } }, isToken ? /* @__PURE__ */ import_react14.default.createElement(Chip_default, { label: "\u4EE3\u5E01", size: "small", color: "secondary", sx: { height: 22, fontSize: 11 } }) : null, /* @__PURE__ */ import_react14.default.createElement(
+        Chip_default,
+        {
+          size: "small",
+          label: dirLabel,
+          color: tx.direction === "in" ? "success" : tx.direction === "out" ? "primary" : "default",
+          sx: { height: 22, fontSize: 11 }
+        }
+      ), !tx.statusOk ? /* @__PURE__ */ import_react14.default.createElement(Chip_default, { size: "small", label: "\u5931\u8D25", color: "error", sx: { height: 22, fontSize: 11 } }) : null, /* @__PURE__ */ import_react14.default.createElement(Typography_default, { variant: "caption", color: "text.secondary" }, tx.timeLabel)), /* @__PURE__ */ import_react14.default.createElement(
+        Typography_default,
+        {
+          variant: "body2",
+          sx: {
+            fontFamily: "monospace",
+            fontSize: 12,
+            wordBreak: "break-all",
+            color: "text.secondary"
+          }
+        },
+        tx.hash.slice(0, 10),
+        "\u2026",
+        tx.hash.slice(-8)
+      ), /* @__PURE__ */ import_react14.default.createElement(Typography_default, { variant: "caption", color: "text.secondary", sx: { display: "block", mt: 0.5 } }, "\u5BF9\u624B\u65B9\uFF1A", tx.direction === "in" ? shortAddr(tx.from) : tx.to ? shortAddr(tx.to) : "\u5408\u7EA6\u521B\u5EFA"), isToken && tx.contractAddress ? /* @__PURE__ */ import_react14.default.createElement(Typography_default, { variant: "caption", color: "text.secondary", sx: { display: "block", mt: 0.25 } }, "\u5408\u7EA6\uFF1A", shortAddr(tx.contractAddress)) : null, /* @__PURE__ */ import_react14.default.createElement(Typography_default, { variant: "body2", fontWeight: 600, sx: { mt: 0.75 } }, isToken ? `${tx.tokenAmountDisplay} ${tx.tokenSymbol}` : `${tx.valueDisplay} ${nativeSymbol}`)), /* @__PURE__ */ import_react14.default.createElement(
+        IconButton_default,
+        {
+          size: "small",
+          "aria-label": "\u5728\u6D4F\u89C8\u5668\u4E2D\u6253\u5F00",
+          onClick: () => openExplorer(tx.hash),
+          disabled: !getTxExplorerTxUrl(filterChainId, tx.hash)
+        },
+        /* @__PURE__ */ import_react14.default.createElement(ExternalLink, { size: 18 })
+      ))));
+    }), /* @__PURE__ */ import_react14.default.createElement(Button_default, { fullWidth: true, sx: { mt: 1 }, onClick: () => void load(), disabled: loading }, "\u5237\u65B0\u6570\u636E"))));
   }
 
   // src/SendFlowViews.jsx
