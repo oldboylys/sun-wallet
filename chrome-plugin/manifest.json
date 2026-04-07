@@ -24,6 +24,7 @@
   "permissions": ["storage", "idle", "sidePanel", "windows"],
   "host_permissions": [
     "https://ethereum.publicnode.com/*",
+    "https://ethereum-sepolia.publicnode.com/*",
     "https://eth.llamarpc.com/*",
     "https://arb1.arbitrum.io/*",
     "https://mainnet.base.org/*",
@@ -35,6 +36,8 @@
     "https://assets.coingecko.com/*",
     "https://*.blockscout.com/*",
     "https://api.bscscan.com/*",
-    "https://bscscan.com/*"
+    "https://bscscan.com/*",
+    "https://fonts.googleapis.com/*",
+    "https://fonts.gstatic.com/*"
   ]
 }
