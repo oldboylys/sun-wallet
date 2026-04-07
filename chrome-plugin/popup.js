@@ -107713,6 +107713,168 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
     };
   }
 
+  // src/services/nftPortfolio.js
+  var BLOCKSCOUT_API_BASE2 = {
+    1: "https://eth.blockscout.com/api",
+    11155111: "https://eth-sepolia.blockscout.com/api",
+    42161: "https://arbitrum.blockscout.com/api",
+    8453: "https://base.blockscout.com/api",
+    10: "https://optimism.blockscout.com/api",
+    137: "https://polygon.blockscout.com/api"
+  };
+  var TX_PREFIX = {
+    1: "https://eth.blockscout.com/tx/",
+    11155111: "https://eth-sepolia.blockscout.com/tx/",
+    42161: "https://arbitrum.blockscout.com/tx/",
+    8453: "https://base.blockscout.com/tx/",
+    10: "https://optimism.blockscout.com/tx/",
+    137: "https://polygon.blockscout.com/tx/",
+    56: "https://bscscan.com/tx/"
+  };
+  function formatTimeLabel2(ts) {
+    if (ts <= 0) return "\u2014";
+    return new Date(ts * 1e3).toLocaleString(void 0, {
+      month: "short",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit"
+    });
+  }
+  async function fetchNftTransfers(walletAddress, chainId, opts = {}) {
+    const offset = Math.min(opts.offset ?? 40, 100);
+    const empty2 = { ok: false, error: "", items: [], notice: "" };
+    let checksum4;
+    try {
+      checksum4 = getAddress2(String(walletAddress ?? "").trim());
+    } catch {
+      return { ...empty2, error: "\u94B1\u5305\u5730\u5740\u65E0\u6548" };
+    }
+    if (chainId === 196) {
+      return { ...empty2, notice: "X Layer \u6682\u672A\u63A5\u5165 NFT \u7D22\u5F15\uFF0C\u8BF7\u5230\u6D4F\u89C8\u5668\u67E5\u770B\u3002" };
+    }
+    if (chainId === 56) {
+      return fetchBscNftTx(checksum4, offset);
+    }
+    const base2 = BLOCKSCOUT_API_BASE2[chainId];
+    if (!base2) {
+      return { ...empty2, error: "\u5F53\u524D\u7F51\u7EDC\u672A\u914D\u7F6E NFT \u6570\u636E" };
+    }
+    const params = new URLSearchParams({
+      module: "account",
+      action: "tokennfttx",
+      address: checksum4,
+      page: "1",
+      offset: String(offset),
+      sort: "desc"
+    });
+    let json2;
+    try {
+      const res = await fetch(`${base2}?${params.toString()}`);
+      json2 = await res.json();
+    } catch {
+      return { ...empty2, error: "\u7F51\u7EDC\u8BF7\u6C42\u5931\u8D25" };
+    }
+    return normalizeNftJson(json2, checksum4, chainId);
+  }
+  async function fetchBscNftTx(checksum4, offset) {
+    const empty2 = { ok: false, error: "", items: [], notice: "" };
+    const apiKey = await getStorageValue(BSCSCAN_API_KEY_STORAGE_KEY, "") || "";
+    if (!String(apiKey).trim()) {
+      return {
+        ok: true,
+        items: [],
+        notice: "BNB Chain \u9700\u5148\u5728\u300C\u8BBE\u7F6E\u300D\u4E2D\u914D\u7F6E BscScan API Key \u624D\u53EF\u67E5\u8BE2 NFT \u8BB0\u5F55\u3002"
+      };
+    }
+    const params = new URLSearchParams({
+      module: "account",
+      action: "tokennfttx",
+      address: checksum4,
+      startblock: "0",
+      endblock: "99999999",
+      page: "1",
+      offset: String(offset),
+      sort: "desc",
+      apikey: String(apiKey).trim()
+    });
+    let json2;
+    try {
+      const res = await fetch(`https://api.bscscan.com/api?${params.toString()}`);
+      json2 = await res.json();
+    } catch {
+      return { ...empty2, error: "\u7F51\u7EDC\u8BF7\u6C42\u5931\u8D25" };
+    }
+    return normalizeNftJson(json2, checksum4, 56);
+  }
+  function normalizeNftJson(json2, checksumWallet, chainId) {
+    const empty2 = { ok: false, error: "", items: [], notice: "" };
+    const status = json2?.status;
+    const message = json2?.message;
+    const result = json2?.result;
+    if (String(status) === "0") {
+      if (typeof result === "string") {
+        const msg = String(message ?? "").toLowerCase();
+        if (msg.includes("no transaction") || result === "No transactions found") {
+          return { ok: true, items: [], notice: "" };
+        }
+        return { ...empty2, error: result };
+      }
+      const m = String(message ?? "").toLowerCase();
+      if (m.includes("no transaction") || m.includes("no record")) {
+        return { ok: true, items: [], notice: "" };
+      }
+      return { ...empty2, error: String(message || "\u67E5\u8BE2\u5931\u8D25") };
+    }
+    if (!Array.isArray(result)) {
+      return { ok: true, items: [], notice: "" };
+    }
+    const txPrefix = TX_PREFIX[chainId] ?? "";
+    const items = [];
+    for (const raw of result) {
+      const hash6 = raw?.hash;
+      const contractAddress = String(raw.contractAddress ?? "").trim();
+      const tokenId = String(raw.tokenID ?? raw.tokenId ?? "");
+      if (!hash6 || !contractAddress || tokenId === "") continue;
+      let from15 = String(raw.from ?? "");
+      let to = String(raw.to ?? "");
+      try {
+        from15 = getAddress2(from15);
+      } catch {
+        continue;
+      }
+      try {
+        to = to ? getAddress2(to) : "";
+      } catch {
+        to = "";
+      }
+      const ts = Number.parseInt(String(raw.timeStamp ?? "0"), 10);
+      const timestamp = Number.isFinite(ts) ? ts : 0;
+      let direction = "out";
+      if (to.toLowerCase() === checksumWallet.toLowerCase()) direction = "in";
+      else if (from15.toLowerCase() === checksumWallet.toLowerCase()) direction = "out";
+      let contractCs = contractAddress;
+      try {
+        contractCs = getAddress2(contractAddress);
+      } catch {
+      }
+      const name = String(raw.tokenName ?? "\u672A\u547D\u540D NFT").trim() || "\u672A\u547D\u540D NFT";
+      const symbol2 = String(raw.tokenSymbol ?? "NFT").trim() || "NFT";
+      items.push({
+        rowKey: `${hash6}-${contractCs}-${tokenId}`,
+        contractAddress: contractCs,
+        tokenId,
+        name,
+        symbol: symbol2,
+        timestamp,
+        timeLabel: formatTimeLabel2(timestamp),
+        hash: hash6,
+        direction,
+        explorerTxUrl: txPrefix ? `${txPrefix}${hash6}` : ""
+      });
+    }
+    return { ok: true, items, notice: "" };
+  }
+
   // src/popup.entry.jsx
   var VIEWS = {
     LOGIN: "login",
@@ -107796,6 +107958,10 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
     const [portfolioTotalUsd, setPortfolioTotalUsd] = (0, import_react17.useState)(0);
     const [portfolioChange24h, setPortfolioChange24h] = (0, import_react17.useState)(null);
     const [portfolioRefreshing, setPortfolioRefreshing] = (0, import_react17.useState)(false);
+    const [nftItems, setNftItems] = (0, import_react17.useState)([]);
+    const [nftLoading, setNftLoading] = (0, import_react17.useState)(false);
+    const [nftError, setNftError] = (0, import_react17.useState)("");
+    const [nftNotice, setNftNotice] = (0, import_react17.useState)("");
     const [hideTotalUsd, setHideTotalUsd] = (0, import_react17.useState)(false);
     const [showAddTokenFab, setShowAddTokenFab] = (0, import_react17.useState)(false);
     const lastAssetListScrollTopRef = (0, import_react17.useRef)(0);
@@ -107972,6 +108138,30 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
       },
       [walletAddress, customTokens, selectedChainId]
     );
+    const loadNftPortfolio = (0, import_react17.useCallback)(async () => {
+      setNftLoading(true);
+      setNftError("");
+      setNftNotice("");
+      try {
+        const res = await fetchNftTransfers(walletAddress, selectedChainId, { offset: 40 });
+        if (!res.ok) {
+          setNftError(res.error || "\u52A0\u8F7D\u5931\u8D25");
+          setNftItems([]);
+          return;
+        }
+        setNftNotice(res.notice || "");
+        setNftItems(res.items ?? []);
+      } catch (e) {
+        setNftError(e?.message || "\u52A0\u8F7D\u5931\u8D25");
+        setNftItems([]);
+      } finally {
+        setNftLoading(false);
+      }
+    }, [walletAddress, selectedChainId]);
+    (0, import_react17.useEffect)(() => {
+      if (current !== VIEWS.HOME || activeTab !== "NFT") return;
+      void loadNftPortfolio();
+    }, [current, activeTab, loadNftPortfolio]);
     const handleSelectChain = (0, import_react17.useCallback)(async (id2) => {
       const next2 = normalizeStoredChainId(id2);
       setSelectedChainId(next2);
@@ -108795,7 +108985,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
               WebkitOverflowScrolling: "touch"
             }
           },
-          portfolioLoading && portfolioItems.length === 0 ? /* @__PURE__ */ import_react17.default.createElement(Box_default, { sx: { py: 2, display: "flex", justifyContent: "center" } }, /* @__PURE__ */ import_react17.default.createElement(CircularProgress_default, { size: 28 })) : portfolioItems.map((asset) => /* @__PURE__ */ import_react17.default.createElement(
+          activeTab === "\u5E01\u79CD" && /* @__PURE__ */ import_react17.default.createElement(import_react17.default.Fragment, null, portfolioLoading && portfolioItems.length === 0 ? /* @__PURE__ */ import_react17.default.createElement(Box_default, { sx: { py: 2, display: "flex", justifyContent: "center" } }, /* @__PURE__ */ import_react17.default.createElement(CircularProgress_default, { size: 28 })) : !portfolioLoading && portfolioItems.length === 0 ? /* @__PURE__ */ import_react17.default.createElement(Typography_default, { variant: "body2", color: "text.secondary", sx: { py: 2 } }, "\u6682\u65E0\u8D44\u4EA7\uFF0C\u53EF\u5728\u4E0B\u65B9\u7BA1\u7406\u81EA\u5B9A\u4E49\u4EE3\u5E01") : portfolioItems.map((asset) => /* @__PURE__ */ import_react17.default.createElement(
             Card_default,
             {
               key: asset.rowKey ?? asset.symbol,
@@ -108848,7 +109038,32 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
               },
               asset.change
             ))))
-          ))
+          ))),
+          activeTab === "DeFi" && /* @__PURE__ */ import_react17.default.createElement(Box_default, { sx: { py: 0.5 } }, /* @__PURE__ */ import_react17.default.createElement(Typography_default, { variant: "body2", color: "text.secondary", sx: { mb: 1.5 } }, "\u805A\u5408\u501F\u8D37\u3001\u6D41\u52A8\u6027\u6C60\u3001\u8D28\u62BC\u4E0E\u6536\u76CA\u7C7B\u4ED3\u4F4D\uFF08\u4E0E\u5F53\u524D Globe \u6240\u9009\u94FE\u4E00\u81F4\uFF0C\u6301\u7EED\u5B8C\u5584\u4E2D\uFF09\u3002"), /* @__PURE__ */ import_react17.default.createElement(Card_default, { variant: "outlined", sx: { mb: 1 } }, /* @__PURE__ */ import_react17.default.createElement(CardContent_default, { sx: { py: 1.5, "&:last-child": { pb: 1.5 } } }, /* @__PURE__ */ import_react17.default.createElement(Typography_default, { variant: "subtitle2", fontWeight: 600, gutterBottom: true }, "\u5373\u5C06\u63A5\u5165"), /* @__PURE__ */ import_react17.default.createElement(Typography_default, { variant: "caption", color: "text.secondary", sx: { display: "block", lineHeight: 1.6 } }, "\u8BA1\u5212\u5C55\u793A\uFF1A\u534F\u8BAE\u540D\u79F0\u3001\u4ED3\u4F4D\u7C7B\u578B\u3001\u6295\u5165\u8D44\u4EA7\u3001\u9884\u4F30\u51C0\u503C\u4E0E 24h \u6DA8\u8DCC\u3002\u9700\u8FDE\u63A5\u5404\u534F\u8BAE\u53EA\u8BFB\u63A5\u53E3\u6216\u7D22\u5F15\u670D\u52A1\u3002"))), /* @__PURE__ */ import_react17.default.createElement(Button_default, { variant: "outlined", size: "small", fullWidth: true, onClick: () => setToast("DeFi \u6570\u636E\u63A5\u5165\u5360\u4F4D") }, "\u4E86\u89E3\u66F4\u591A")),
+          activeTab === "NFT" && /* @__PURE__ */ import_react17.default.createElement(Box_default, { sx: { py: 0.5 } }, /* @__PURE__ */ import_react17.default.createElement(Typography_default, { variant: "caption", color: "text.secondary", sx: { display: "block", mb: 1 } }, "\u7F51\u7EDC\uFF1A", getChainDisplayName(selectedChainId), " \xB7 \u5C55\u793A\u8FD1\u671F NFT \u8F6C\u8D26\uFF08ERC-721 / ERC-1155 \u7D22\u5F15\uFF09"), nftLoading ? /* @__PURE__ */ import_react17.default.createElement(Box_default, { sx: { py: 3, display: "flex", justifyContent: "center" } }, /* @__PURE__ */ import_react17.default.createElement(CircularProgress_default, { size: 28 })) : nftError ? /* @__PURE__ */ import_react17.default.createElement(Typography_default, { color: "error", variant: "body2" }, nftError) : /* @__PURE__ */ import_react17.default.createElement(import_react17.default.Fragment, null, nftNotice ? /* @__PURE__ */ import_react17.default.createElement(Alert_default, { severity: "info", sx: { mb: 1, py: 0.5 } }, nftNotice) : null, nftItems.length === 0 ? /* @__PURE__ */ import_react17.default.createElement(Typography_default, { variant: "body2", color: "text.secondary", sx: { py: 1 } }, "\u6682\u65E0 NFT \u76F8\u5173\u94FE\u4E0A\u8BB0\u5F55") : nftItems.map((nft) => /* @__PURE__ */ import_react17.default.createElement(Card_default, { key: nft.rowKey, variant: "outlined", sx: { mb: 1 } }, /* @__PURE__ */ import_react17.default.createElement(CardContent_default, { sx: { py: 1.25, "&:last-child": { pb: 1.25 } } }, /* @__PURE__ */ import_react17.default.createElement(Box_default, { sx: { display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 1 } }, /* @__PURE__ */ import_react17.default.createElement(Box_default, { sx: { minWidth: 0, flex: 1 } }, /* @__PURE__ */ import_react17.default.createElement(Box_default, { sx: { display: "flex", alignItems: "center", gap: 0.75, flexWrap: "wrap", mb: 0.5 } }, /* @__PURE__ */ import_react17.default.createElement(
+            Chip_default,
+            {
+              size: "small",
+              label: nft.direction === "in" ? "\u8F6C\u5165" : "\u8F6C\u51FA",
+              color: nft.direction === "in" ? "success" : "primary",
+              sx: { height: 22, fontSize: 11 }
+            }
+          ), /* @__PURE__ */ import_react17.default.createElement(Typography_default, { variant: "caption", color: "text.secondary" }, nft.timeLabel)), /* @__PURE__ */ import_react17.default.createElement(Typography_default, { variant: "body2", fontWeight: 600, sx: { lineHeight: 1.35 } }, nft.name), /* @__PURE__ */ import_react17.default.createElement(Typography_default, { variant: "caption", color: "text.secondary", sx: { display: "block" } }, nft.symbol, " \xB7 #", nft.tokenId), /* @__PURE__ */ import_react17.default.createElement(Typography_default, { variant: "caption", color: "text.secondary", sx: { display: "block", mt: 0.5, wordBreak: "break-all" } }, "\u5408\u7EA6 ", shortAddress(nft.contractAddress))), nft.explorerTxUrl ? /* @__PURE__ */ import_react17.default.createElement(
+            IconButton_default,
+            {
+              size: "small",
+              "aria-label": "\u5728\u6D4F\u89C8\u5668\u67E5\u770B\u4EA4\u6613",
+              onClick: () => {
+                try {
+                  window.open(nft.explorerTxUrl, "_blank", "noopener,noreferrer");
+                } catch {
+                  setToast("\u65E0\u6CD5\u6253\u5F00\u94FE\u63A5");
+                }
+              }
+            },
+            /* @__PURE__ */ import_react17.default.createElement(ExternalLink, { size: 18 })
+          ) : null)))), /* @__PURE__ */ import_react17.default.createElement(Button_default, { variant: "text", size: "small", fullWidth: true, sx: { mt: 0.5 }, onClick: () => void loadNftPortfolio() }, "\u5237\u65B0 NFT \u5217\u8868"))),
+          activeTab === "\u6388\u6743" && /* @__PURE__ */ import_react17.default.createElement(Box_default, { sx: { py: 0.5 } }, /* @__PURE__ */ import_react17.default.createElement(Typography_default, { variant: "body2", color: "text.secondary", sx: { mb: 1.5, lineHeight: 1.6 } }, "\u67E5\u770B\u5E76\u64A4\u9500\u5BF9\u4EE3\u5E01\uFF08ERC-20\uFF09\u6216 NFT\uFF08ERC-721\uFF09\u7684\u65E0\u9650\u6388\u6743\uFF0C\u964D\u4F4E\u5408\u7EA6\u98CE\u9669\u3002\u6570\u636E\u9700\u8BFB\u53D6\u94FE\u4E0A Allowance\uFF08\u5F00\u53D1\u4E2D\uFF09\u3002"), /* @__PURE__ */ import_react17.default.createElement(Card_default, { variant: "outlined", sx: { mb: 1 } }, /* @__PURE__ */ import_react17.default.createElement(CardContent_default, { sx: { py: 1.5, "&:last-child": { pb: 1.5 } } }, /* @__PURE__ */ import_react17.default.createElement(Typography_default, { variant: "subtitle2", fontWeight: 600, gutterBottom: true }, "\u5373\u5C06\u652F\u6301"), /* @__PURE__ */ import_react17.default.createElement(Typography_default, { variant: "caption", color: "text.secondary", sx: { display: "block", lineHeight: 1.6 } }, "\u6309\u5408\u7EA6\u805A\u5408\u6388\u6743\u989D\u5EA6\u3001spender\uFF08\u534F\u8BAE\u8DEF\u7531\uFF09\u3001\u4E00\u952E\u64A4\u9500\u4E0E\u6279\u91CF\u5904\u7406\u3002"))), /* @__PURE__ */ import_react17.default.createElement(Button_default, { variant: "outlined", size: "small", fullWidth: true, onClick: () => setToast("\u6388\u6743\u7BA1\u7406\u5F00\u53D1\u4E2D") }, "\u6388\u6743\u7BA1\u7406"))
         ),
         activeTab === "\u5E01\u79CD" ? /* @__PURE__ */ import_react17.default.createElement(Fade_default, { in: showAddTokenFab, timeout: 180, unmountOnExit: true }, /* @__PURE__ */ import_react17.default.createElement(
           Box_default,

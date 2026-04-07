@@ -18,6 +18,7 @@ import {
   Plus,
   Coins,
   ArrowLeft,
+  ExternalLink,
 } from "lucide-react";
 import QRCode from "qrcode";
 import { ThemeProvider, CssBaseline } from "@mui/material";
@@ -36,6 +37,7 @@ import Alert from "@mui/material/Alert";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import CircularProgress from "@mui/material/CircularProgress";
+import Chip from "@mui/material/Chip";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -93,7 +95,8 @@ import {
   normalizeStoredChainId,
   SELECTED_CHAIN_ID_STORAGE_KEY,
 } from "./services/chainRegistry";
-import { BSCSCAN_API_KEY_STORAGE_KEY } from "./services/txHistory";
+import { fetchNftTransfers } from "./services/nftPortfolio";
+import { BSCSCAN_API_KEY_STORAGE_KEY, getChainDisplayName } from "./services/txHistory";
 
 const VIEWS = {
   LOGIN: "login",
@@ -194,6 +197,10 @@ function App() {
   const [portfolioTotalUsd, setPortfolioTotalUsd] = useState(0);
   const [portfolioChange24h, setPortfolioChange24h] = useState(null);
   const [portfolioRefreshing, setPortfolioRefreshing] = useState(false);
+  const [nftItems, setNftItems] = useState([]);
+  const [nftLoading, setNftLoading] = useState(false);
+  const [nftError, setNftError] = useState("");
+  const [nftNotice, setNftNotice] = useState("");
   /** 点击金额隐藏为 **** */
   const [hideTotalUsd, setHideTotalUsd] = useState(false);
   /** 首页币种列表：向下滚显、向上滚隐 */
@@ -398,6 +405,32 @@ function App() {
     },
     [walletAddress, customTokens, selectedChainId],
   );
+
+  const loadNftPortfolio = useCallback(async () => {
+    setNftLoading(true);
+    setNftError("");
+    setNftNotice("");
+    try {
+      const res = await fetchNftTransfers(walletAddress, selectedChainId, { offset: 40 });
+      if (!res.ok) {
+        setNftError(res.error || "加载失败");
+        setNftItems([]);
+        return;
+      }
+      setNftNotice(res.notice || "");
+      setNftItems(res.items ?? []);
+    } catch (e) {
+      setNftError(e?.message || "加载失败");
+      setNftItems([]);
+    } finally {
+      setNftLoading(false);
+    }
+  }, [walletAddress, selectedChainId]);
+
+  useEffect(() => {
+    if (current !== VIEWS.HOME || activeTab !== "NFT") return;
+    void loadNftPortfolio();
+  }, [current, activeTab, loadNftPortfolio]);
 
   const handleSelectChain = useCallback(async (id) => {
     const next = normalizeStoredChainId(id);
@@ -1316,91 +1349,220 @@ function App() {
                   WebkitOverflowScrolling: "touch",
                 }}
               >
-                {portfolioLoading && portfolioItems.length === 0 ? (
-                  <Box sx={{ py: 2, display: "flex", justifyContent: "center" }}>
-                    <CircularProgress size={28} />
-                  </Box>
-                ) : (
-                  portfolioItems.map((asset) => (
-                    <Card
-                      key={asset.rowKey ?? asset.symbol}
-                      variant="outlined"
-                      component="button"
-                      onClick={() => setToast(`${asset.symbol} 详情页占位`)}
-                      sx={{
-                        textAlign: "left",
-                        cursor: "pointer",
-                        flexShrink: 0,
-                        "&:hover": { bgcolor: "action.hover" },
-                      }}
-                    >
-                      <CardContent sx={{ py: 1.35, "&:last-child": { pb: 1.35 } }}>
-                        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                          <Box sx={{ display: "flex", alignItems: "center", gap: 1, minWidth: 0 }}>
-                            {asset.iconUrl ? (
-                              <Box
-                                component="img"
-                                src={asset.iconUrl}
-                                alt=""
-                                sx={{
-                                  width: 32,
-                                  height: 32,
-                                  borderRadius: "50%",
-                                  objectFit: "cover",
-                                  flexShrink: 0,
-                                  bgcolor: "action.hover",
-                                }}
-                              />
-                            ) : (
-                              <Box
-                                sx={{
-                                  width: 32,
-                                  height: 32,
-                                  borderRadius: "50%",
-                                  bgcolor: "action.selected",
-                                  display: "grid",
-                                  placeItems: "center",
-                                  fontSize: 12,
-                                  fontWeight: 700,
-                                  flexShrink: 0,
-                                }}
-                              >
-                                {asset.symbol[0]}
+                {activeTab === "币种" && (
+                  <>
+                    {portfolioLoading && portfolioItems.length === 0 ? (
+                      <Box sx={{ py: 2, display: "flex", justifyContent: "center" }}>
+                        <CircularProgress size={28} />
+                      </Box>
+                    ) : !portfolioLoading && portfolioItems.length === 0 ? (
+                      <Typography variant="body2" color="text.secondary" sx={{ py: 2 }}>
+                        暂无资产，可在下方管理自定义代币
+                      </Typography>
+                    ) : (
+                      portfolioItems.map((asset) => (
+                        <Card
+                          key={asset.rowKey ?? asset.symbol}
+                          variant="outlined"
+                          component="button"
+                          onClick={() => setToast(`${asset.symbol} 详情页占位`)}
+                          sx={{
+                            textAlign: "left",
+                            cursor: "pointer",
+                            flexShrink: 0,
+                            "&:hover": { bgcolor: "action.hover" },
+                          }}
+                        >
+                          <CardContent sx={{ py: 1.35, "&:last-child": { pb: 1.35 } }}>
+                            <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                              <Box sx={{ display: "flex", alignItems: "center", gap: 1, minWidth: 0 }}>
+                                {asset.iconUrl ? (
+                                  <Box
+                                    component="img"
+                                    src={asset.iconUrl}
+                                    alt=""
+                                    sx={{
+                                      width: 32,
+                                      height: 32,
+                                      borderRadius: "50%",
+                                      objectFit: "cover",
+                                      flexShrink: 0,
+                                      bgcolor: "action.hover",
+                                    }}
+                                  />
+                                ) : (
+                                  <Box
+                                    sx={{
+                                      width: 32,
+                                      height: 32,
+                                      borderRadius: "50%",
+                                      bgcolor: "action.selected",
+                                      display: "grid",
+                                      placeItems: "center",
+                                      fontSize: 12,
+                                      fontWeight: 700,
+                                      flexShrink: 0,
+                                    }}
+                                  >
+                                    {asset.symbol[0]}
+                                  </Box>
+                                )}
+                                <Box sx={{ minWidth: 0 }}>
+                                  <Typography variant="body2" fontWeight={600}>
+                                    {asset.symbol}
+                                  </Typography>
+                                  <Typography variant="caption" color="text.secondary" component="div">
+                                    {asset.amount}
+                                  </Typography>
+                                  <Typography variant="caption" color="text.secondary" sx={{ fontSize: 11, opacity: 0.9 }}>
+                                    单价 {asset.priceLabel ?? "—"}
+                                  </Typography>
+                                </Box>
                               </Box>
-                            )}
-                            <Box sx={{ minWidth: 0 }}>
-                              <Typography variant="body2" fontWeight={600}>
-                                {asset.symbol}
-                              </Typography>
-                              <Typography variant="caption" color="text.secondary" component="div">
-                                {asset.amount}
-                              </Typography>
-                              <Typography variant="caption" color="text.secondary" sx={{ fontSize: 11, opacity: 0.9 }}>
-                                单价 {asset.priceLabel ?? "—"}
-                              </Typography>
+                              <Box sx={{ textAlign: "right" }}>
+                                <Typography variant="body2" fontWeight={600}>
+                                  {asset.value}
+                                </Typography>
+                                <Typography
+                                  variant="caption"
+                                  color={
+                                    asset.change === "—"
+                                      ? "text.secondary"
+                                      : asset.change.startsWith("-")
+                                        ? "error.main"
+                                        : "success.main"
+                                  }
+                                >
+                                  {asset.change}
+                                </Typography>
+                              </Box>
                             </Box>
-                          </Box>
-                          <Box sx={{ textAlign: "right" }}>
-                            <Typography variant="body2" fontWeight={600}>
-                              {asset.value}
-                            </Typography>
-                            <Typography
-                              variant="caption"
-                              color={
-                                asset.change === "—"
-                                  ? "text.secondary"
-                                  : asset.change.startsWith("-")
-                                    ? "error.main"
-                                    : "success.main"
-                              }
-                            >
-                              {asset.change}
-                            </Typography>
-                          </Box>
-                        </Box>
+                          </CardContent>
+                        </Card>
+                      ))
+                    )}
+                  </>
+                )}
+
+                {activeTab === "DeFi" && (
+                  <Box sx={{ py: 0.5 }}>
+                    <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5 }}>
+                      聚合借贷、流动性池、质押与收益类仓位（与当前 Globe 所选链一致，持续完善中）。
+                    </Typography>
+                    <Card variant="outlined" sx={{ mb: 1 }}>
+                      <CardContent sx={{ py: 1.5, "&:last-child": { pb: 1.5 } }}>
+                        <Typography variant="subtitle2" fontWeight={600} gutterBottom>
+                          即将接入
+                        </Typography>
+                        <Typography variant="caption" color="text.secondary" sx={{ display: "block", lineHeight: 1.6 }}>
+                          计划展示：协议名称、仓位类型、投入资产、预估净值与 24h 涨跌。需连接各协议只读接口或索引服务。
+                        </Typography>
                       </CardContent>
                     </Card>
-                  ))
+                    <Button variant="outlined" size="small" fullWidth onClick={() => setToast("DeFi 数据接入占位")}>
+                      了解更多
+                    </Button>
+                  </Box>
+                )}
+
+                {activeTab === "NFT" && (
+                  <Box sx={{ py: 0.5 }}>
+                    <Typography variant="caption" color="text.secondary" sx={{ display: "block", mb: 1 }}>
+                      网络：{getChainDisplayName(selectedChainId)} · 展示近期 NFT 转账（ERC-721 / ERC-1155 索引）
+                    </Typography>
+                    {nftLoading ? (
+                      <Box sx={{ py: 3, display: "flex", justifyContent: "center" }}>
+                        <CircularProgress size={28} />
+                      </Box>
+                    ) : nftError ? (
+                      <Typography color="error" variant="body2">
+                        {nftError}
+                      </Typography>
+                    ) : (
+                      <>
+                        {nftNotice ? (
+                          <Alert severity="info" sx={{ mb: 1, py: 0.5 }}>
+                            {nftNotice}
+                          </Alert>
+                        ) : null}
+                        {nftItems.length === 0 ? (
+                          <Typography variant="body2" color="text.secondary" sx={{ py: 1 }}>
+                            暂无 NFT 相关链上记录
+                          </Typography>
+                        ) : (
+                          nftItems.map((nft) => (
+                            <Card key={nft.rowKey} variant="outlined" sx={{ mb: 1 }}>
+                              <CardContent sx={{ py: 1.25, "&:last-child": { pb: 1.25 } }}>
+                                <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 1 }}>
+                                  <Box sx={{ minWidth: 0, flex: 1 }}>
+                                    <Box sx={{ display: "flex", alignItems: "center", gap: 0.75, flexWrap: "wrap", mb: 0.5 }}>
+                                      <Chip
+                                        size="small"
+                                        label={nft.direction === "in" ? "转入" : "转出"}
+                                        color={nft.direction === "in" ? "success" : "primary"}
+                                        sx={{ height: 22, fontSize: 11 }}
+                                      />
+                                      <Typography variant="caption" color="text.secondary">
+                                        {nft.timeLabel}
+                                      </Typography>
+                                    </Box>
+                                    <Typography variant="body2" fontWeight={600} sx={{ lineHeight: 1.35 }}>
+                                      {nft.name}
+                                    </Typography>
+                                    <Typography variant="caption" color="text.secondary" sx={{ display: "block" }}>
+                                      {nft.symbol} · #{nft.tokenId}
+                                    </Typography>
+                                    <Typography variant="caption" color="text.secondary" sx={{ display: "block", mt: 0.5, wordBreak: "break-all" }}>
+                                      合约 {shortAddress(nft.contractAddress)}
+                                    </Typography>
+                                  </Box>
+                                  {nft.explorerTxUrl ? (
+                                    <IconButton
+                                      size="small"
+                                      aria-label="在浏览器查看交易"
+                                      onClick={() => {
+                                        try {
+                                          window.open(nft.explorerTxUrl, "_blank", "noopener,noreferrer");
+                                        } catch {
+                                          setToast("无法打开链接");
+                                        }
+                                      }}
+                                    >
+                                      <ExternalLink size={18} />
+                                    </IconButton>
+                                  ) : null}
+                                </Box>
+                              </CardContent>
+                            </Card>
+                          ))
+                        )}
+                        <Button variant="text" size="small" fullWidth sx={{ mt: 0.5 }} onClick={() => void loadNftPortfolio()}>
+                          刷新 NFT 列表
+                        </Button>
+                      </>
+                    )}
+                  </Box>
+                )}
+
+                {activeTab === "授权" && (
+                  <Box sx={{ py: 0.5 }}>
+                    <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5, lineHeight: 1.6 }}>
+                      查看并撤销对代币（ERC-20）或 NFT（ERC-721）的无限授权，降低合约风险。数据需读取链上 Allowance（开发中）。
+                    </Typography>
+                    <Card variant="outlined" sx={{ mb: 1 }}>
+                      <CardContent sx={{ py: 1.5, "&:last-child": { pb: 1.5 } }}>
+                        <Typography variant="subtitle2" fontWeight={600} gutterBottom>
+                          即将支持
+                        </Typography>
+                        <Typography variant="caption" color="text.secondary" sx={{ display: "block", lineHeight: 1.6 }}>
+                          按合约聚合授权额度、spender（协议路由）、一键撤销与批量处理。
+                        </Typography>
+                      </CardContent>
+                    </Card>
+                    <Button variant="outlined" size="small" fullWidth onClick={() => setToast("授权管理开发中")}>
+                      授权管理
+                    </Button>
+                  </Box>
                 )}
               </Box>
 
