@@ -1,0 +1,29 @@
+{
+  "name": "chrome-plugin",
+  "version": "1.0.0",
+  "description": "ETH wallet chrome extension demo",
+  "main": "popup.js",
+  "scripts": {
+    "build": "esbuild src/popup.entry.jsx --bundle --format=iife --target=chrome114 --outfile=popup.js",
+    "dev": "esbuild src/popup.entry.jsx --bundle --format=iife --target=chrome114 --sourcemap --outfile=popup.js",
+    "test": "echo \"No tests\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/material": "^7.3.9",
+    "esbuild": "^0.27.5",
+    "ethers": "^6.16.0",
+    "lucide-react": "^1.7.0",
+    "qrcode": "^1.5.4",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "react-hook-form": "^7.72.0",
+    "viem": "^2.47.6",
+    "zod": "^4.3.6",
+    "zustand": "^5.0.12"
+  }
+}
